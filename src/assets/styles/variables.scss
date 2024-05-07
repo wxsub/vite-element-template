@@ -1,0 +1,29 @@
+:root {
+  --client: 1440
+}
+
+@function vm($px) {
+  $calc: calc($px / 14.4);
+  @return calc($calc * 1vw);
+}
+
+@for $i from 1 through 6 {
+  .ellipsis-#{$i} {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $i;
+    overflow: hidden;
+  }
+}
+
+.hover {
+  transition: 300ms;
+  &:hover { opacity: .88 }
+}
+
+@mixin scrollbar {
+  overflow-y: auto;
+  &::-webkit-scrollbar { width: 2px; height: 6px }
+  &::-webkit-scrollbar-thumb { background: #999999; border-radius: 6px }
+  &::-webkit-scrollbar-track { background: transparent }
+}

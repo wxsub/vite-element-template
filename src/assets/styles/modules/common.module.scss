@@ -1,0 +1,18 @@
+.Sidebar {
+  width: 295px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 12px 6px;
+  overflow-y: auto;
+  :global .el-menu { border-right: none }
+  :global .el-menu-item.is-active { background: #E7F0FF; border-radius: 4px }
+}
+.Container {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 14px;
+  height: 100%;
+  overflow-y: auto;
+  .views { padding: 15px 20px }
+}

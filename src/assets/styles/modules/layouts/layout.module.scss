@@ -1,0 +1,23 @@
+.IM-container {
+  width: 100%;
+  overflow-x: hidden;
+  padding: 10px 0;
+}
+
+.common {
+  background: linear-gradient(34deg, #EFEFFB 50%, #D7EEFC 100%);
+  height: 100vh;
+  section {
+    display: flex;
+    height: inherit;
+    gap: 10px;
+    padding: 18px 20px 18px 10px;
+    overflow: hidden;
+  }
+  .slider {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}

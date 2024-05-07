@@ -1,0 +1,12 @@
+.setting {
+  display: flex;
+  column-gap: 10px;
+  height: 100%;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid #F2F3F5;
+  }
+}

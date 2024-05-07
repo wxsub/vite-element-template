@@ -1,0 +1,68 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  border-color: currentcolor;
+  border-style: solid;
+  border-width: 0;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+html {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  line-height: 1.5;
+  tab-size: 4;
+  text-size-adjust: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  line-height: inherit;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+}
+
+a {
+  color: #409EFF;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+h1, h2, h3, h4, h5, h6, p { margin: 0 }
+
+img,
+svg {
+  display: inline-block;
+}
+
+// Because the icon size is set to be consistent with the font size, and the lower edge of labels such as span will be aligned with the baseline of the font, a downward offset ratio needs to be set to correct the visual misalignment effect.
+svg {
+  vertical-align: -0.15em;
+}
+
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}

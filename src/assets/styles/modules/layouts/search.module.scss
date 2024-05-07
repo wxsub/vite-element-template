@@ -1,0 +1,8 @@
+.search-input-container {
+  :global .el-input__wrapper {
+    background: var(--el-fill-color-light);
+  }
+  .btn-container {
+    border: 1px solid var(--el-input-border-color,var(--el-border-color));
+  }
+}
