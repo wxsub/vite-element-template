@@ -78,12 +78,12 @@ const props = defineProps({
   rules: { type: Object, default: () => {} },
   block: { type: Boolean, default: false },
   disabled: { type: Boolean, default: false },
-  labelPosition: { type: String, default: 'top' }, // 表单项对齐规则
-  rowGap: { type: Number, default: 5 }, // 表单项纵向间距
-  labelWidth: { type: Number, default: 120 }, // 表单项标题宽度(仅在labelPosition为left、right时生效)
-  columns: { type: [Number, String], default: 1 }, // 每行显示多少列
-  size: { type: String, default: 'default' }, // 表单项尺寸
-  row: { type: Object, default: () => ({ gutter: 30, type: 'flex' }) } // 表单row项设置
+  labelPosition: { type: String, default: 'top' }, // Form Input Alignment Rules
+  rowGap: { type: Number, default: 5 }, // Vertical spacing of form items
+  labelWidth: { type: Number, default: 120 }, // Form item title width (only works when labelPosition is left, right)
+  columns: { type: [Number, String], default: 1 }, // How many columns per row
+  size: { type: String, default: 'default' }, // Form Size
+  row: { type: Object, default: () => ({ gutter: 30, type: 'flex' }) } // Form row item settings
 })
 
 onMounted(async () => {
