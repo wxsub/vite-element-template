@@ -1,4 +1,4 @@
-# Tenant webapp ng page
+# vite-element-template webapp ng page
 
 ```
 npm install -g pnpm
