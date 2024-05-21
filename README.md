@@ -12,6 +12,8 @@ pnpm run dev
 pnpm run build
 ```
 
+[演示地址](https://wxsub.github.io/vite-element-template/)
+
 ## unoCss
 系统内置unoCss，so 大部分css不必动手绘制，特殊需求样式的处理，请在src/assets/styles/下查阅是否存在
 类似css模块，如果没有相应css模块，你可能需要手动在style标签进行书写，当然它也是很少一部分也不推荐，推荐快速书写css参考
