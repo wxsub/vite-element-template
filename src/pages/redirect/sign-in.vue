@@ -13,7 +13,7 @@ const LoginForm: any = reactive({
   company: [],
   protocol: false,
   loading: false,
-  value: { mobilePhone: 18917040945, password: '123456', validate: '', nickname: `user-${Number(new Date())}` },
+  value: { mobilePhone: null, password: '123456', validate: '', nickname: `user-${Number(new Date())}` },
   mobilePhoneConf: [
     {
       key: 'mobilePhone',
