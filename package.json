@@ -107,7 +107,7 @@
     "vite-plugin-vue-layouts": "^0.8.0",
     "vue-tsc": "^1.7.0 "
   },
-  "repository": "https://JobnBoom@bitbucket.org/wxsub/wxsub-admin-vite.git",
+  "repository": "https://github.com/wxsub/vite-element-template.git",
   "author": "wxsub.com studios © 2023",
   "license": "MIT",
   "engines": {
