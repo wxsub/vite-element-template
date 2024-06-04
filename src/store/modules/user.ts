@@ -70,6 +70,7 @@ export const useUserStore = defineStore("user", () => {
         if (user?.data) { resolve(user.data) } else {
           const response: any = await http.post("user/userinfo"),
             { code, data = {} } = response || {};
+            console.log(response)
           if (code === 200) {
             if (data?.info) user.data = data.info
             if (data?.table) user.companyList = data.table

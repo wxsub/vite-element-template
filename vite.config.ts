@@ -19,7 +19,6 @@ import { viteMockServe } from "vite-plugin-mock";
 
 import vueJsx from "@vitejs/plugin-vue-jsx";
 
-import UnoCSS from "unocss/vite";
 import path from "path";
 
 const pathSrc = path.resolve(__dirname, "src");
@@ -38,6 +37,9 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           javascriptEnabled: true,
           additionalData: `@use "@/assets/styles/variables.scss" as *;`
         }
+      },
+      postcss: {
+        plugins: [require("tailwindcss"), require("autoprefixer")]
       }
     },
     server: {
@@ -79,7 +81,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         exclude: ['**/component/*.vue', '**/components/*.vue', '**/components/*.md', '**/modules/*.vue', '**/module/*.vue']
       }),
       vueJsx(),
-      UnoCSS({ hmrTopLevelAwait: false }),
       AutoImport({
         // Automatically import Vue related functions, such as: ref, reactive, toRef, etc.
         imports: ["vue", "@vueuse/core"],

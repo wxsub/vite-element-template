@@ -12,7 +12,7 @@ import "virtual:svg-icons-register"
 // Global style
 import "element-plus/theme-chalk/dark/css-vars.css"
 import "@/assets/styles/index.scss"
-import "uno.css"
+import "tailwindcss/tailwind.css"
 
 const app = createApp(App)
 

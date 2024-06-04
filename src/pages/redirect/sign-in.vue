@@ -1,4 +1,4 @@
-<route>{ meta: { title: "登录律观IM", layout: "blank" } }</route>
+<route>{ meta: { title: "sign-in", layout: "blank" } }</route>
 
 <script setup lang="ts">
 import { useUserStore } from "@/store/modules/user"
@@ -13,7 +13,7 @@ const LoginForm: any = reactive({
   company: [],
   protocol: false,
   loading: false,
-  value: { mobilePhone: null, password: '123456', validate: '', nickname: `user-${Number(new Date())}` },
+  value: { mobilePhone: '17354186558', password: '123456', validate: '', nickname: `user-${Number(new Date())}` },
   mobilePhoneConf: [
     {
       key: 'mobilePhone',
@@ -200,8 +200,8 @@ async function selectEnterprise(userid: string) {
         </template>
       </el-image>
       <!-- 手机号输入 -->
-      <div class="sign-in-context pt-23" v-if="LoginForm.step === 1">
-        <h1>欢迎使用律观IM</h1>
+      <div class="sign-in-context pt-[23px]" v-if="LoginForm.step === 1">
+        <h1 class="text-center text-[20px] mt-[20px]">vite-element-template sign-in</h1>
         <div>
           <ul class="sign-in-tab">
             <li :class="{ 'active': active === 1 }" @click="active = 1">手机号</li>

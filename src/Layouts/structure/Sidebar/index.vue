@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import scssSidebarModule from "@/assets/styles/modules/layouts/sidebar.module.scss"
 import { useRouter } from 'vue-router'
-import { useUserStore } from "@/store/modules/user"
 import { Picture as IconPicture } from '@element-plus/icons-vue'
 import User from "@/Layouts/structure/header/user.vue"
 
 const router = useRouter(),
-  { companyName } = useUserStore().user.data,
   current: any = ref(router.currentRoute.value.path),
   sideList = reactive([
     {
@@ -22,7 +20,7 @@ const router = useRouter(),
       activeIcon: '/images/layout/sidebar-work-active.png'
     },
     {
-      path: companyName ? `/contact/department` : `/contact/external`,
+      path: `/contact/external`,
       title: '通讯录',
       defaultIcon: '/images/layout/sidebar-connect-default.png',
       activeIcon: '/images/layout/sidebar-connect-active.png'
