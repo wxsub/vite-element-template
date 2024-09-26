@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  webapp-page:
+    build: .
+    container_name: vite-element-template
+    volumes:
+      - .:/vite-element-template
+    ports:
+      - "8848:8848"
+    restart: unless-stopped
