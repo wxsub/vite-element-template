@@ -8,6 +8,20 @@ npm install -g pnpm
 pnpm install
 pnpm run dev
 
+// docker方式开发启动
+1. [安装docker](https://www.docker.com)
+2. 构建并启动容器
+```
+docker-compose up --build -d
+```
+3. 进入容器启动服务
+```
+docker-compose exec webapp-page /bin/bash
+
+pnpm install
+pnpm run dev
+```
+
 // 打包
 pnpm run build
 ```
