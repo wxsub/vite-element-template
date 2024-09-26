@@ -12,7 +12,7 @@ pnpm run dev
 pnpm run build
 ```
 
-***docker方式开发启动***
+## Docker方式开发启动
 1. [安装docker](https://www.docker.com)
 2. 构建并启动容器
 ```
