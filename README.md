@@ -8,7 +8,11 @@ npm install -g pnpm
 pnpm install
 pnpm run dev
 
-// docker方式开发启动
+// 打包
+pnpm run build
+```
+
+***docker方式开发启动***
 1. [安装docker](https://www.docker.com)
 2. 构建并启动容器
 ```
@@ -20,10 +24,6 @@ docker-compose exec webapp-page /bin/bash
 
 pnpm install
 pnpm run dev
-```
-
-// 打包
-pnpm run build
 ```
 
 [演示地址](https://wxsub.github.io/vite-element-template/)
