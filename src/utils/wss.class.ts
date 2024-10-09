@@ -27,11 +27,7 @@ export default class websocket {
           try {
             if (event?.data) {
               const response = JSON.parse(event.data) || {}
-              if (response?.code === 200) {
-                if (response?.event === 'messenger') {
-                  websocket.onMessage(response)
-                }
-              }
+              if (response?.code === 200) websocket.onMessage(response);
             }
           } catch (e) {
             console.log(`websocket aspect raw error: ${e}`)
