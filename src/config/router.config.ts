@@ -32,7 +32,7 @@ const router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 })
 })
 
-const TICKET = useStorage<string>("XSRF-TOKEN", null).value || "empty"
+const TICKET = useStorage<string>("XSRF-TOKEN", null).value || null
 
 routerStore.setRoutes(routes)
 // console.log(routerStore.router.routes)
@@ -50,9 +50,9 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
             next({ path: "/" })
           } else next()
         } else {
-          // await userStore.getUserInfo()
-          // const { hashmap } = routerStore.router
-          // await initializeSystemWebSocketSetup(TICKET)
+          await userStore.getUserInfo()
+          const { hashmap } = routerStore.router
+          await initializeSystemWebSocketSetup(TICKET)
           if (hash) {
             next({ ...to, replace: true })
           } else next()
