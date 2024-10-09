@@ -35,9 +35,11 @@ pnpm run dev
 当然使用你的VSCode插件配合是个不错的选择【插件-搜索并安装tailwindcss】
 *vscode没有智能的提示？*
 ```json
+{
   "editor.quickSuggestions": {
     "strings": true
   }
+}
 ```
 
 ## global plugin
