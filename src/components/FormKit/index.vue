@@ -153,7 +153,7 @@ function mutation(event: any, config: ConfigInterface) {
   fixedPointClearValidate(config)
 }
 function fixedPointClearValidate(config: ConfigInterface) {
-  if (Object.hasOwnProperty.call(config, 'key' && 'rules')) {
+  if (Object.hasOwnProperty.call(config, 'key') && Object.hasOwnProperty.call(config, 'rules')) {
     const { proxy } = CurrentInstance || {}
     if (proxy) proxy.$refs[UNIQUE_KEY.value].clearValidate([config.key])
   }
