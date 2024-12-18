@@ -1,11 +1,13 @@
-<route>{ meta: { title: "首页", layout: 'IM' } }</route>
+<route>
+{
+  meta: { title: "首页" }
+}
+</route>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<template>
+  <div>
+    <h1>1112</h1>
+  </div>
+</template>
 
-export default defineComponent({
-  beforeRouteEnter(to, from, next) {
-    next('/channel')
-  }
-})
-</script>
+<script setup lang="ts"></script>

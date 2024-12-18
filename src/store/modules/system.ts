@@ -1,7 +1,10 @@
 import { defineStore } from "pinia"
+import { ref } from "vue"
 
 export const useSystemStore = defineStore("system", () => {
-  const buckets = reactive(Object.create(null))
+  const stream = ref([])
 
-  return { buckets }
+  const setStream = (data: Array<object> | any) => stream.value = data
+
+  return { stream, setStream }
 })

@@ -25,7 +25,7 @@
     ],
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "allowSyntheticDefaultImports": true /* 允许默认导入 */,
-    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    "forceConsistentCasingInFileNames": false /* Ensure that casing is correct in imports. */,
 
     "jsx": "preserve",
     "jsxFactory": "h",

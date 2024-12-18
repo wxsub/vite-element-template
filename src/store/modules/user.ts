@@ -1,11 +1,14 @@
 import { defineStore } from "pinia"
 import http from "@/config/axios.config"
 import { store } from "@/store"
-import { isEmpty } from "lodash"
+import { useStorage } from "@vueuse/core"
+import { ref } from "vue"
+import { routerStore } from "@/store/modules/router"
 
 export const useUserStore = defineStore("user", () => {
-  const user: any = reactive(Object.create(null)),
-    bucket: any = reactive(Object.create(null));
+  const Dataset: any = ref(null)
+
+  const setUserData = (data: Object | any) => Dataset.value = data
 
   /**
    * 密码登录
@@ -14,47 +17,9 @@ export const useUserStore = defineStore("user", () => {
   function login(loginData: object) {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        const response: any = await http.post("index/login/password", loginData),
-            { code } = response || {};
-        if (code === 200) {
-          resolve(response)
-        } else reject(response)
-      } catch (e) {
-        console.log(e)
-        reject(e)
-      }
-    })
-  }
-
-  /**
-   * 手机号验证码登录
-   * @param loginData
-   */
-  function VerificationCodeLogin(loginData: object) {
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        const response: any = await http.post("index/login/verifyCode", loginData),
-          { code } = response || {};
-        if (code === 200) {
-          resolve(response)
-        } else reject(response)
-      } catch (e) {
-        console.log(e)
-        reject(e)
-      }
-    })
-  }
-
-  /**
-   * 用户注册
-   * @param registerData
-   */
-  function register(registerData: object) {
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        const response: any = await http.post("index/register", registerData),
-          { code } = response || {};
-        if (code === 200) {
+        const response: any = await useAxios().post("/login", loginData)
+        if (response?.token) {
+          useStorage<string>("XSRF-TOKEN", response.token)
           resolve(response)
         } else reject(response)
       } catch (e) {
@@ -67,15 +32,16 @@ export const useUserStore = defineStore("user", () => {
   function getUserInfo() {
     return new Promise<any>(async (resolve, reject) => {
       try {
-        if (user?.data) { resolve(user.data) } else {
-          const response: any = await http.post("user/userinfo"),
-            { code, data = {} } = response || {};
-            console.log(response)
-          if (code === 200) {
-            if (data?.info) user.data = data.info
-            if (data?.table) user.companyList = data.table
-            resolve(data)
-          } else reject(response)
+        if (Dataset?.value) {
+          resolve(Dataset.value)
+        } else {
+          const response: any = await http.get("/user/info");
+          if (response?.id) {
+            setUserData(response);
+            resolve(response);
+          } else {
+            reject(response);
+          }
         }
       } catch (e) {
         console.log(e)
@@ -84,7 +50,6 @@ export const useUserStore = defineStore("user", () => {
     })
   }
 
-  // 注销
   async function logout() {
     try {
       await ElMessageBox.confirm(
@@ -104,69 +69,12 @@ export const useUserStore = defineStore("user", () => {
     }
   }
 
-  /**
-   * 用户选择公司
-   * @param userid 用户id
-   * @param temporaryToken 登录时用户的临时token
-   */
-  function selectEnterprise(userid: string, temporaryToken: string) {
-    return new Promise( async (resolve, reject) => {
-      try {
-        const response: any = await http.post(`index/selectUserRole`, { userid, temporaryToken })
-        resolve(response)
-      } catch (e) {
-        reject(e)
-      }
-    })
-  }
-
-  /**
-   * 切换用户身份
-   * @param userid 用户id
-   */
-  function changeRoles(userid: string) {
-    return new Promise( async (resolve, reject) => {
-      try {
-        if (isEmpty(userid)) throw `can not found userid: ${userid}`
-        const response: any = await http.post(`user/selectUserRoleList`, { userid })
-        if (response?.code === 200) {
-          resolve(response)
-          ElMessage.success("切换成功")
-          setTimeout(() => { window.location.reload() }, 1000)
-        } else throw response
-      } catch (e) {
-        reject(e)
-      }
-    })
-  }
-
-  /**
-   * 获取验证码
-   * @param parameter
-   * @param scenes 场景
-   */
-  function getMsgCode(parameter: object, scenes: String) {
-    return new Promise( async (resolve, reject) => {
-      try {
-        const response: any = await http.post(`index/textMessage/${scenes}`, parameter)
-        resolve(response)
-      } catch (e) {
-        reject(e)
-      }
-    })
-  }
-
   return {
-    user,
-    bucket,
+    Dataset,
     login,
     getUserInfo,
     logout,
-    getMsgCode,
-    VerificationCodeLogin,
-    register,
-    changeRoles,
-    selectEnterprise
+    setUserData
   }
 })
 

@@ -1,5 +1,7 @@
 # vite-element-template webapp ng page
 
+运行项目node版本不低于18.0.0
+
 ```
 npm install -g pnpm
 // check you pnpm pnpm -v
@@ -18,7 +20,7 @@ pnpm run build
 ```
 docker-compose up --build -d
 ```
-3. 进入容器启动服务
+1. 进入容器启动服务
 ```
 docker-compose exec webapp-page /bin/bash
 
@@ -40,19 +42,6 @@ pnpm run dev
     "strings": true
   }
 }
-```
-
-## global plugin
-U can set plugin in dir("config/plugin.ts")
-### How to use global plugin
-eg: `this.$loadsh`, 这样的语法在任何组件的 methods 或 lifecycle hooks中都是可行的, but What you need to pay attention to is `<script setup>`, to use `getCurrentInstance()`
-在插件的配置中你可以直接调用plugin方法取使用
-```vue
-<script setup lang="ts">
-import { plugin } from "@/config/plugin"
-const lodash = plugin('$lodash')
-lodash.isEmpty()
-</script>
 ```
 
 ## 应用组件
@@ -104,6 +93,18 @@ Layout System使用一个将layout混入路由的一个设计，对于非常规l
 </route>
 ```
 Tips：layout字段指向的就是Layouts文件夹内所有.vue文件(默认default)你需要和文件名相同，因为者会导致路由生成失败
+
+### route标签中meta合法属性解释
+
+**注意**：基于vite-plugin-pages的规则，自定义的字段尽可能存入meta属性中，否则无法识别
+
+1. **title**： 路由标题
+2. **roles**： 路由权限，预留权限字段
+3. **layout**: 当前路由使用的布局，`src/Layouts/*.vue`目录下的文件名
+4. **icon**: 当前路由icon，为侧边栏组件渲染使用，你的icon字段规则参考[`svg-icon`](#使用svg图标)组件`name`字段规则
+5. **hidden**: 隐藏当前路由，当前路由不会出现在侧边栏位置，但可以通过链接访问该页面
+
+**Tips**: `pages/redirect`目录下的所有文件（路由）， 都将默认添加`meta.hidden: true`规则, 当然它不会修改你已经设置的`meta.hidden`
 
 ### 嵌套路由
 可以利用 Vue Router 子路由来创建嵌套布局。可以通过为父组件定义与包含子路由的目录相同的名称来定义父组件。 当有如下的目录结构时：
@@ -176,3 +177,58 @@ All icons has been imported into the system when execute main.js, like this
 ```
 避免重复导入Lock图标组件进入系统
 
+## 使用svg图标
+系统采用svg icon的形式，svg图标默认统一放入`/src/assets/icons`内(修改改目录请在`vite.config.ts`内`createSvgIconsPlugin`进行修改)，使用时请使用svgIcon组件（系统已默认注册）
+例如：
+```html
+<svg-icon name="github"></svg-icon>
+
+// or
+
+<svg-icon name="home-wxsub-dark"></svg-icon>  // [dir name]-[svg file name]
+```
+
+## mock data
+系统集成了mockjs，请在`mock`文件夹下创建模拟api规范
+关于mockjs的使用请转至[mockjs官网](https://github.com/nuysoft/Mock/wiki)，或参考以下示例
+
+```javascript
+import { MockMethod } from 'vite-plugin-mock'
+import { v4 as uuidV4 } from 'uuid'
+
+export default [
+  {
+    url: '/api/user/info',
+    method: 'get',
+    response: () => {
+      return {
+        code: 200,
+        message: '获取成功',
+        data: {
+          id: 1,
+          role: 28,
+          token: uuidV4(),
+          name: '张三',
+          email: 'zhangsan@example.com'
+        }
+      }
+    }
+  },
+  {
+    url: '/api/login',
+    method: 'post',
+    response: () => {
+      return {
+        code: 200,
+        message: '获取成功',
+        data: {
+          id: 1,
+          token: uuidV4(),
+          name: '张三',
+          email: 'zhangsan@example.com'
+        }
+      }
+    }
+  }
+] as MockMethod[]
+```

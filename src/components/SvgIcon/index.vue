@@ -1,8 +1,8 @@
 <template>
   <svg
     aria-hidden="true"
-    class="svg-icon">
-    <use :xlink:href="symbolId" :fill="color" />
+    :class="svgIcon['svg-icon']">
+    <use :href="symbolId" :fill="color" />
   </svg>
 </template>
 
@@ -12,7 +12,7 @@ const props = defineProps({
     type: String,
     default: "icon",
   },
-  iconClass: {
+  name: {
     type: String,
     required: false,
     default: "",
@@ -24,21 +24,20 @@ const props = defineProps({
   size: {
     type: String,
     default: "1em",
-  },
+  }
 });
 
-const symbolId = computed(() => `#${props.prefix}-${props.iconClass}`);
+const symbolId = computed(() => `#${props.prefix}-${props.name}`);
 </script>
 
-
-<style scoped>
+<style lang="scss" module="svgIcon">
 .svg-icon {
   display: inline-block;
   width: v-bind(size);
   height: v-bind(size);
   overflow: hidden;
-  vertical-align: -0.15em; /* 因icon大小被设置为和字体大小一致，而span等标签的下边缘会和字体的基线对齐，故需设置一个往下的偏移比例，来纠正视觉上的未对齐效果 */
+  vertical-align: -0.15em;
   outline: none;
-  fill: currentcolor; /* 定义元素的颜色，currentColor是一个变量，这个变量的值就表示当前元素的color值，如果当前元素未设置color值，则从父元素继承 */
+  fill: currentcolor;
 }
 </style>

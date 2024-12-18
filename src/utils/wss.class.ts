@@ -1,9 +1,7 @@
-import apis, { Environment } from "@/config/channel.api"
 import { ElNotification } from 'element-plus'
 import "element-plus/theme-chalk/el-notification.css"
 type onmessageListener = (response: any) => void
 
-const environment: Environment = import.meta.env.MODE as Environment
 export default class websocket {
   private static instances: null | WebSocket = null
   private notificationInstance: any = null
@@ -15,10 +13,10 @@ export default class websocket {
 
   setMessageListener(listener: onmessageListener): void { websocket.onMessage = listener }
 
-  async create(key: keyof typeof apis): Promise<WebSocket | null> {
+  async create(key: string): Promise<WebSocket | null> {
     return new Promise<WebSocket | null>((resolve, reject) => {
-      if (apis[key] && this.hash) {
-        websocket.instances = new WebSocket(`${apis[key as keyof typeof apis][environment]}?token=${this.hash}`)
+      if (this.hash) {
+        websocket.instances = new WebSocket(`${import.meta.env.VITE_APP_WSS_API}?token=${this.hash}`)
         websocket.instances.onopen = () => {
           if (this.notificationInstance) this.notificationInstance.close()
           resolve(websocket.instances)
@@ -27,13 +25,17 @@ export default class websocket {
           try {
             if (event?.data) {
               const response = JSON.parse(event.data) || {}
-              if (response?.code === 200) websocket.onMessage(response);
+              if (response?.code === 200) {
+                if (response?.event === 'messenger') {
+                  websocket.onMessage(response)
+                }
+              }
             }
           } catch (e) {
             console.log(`websocket aspect raw error: ${e}`)
           }
         }
-        websocket.instances.onerror = async (e: any) => {
+        websocket.instances.onerror = async () => {
           this.reconnect++
           if (this.reconnect <= 3) {
             await this.create(key)
@@ -53,7 +55,7 @@ export default class websocket {
       }
     })
   }
-  clearWebsocket = (key: keyof typeof apis) => {
+  clearWebsocket = (key: string) => {
     if (websocket.instances) {
       websocket.instances.close()
       websocket.instances = null
@@ -78,7 +80,7 @@ export default class websocket {
 }
 
 export interface WebSocketInterface {
-  create: (key: keyof typeof apis) => Promise<WebSocket | null>
+  create: (key: string) => Promise<WebSocket | null>
   setMessageListener: (listener: onmessageListener) => void,
-  clearWebsocket: (key: keyof typeof apis) => void
+  clearWebsocket: (key: string) => void
 }

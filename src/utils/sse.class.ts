@@ -1,6 +1,13 @@
-import apis, { Environment } from "@/config/channel.api"
 import http from "@/config/axios.config"
 
+const apis = {
+  system: {
+    development: 'ws://192.168.110.228:9502/chat/global',
+    production: 'ws://1.94.19.153:9502/chat/global'
+  }
+}
+
+type Environment = "development" | "production"
 type onmessageListener = (response: MessageEvent) => void
 
 const environment: Environment = import.meta.env.MODE as Environment

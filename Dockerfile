@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:18.0.0
 LABEL authors="wxsub"
 
 WORKDIR /vite-element-template
