@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import SidebarItem from '@/Layouts/components/Sidebar/SidebarItem.vue'
 import { useRouterStoreHook } from "@/store/modules/router"
+import { SidebarItem as SidebarItemType } from '@/types/router'
 
 const { routers } = useRouterStoreHook(),
   route = useRoute();
@@ -12,7 +13,7 @@ const activeMenu = computed(() => {
 })
 
 const RouteList = computed(() => {
-  const { options = [] } = routers
+  const { options = [] } = routers as { options: SidebarItemType[] }
   return options.filter(({ meta = {} }) => {
     return meta.hidden === undefined ? true : meta.hidden === false
   })

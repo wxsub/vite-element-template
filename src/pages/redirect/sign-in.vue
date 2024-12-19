@@ -25,7 +25,6 @@
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
 import { useUserStore } from "@/store/modules/user"
 
 const data = reactive({
@@ -43,7 +42,7 @@ const login = async () => {
     data.loading = true
     await useUserStore().login(data)
     data.loading = false
-    await useRouter().push("/")
+    location.reload()
   } catch (error) {
     console.log(error)
   }

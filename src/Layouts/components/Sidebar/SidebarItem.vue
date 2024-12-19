@@ -20,9 +20,9 @@ const props = defineProps({
 })
 let onlyOneChild:any = null
 
-const hasOneShowingChild = (children = [], parent: any) => {
-  const showingChildren = children.filter(item => {
-    if (item?.hidden) {
+const hasOneShowingChild = (children: any = [], parent: any) => {
+  const showingChildren = children.filter((item: { meta: any }) => {
+    if (item.meta?.hidden) {
       return false
     } else {
       // Temp set(will be used if only has one showing child)
