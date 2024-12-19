@@ -1,16 +1,20 @@
 name: Deploy static content to Pages
 
 on:
+  # 仅在推送到默认分支时运行。
   push:
-    branches: ['master']
+    branches: ['main']
 
+  # 这个选项可以使你手动在 Action tab 页面触发工作流
   workflow_dispatch:
 
+# 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages。
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# 允许一个并发的部署
 concurrency:
   group: 'pages'
   cancel-in-progress: true
@@ -24,13 +28,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18.0.0
-          cache: 'npm'
-      - name: Set up pnpm
-        run: npm install -g pnpm
+          node-version: 18
+          cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
       - name: Build
