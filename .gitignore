@@ -18,4 +18,5 @@ dist-ssr
 *.key
 
 package-lock.json
+pnpm-lock.yaml
 stats.html
