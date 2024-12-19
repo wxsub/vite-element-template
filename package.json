@@ -5,9 +5,9 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "vite serve --mode development --strictPort",
-    "preview": "npm run build:prod && vite preview --mode production --port 8849",
+    "preview": "npm run build && vite preview --mode production --port 8849",
     "build": "vite build --mode development && vue-tsc --noEmit",
-    "build:prod": "vite build --mode production && vue-tsc --noEmit && scp -r ./dist/* piccolo@1.94.14.20:./webapp",
+    "scp": "scp -r ./dist/* <User Name>@<Server Public IP>:./<Server directory>",
     "lint:eslint": "eslint  --fix --ext .ts,.js,.vue ./src ",
     "lint:prettier": "prettier --write \"**/*.{js,cjs,ts,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint  \"**/*.{css,scss,vue}\" --fix"
