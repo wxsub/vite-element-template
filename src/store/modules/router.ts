@@ -1,14 +1,12 @@
 import { defineStore } from "pinia"
 import { store } from "@/store"
-import { reactive } from "vue"
+import { ref } from "vue"
 
 export const routerStore = defineStore("router", () => {
   const whiteList: Array<string> = [],
-    routers: any = reactive({
-      options: [], generate: []
-    });
+    routers: any = ref([]);
 
-  const setRoutes = (data: Array<object> | any) => routers.options = data
+  const setRoutes = (data: Array<object> | any) => routers.value = data
 
   return { routers, setRoutes, whiteList }
 })

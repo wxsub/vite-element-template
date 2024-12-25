@@ -96,9 +96,9 @@
     "unplugin-auto-import": "^0.15.3",
     "unplugin-icons": "^0.16.1",
     "unplugin-vue-components": "^0.24.1",
+    "unplugin-vue-router": "^0.10.9",
     "vite": "^4.4.11",
     "vite-plugin-mock": "^3.0.0",
-    "vite-plugin-pages": "^0.31.0",
     "vite-plugin-svg-icons": "^2.0.1",
     "vite-plugin-vue-layouts": "^0.8.0",
     "vue-tsc": "^2.1.10"

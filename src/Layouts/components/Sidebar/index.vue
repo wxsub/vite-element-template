@@ -1,22 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import SidebarItem from '@/Layouts/components/Sidebar/SidebarItem.vue'
-import { useRouterStoreHook } from "@/store/modules/router"
-import { SidebarItem as SidebarItemType } from '@/types/router'
+import explain from '@/Layouts/components/Sidebar/explain.vue'
 
-const { routers } = useRouterStoreHook(),
-  route = useRoute();
+const route = useRoute()
 
 const activeMenu = computed(() => {
   return route.path
-})
-
-const RouteList = computed(() => {
-  const { options = [] } = routers as { options: SidebarItemType[] }
-  return options.filter(({ meta = {} }) => {
-    return meta.hidden === undefined ? true : meta.hidden === false
-  })
 })
 </script>
 
@@ -26,7 +16,7 @@ const RouteList = computed(() => {
       :default-active="activeMenu"
       class="min-h-[100vh]"
       mode="vertical">
-      <sidebar-item v-for="route in RouteList" :key="route.path" :item="route" :base-path="route.path" />
+      <explain title="系统设置" name="setting" />
     </el-menu>
   </el-scrollbar>
 </template>
