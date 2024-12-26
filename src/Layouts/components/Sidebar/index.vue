@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import explain from '@/Layouts/components/Sidebar/explain.vue'
+import directory from '@/Layouts/components/Sidebar/directory.vue'
 
 const route = useRoute()
 
@@ -16,7 +16,8 @@ const activeMenu = computed(() => {
       :default-active="activeMenu"
       class="min-h-[100vh]"
       mode="vertical">
-      <explain title="系统设置" name="setting" />
+      <directory title="首页" />
+      <directory title="系统设置" name="setting" />
     </el-menu>
   </el-scrollbar>
 </template>

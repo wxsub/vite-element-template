@@ -14,12 +14,12 @@ const external = computed(() => {
 })
 
 const type = computed(() => {
-  if (external) return 'a'
+  if (external.value) return 'a'
   return 'router-link'
 })
 
 const linkProps = () => {
-  if (external) {
+  if (external.value) {
     return {
       href: props.to,
       target: '_blank',

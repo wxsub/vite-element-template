@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { defineProps, computed } from 'vue'
 import { useRouterStoreHook } from "@/store/modules/router"
-import { SidebarItem as SidebarItemType } from '@/types/router'
 import SidebarItem from '@/Layouts/components/Sidebar/SidebarItem.vue'
 
-const { routers } = useRouterStoreHook()
+interface Router {
+  path: string;
+  [key: string]: any;
+}
+
+const { routers } = useRouterStoreHook() as { routers: Router[] }
 
 const props = defineProps({
   title: {
@@ -23,10 +27,10 @@ const props = defineProps({
 
 const Route = computed(() => {
   try {
-    const router = routers.find(({ path }) => path === props.name ? `/${props.name}` : '/')
+    const router = routers.find(({ path }) => path === (props.name ? `/${props.name}` : '/'))
     return {  ...router, meta: { title: props.title, icon: props.icon } }
   } catch (error) {
-    return {}
+    return { path: '', meta: { title: props.title, icon: props.icon } }
   }
 })
 </script>
