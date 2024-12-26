@@ -19,6 +19,7 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
+    '/[...all]': RouteRecordInfo<'/[...all]', '/:all(.*)', { all: ParamValue<true> }, { all: ParamValue<false> }>,
     '/redirect/register': RouteRecordInfo<'/redirect/register', '/redirect/register', Record<never, never>, Record<never, never>>,
     '/redirect/sign-in': RouteRecordInfo<'/redirect/sign-in', '/redirect/sign-in', Record<never, never>, Record<never, never>>,
     '/redirect/unauthorized': RouteRecordInfo<'/redirect/unauthorized', '/redirect/unauthorized', Record<never, never>, Record<never, never>>,
