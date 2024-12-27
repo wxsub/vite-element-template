@@ -2,24 +2,17 @@
 import { ArrowRight } from '@element-plus/icons-vue'
 import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { RouterItem } from '@/types/router'
 
 const route = useRoute(),
   Router = useRouter(),
-  levelList = ref<BreadcrumbItem[]>([]);
+  levelList = ref<RouterItem[]>([]);
 
 onMounted(() => getBreadcrumb())
 
 watch(route, () => getBreadcrumb())
 
-interface BreadcrumbItem {
-  path: string;
-  redirect?: string;
-  meta: {
-    title: string;
-  };
-}
-
-function handleLink(item: BreadcrumbItem) {
+function handleLink(item: RouterItem) {
   const { path } = item
   Router.push(path)
 }
@@ -56,9 +49,9 @@ function isDashboard(route: any) {
         <span
           v-if="index == levelList.length - 1"
           class="text-[#97a8be] cursor-[text]">
-          {{ item.meta.title }}
+          {{ item.meta?.title }}
         </span>
-        <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
+        <a v-else @click.prevent="handleLink(item)">{{ item.meta?.title }}</a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
