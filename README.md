@@ -1,8 +1,8 @@
-# vite-element-template webapp ng page
+# vite-element-template webapp
 
-基于vue3+vite+elementPlus的一个快速后台框架搭建项目，项目集成自动化发布方案、elementUI动态组件导入、axios、mockjs以及docker等。
+基于vue3+vite+elementPlus的一个快速前端后台框架搭建项目，项目集成自动化发布方案、elementUI动态组件导入、axios、mockjs以及docker等。
 
-运行项目node版本不低于18.0.0
+**项目node版本不低于18.0.0**
 
 ```
 npm install -g pnpm
@@ -46,11 +46,37 @@ pnpm run dev
 }
 ```
 
-## 应用组件
-系统内应用组件尽可能放入src/components文件夹内，这个文件夹内的所有.vue文件系统内将自动import，你无需担心扫描成本，因为它依旧是按需加载的，你只需在业务内使用对应的文件名去
-加载你的业务组件
+## 应用组件与组合式方法（composable）
+系统内应用组件建议尽可能放入src/components文件夹内以提高代码可维护性。
 
-Tips：需要注意系统仅扫描components文件夹内的.vue文件，并不会components内子文件夹文件创建索引
+对于一些使用频率较高的组件或js，你需要将该文件移入`src/composable`内，该目录内的文件将被系统自动加载而无需手动引入你的页面或组件，你无需担心扫描成本，因为它依旧是按需加载的，你只需在业务内使用对应的文件名去加载你的业务组件
+
+对于ts或js文件，请使用export抛出你的方法，你可以在任意地方去使用你抛出的方法而无需引入。例如：
+
+```
+// src/composable/useAxios.ts
+import service from '@/config/axios.config'
+
+export function useAxios() {
+  return service
+}
+
+// src/store/modules/user.ts
+function login(loginData: object) {
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      const response: any = await useAxios().post("/login", loginData)
+      if (response?.token) {
+        useStorage<string>("XSRF-TOKEN", response.token)
+        resolve(response)
+      } else reject(response)
+    } catch (e) {
+      console.log(e)
+      reject(e)
+    }
+  })
+}
+```
 
 ## Pages File Router and Layout System
 系统会扫描pages文件目录下所有`.vue`文件以生成路由系统所以你需要使用统一规范和特定的方式去设计你的页面，路由元信息需要使用yaml语法写进route标签内，如下：
