@@ -12,6 +12,7 @@ import "virtual:svg-icons-register"
 // Global style
 import "element-plus/theme-chalk/dark/css-vars.css"
 import "tailwindcss/tailwind.css"
+import "@/assets/styles/reset.scss"
 
 import SvgIcon from "@/components/SvgIcon/index.vue"
 

@@ -31,8 +31,6 @@ const router = createRouter({
 
 routerStore.setRoutes(routes)
 
-console.log(routes)
-
 router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
   NProgress.start()
   const { meta, query } = to || {},
@@ -55,7 +53,7 @@ router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormal
       }
       NProgress.done()
     } catch (error) {
-      next(`/redirect/error?type=inactive&title=网络连接异常&content=${JSON.stringify(error)}`)
+      next(`/redirect/unauthorized?type=inactive&title=网络连接异常&content=${JSON.stringify(error)}`)
       NProgress.done()
     }
   } else {
