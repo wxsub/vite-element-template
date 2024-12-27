@@ -98,7 +98,7 @@ Tips：layout字段指向的就是Layouts文件夹内所有.vue文件(默认defa
 
 ### route标签中meta合法属性解释
 
-**注意**：基于vite-plugin-pages的规则，自定义的字段尽可能存入meta属性中，否则无法识别
+**注意**：基于unplugin-vue-router的规则，自定义的字段尽可能存入meta属性中，否则无法识别
 
 1. **title**： 路由标题
 2. **roles**： 路由权限，预留权限字段
@@ -190,7 +190,15 @@ All icons has been imported into the system when execute main.js, like this
 <svg-icon name="home-wxsub-dark"></svg-icon>  // [dir name]-[svg file name]
 ```
 
-## mock data
+## 全局scss变量
+系统为每个组件引入了一个scss变量文件（src/assets/styles/variables.scss），你可以自行在该文件内设计属于自己的scss变量或方法在任意组件style中使用
+```css
+.container {
+  width: vm(100);
+}
+```
+
+## Mock Data
 系统集成了mockjs，请在`mock`文件夹下创建模拟api规范
 关于mockjs的使用请转至[mockjs官网](https://github.com/nuysoft/Mock/wiki)，或参考以下示例
 

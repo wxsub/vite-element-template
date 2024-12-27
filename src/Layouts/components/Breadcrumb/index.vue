@@ -53,7 +53,8 @@ function isDashboard(route: any) {
   <el-breadcrumb separator="/" :separator-icon="ArrowRight">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="(item, index) in levelList" :key="item.path">
-        <span v-if="item.redirect === 'noRedirect' || index == levelList.length - 1"
+        <span
+          v-if="index == levelList.length - 1"
           class="text-[#97a8be] cursor-[text]">
           {{ item.meta.title }}
         </span>
