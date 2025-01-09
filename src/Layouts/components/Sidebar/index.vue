@@ -18,6 +18,7 @@ const activeMenu = computed(() => {
       mode="vertical">
       <directory title="首页" />
       <directory title="系统设置" name="setting" />
+      <directory title="示例" name="example" />
     </el-menu>
   </el-scrollbar>
 </template>

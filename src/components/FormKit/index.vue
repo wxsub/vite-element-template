@@ -7,9 +7,9 @@
       v-bind="FORM_ATTRS"
       :label-position="labelPosition">
       <el-row
-          v-bind="row"
-          :style="{ 'row-gap': `${rowGap}px` }"
-          :class="[isAutoAlignment ? 'form-kit-auto' : 'form-kit-row']">
+        v-bind="row"
+        :style="{ 'row-gap': `${rowGap}px` }"
+        :class="[isAutoAlignment ? 'form-kit-auto' : FormKit['form-kit-row']]">
         <el-col
           v-for="conf in configs"
           :key="conf.key"
@@ -26,7 +26,7 @@
                 :disabled="conf['disabled']"
                 v-model="modelValue[conf.key]"
                 :options="conf.options || buckets[conf.key]"
-                :class="{ 'formKit-list-item': !(block) }"
+                :class="{ [FormKit['item-hint']]: !(block) }"
                 v-on="conf.events || {}"
                 v-bind="conf.props"
                 @change="mutation($event, conf)">
@@ -35,7 +35,7 @@
               </template>
             </component>
             <slot :name="conf.key" :row="conf" :value="modelValue[conf.key]" :size="size" />
-            <p v-if="conf.hint" class="item-hint" v-html="conf.hint"/>
+            <p v-if="conf.hint" :class="FormKit['item-hint']" v-html="conf.hint"/>
           </el-form-item>
         </el-col>
         <slot name="FormKitAppend" />
@@ -206,11 +206,14 @@ function validate(openTips = false) {
 }
 </script>
 
-<style scoped lang="scss">
+<style module="FormKit" lang="scss">
+.form-kit-row { flex-wrap: wrap }
+.item-hint { margin: 0; color: #888888; font-weight: 300; font-size: 12px; line-height: 24px }
+.formKit-list-item { display: inline-block; width: 100% }
+</style>
+
+<style lang="scss">
 .FormKit {
-  .form-kit-row { flex-wrap: wrap }
-  .item-hint { margin: 0; color: #888888; font-weight: 300; font-size: 12px; line-height: 24px }
-  .formKit-list-item { display: inline-block; width: 100% }
   .el-input-number { width: auto }
   :deep(.el-form-item) { margin: 0; width: 100% }
   :deep(.el-form--label-top .el-form-item__label) { padding: 0 }
