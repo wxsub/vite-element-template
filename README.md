@@ -2,18 +2,6 @@
 
 基于vue3+vite+elementPlus的一个快速前端后台框架搭建项目，项目集成自动化发布方案、elementUI动态组件导入、axios、mockjs以及docker等。
 
-## Contributors
-<table>
-    <tr>
-        <td align="center" style="word-wrap: break-word; width: 75.0; height: 75.0">
-            <a href="#">
-                <img src="./public/Contributors/72124234.jfif" width="50;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px"/>
-                <br />
-                <sub style="font-size:14px"><b>zhizhi-sun</b></sub>
-            </a>
-        </td>
-    </tr>
-</table>
 
 **项目node版本不低于18.0.0**  
 
@@ -281,3 +269,16 @@ export default [
   }
 ] as MockMethod[]
 ```
+
+## Contributors
+<table>
+    <tr>
+        <td align="center" style="word-wrap: break-word; width: 75.0; height: 75.0">
+            <a target="_blank" href="https://github.com/zhizhi-sun">
+                <img src="./public/Contributors/72124234.jfif" width="50;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px"/>
+                <br />
+                <sub style="font-size:14px"><b>zhizhi-sun</b></sub>
+            </a>
+        </td>
+    </tr>
+</table>
