@@ -78,7 +78,7 @@ function login(loginData: object) {
 }
 ```
 
-## Pages File Router and Layout System
+## Pages文件路由和Layout系统
 系统会扫描pages文件目录下所有`.vue`文件以生成路由系统所以你需要使用统一规范和特定的方式去设计你的页面，路由元信息需要使用yaml语法写进route标签内，如下：
 ```html
 <route lang="yaml">
