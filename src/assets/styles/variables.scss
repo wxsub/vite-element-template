@@ -1,5 +1,5 @@
 :root {
-  --client: 1440
+  --client: 1440 // Your layout design width
 }
 
 @function vm($px) {
@@ -10,15 +10,10 @@
 @for $i from 1 through 6 {
   .ellipsis-#{$i} {
     display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: $i;
+    box-orient: vertical;
+    line-clamp: $i;
     overflow: hidden;
   }
-}
-
-.hover {
-  transition: 300ms;
-  &:hover { opacity: .88 }
 }
 
 @mixin scrollbar {

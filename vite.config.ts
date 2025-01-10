@@ -65,13 +65,13 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           '**/components/*.vue',
           '**/constant/*',
           '**/components/*.md'
-        ]
+        ],
+        dts: 'src/types/typed-router.d.ts'
       }),
       vue(),
       Layouts({
         layoutsDirs: 'src/Layouts',
         defaultLayout: 'default',
-        
         extensions: ['vue'],
         exclude: ['**/component/*.vue', '**/components/*.vue', '**/components/*.md', '**/modules/*.vue', '**/module/*.vue']
       }),
@@ -85,7 +85,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           globalsPropValue: true
         },
         vueTemplate: true,
-        dts: 'src/auto-imports.d.ts'
+        dts: 'src/types/auto-imports.d.ts'
       }),
       Components({
         resolvers: [

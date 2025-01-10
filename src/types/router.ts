@@ -2,14 +2,17 @@ export interface Meta {
     hidden?: boolean;
     icon?: string;
     title?: string;
+    layout?: string;
+    roles?: string;
 }
 
-export interface SidebarItem {
+export interface RouterItem {
     path: string;
+    component: string;
     meta?: Meta;
-    children?: SidebarItem[];
+    children?: RouterItem[];
 }
 
 export interface RouterStore {
-    options: SidebarItem[];
+    options: RouterItem[];
 }

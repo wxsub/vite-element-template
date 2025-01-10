@@ -3,7 +3,6 @@ import http from "@/config/axios.config"
 import { store } from "@/store"
 import { useStorage } from "@vueuse/core"
 import { ref } from "vue"
-import { routerStore } from "@/store/modules/router"
 
 export const useUserStore = defineStore("user", () => {
   const Dataset: any = ref(null)

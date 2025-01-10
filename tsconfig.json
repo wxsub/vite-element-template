@@ -3,7 +3,7 @@
     "target": "esnext",
     "useDefineForClassFields": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "strict": true,
     "noLib": false,
     "sourceMap": true,
@@ -14,8 +14,8 @@
     "allowJs": true,
     "paths": {
       "@/*": ["src/*"],
-      "vue-router/auto/routes": ["typed-router.d.ts"],
-      "@types/auto-imports": ["types/auto-imports"]
+      "vue-router/auto/routes": ["src/types/typed-router.d.ts"],
+      "@types/auto-imports": ["src/types/auto-imports"]
     },
     "types": [
       "vite/client",
@@ -24,7 +24,7 @@
       "vite-plugin-vue-layouts/client"
     ],
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
-    "allowSyntheticDefaultImports": true /* 允许默认导入 */,
+    "allowSyntheticDefaultImports": true /* Allow default import */,
     "forceConsistentCasingInFileNames": false /* Ensure that casing is correct in imports. */,
     "jsx": "preserve",
     "jsxFactory": "h",
@@ -34,7 +34,7 @@
     "src/**/*.ts",
     "src/**/*.vue",
     "src/types/**/*.d.ts",
-    "./typed-router.d.ts",
+    "src/types/typed-router.d.ts",
     "vite.config.ts"
   ],
   "exclude": ["node_modules", "dist", "**/*.js"]

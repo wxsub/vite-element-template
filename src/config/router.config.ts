@@ -2,10 +2,10 @@ import { setupLayouts } from 'virtual:generated-layouts'
 import { routes } from 'vue-router/auto-routes'
 import wss, { WebSocketInterface } from "@/utils/wss.class"
 import {
-    createRouter,
-    createWebHistory,
-    RouteLocationNormalized,
-    NavigationGuardNext
+  createRouter,
+  createWebHistory,
+  RouteLocationNormalized,
+  NavigationGuardNext
 } from 'vue-router'
 import { useRouterStoreHook } from "@/store/modules/router"
 import { useUserStoreHook } from "@/store/modules/user"
@@ -24,20 +24,17 @@ NProgress.configure({ showSpinner: false })
 const whiteList = routerStore.whiteList
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes: setupLayouts(routes),
-    scrollBehavior: () => ({ left: 0, top: 0 })
+  history: createWebHistory(),
+  routes: setupLayouts(routes),
+  scrollBehavior: () => ({ left: 0, top: 0 })
 })
 
-routerStore.setRoutes(routes)
-
-console.log(routes)
+routerStore.setRoutes(setupLayouts(routes))
 
 router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
   NProgress.start()
   const { meta, query } = to || {},
-    { hash } = meta || {};
-  browserSetter(meta)
+    { hash, title } = meta || {};
 
   const TICKET = localStorage.getItem("XSRF-TOKEN") || null
   if (TICKET) {
@@ -53,9 +50,11 @@ router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormal
           next({ ...to, replace: true })
         } else next()
       }
+      browserSetter(title)
       NProgress.done()
     } catch (error) {
-      next(`/redirect/error?type=inactive&title=网络连接异常&content=${JSON.stringify(error)}`)
+      next(`/redirect/unauthorized?type=inactive&title=网络连接异常&content=${JSON.stringify(error)}`)
+      browserSetter("网络连接异常")
       NProgress.done()
     }
   } else {
@@ -64,6 +63,7 @@ router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormal
       next(redirect ? `/redirect/sign-in?redirect=${redirect}` : `/redirect/sign-in`)
       NProgress.done()
     }
+    browserSetter(title)
   }
 })
 
@@ -93,6 +93,8 @@ function hasWhiteList(path: string) {
   return /^\/redirect\/.*$/.test(path) || whiteList.includes(path)
 }
 
-function browserSetter(route: any) {
-  if (route && route.title) window.document.title = route.title
+function browserSetter(title: any) {
+  if (title) {
+    window.document.title = title
+  }
 }

@@ -33,15 +33,6 @@ body {
   text-rendering: optimizelegibility;
 }
 
-a {
-  color: #409EFF;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-}
-
 h1, h2, h3, h4, h5, h6, p { margin: 0 }
 
 img,
@@ -66,3 +57,14 @@ li {
 *::after {
   box-sizing: inherit;
 }
+
+/* breadcrumb transition */
+.breadcrumb-enter-active,.breadcrumb-leave-active {
+  transition: all .2s;
+}
+.breadcrumb-enter,.breadcrumb-leave-active {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.breadcrumb-move { transition: all .5s }
+.breadcrumb-leave-active { position: absolute }

@@ -1,6 +1,6 @@
-<route>
+<route lang="json">
 {
-  meta: { title: "登录", roles: [1], layout: "fullscreen" }
+  "meta": { "title": "登录", "layout": "fullscreen" }
 }
 </route>
 
