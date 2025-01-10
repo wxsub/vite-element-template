@@ -16,6 +16,8 @@ pnpm run dev
 pnpm run build
 ```
 
+<img src="https://avatars.githubusercontent.com/u/72124234?s=64&v=4" />
+
 ## Docker方式开发启动
 1. [安装docker](https://www.docker.com)
 2. 构建并启动容器
