@@ -225,7 +225,7 @@ All icons has been imported into the system when execute main.js, like this
 }
 ```
 
-## Mock Data
+## MockJS 模拟数据请求
 系统集成了mockjs，请在`mock`文件夹下创建模拟api规范
 关于mockjs的使用请转至[mockjs官网](https://github.com/nuysoft/Mock/wiki)，或参考以下示例
 
