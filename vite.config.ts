@@ -3,7 +3,7 @@ import vue from "@vitejs/plugin-vue"
 import { UserConfig, ConfigEnv, loadEnv, defineConfig } from "vite"
 
 import Layouts from 'vite-plugin-vue-layouts'
-import VueRouter from 'unplugin-vue-router/vite'
+import Pages from "vite-plugin-pages"
 
 import AutoImport from "unplugin-auto-import/vite"
 import Components from "unplugin-vue-components/vite"
@@ -56,25 +56,27 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       }
     },
     plugins: [
-      VueRouter({
-        routesFolder: 'src/pages',
-        extensions: ['.vue'],
-        importMode: 'async',
-        exclude: [
-          '**/component/*.vue',
-          '**/components/*.vue',
-          '**/constant/*',
-          '**/components/*.md'
-        ],
-        dts: 'src/types/typed-router.d.ts'
+      Pages({
+        dirs: 'src/pages',
+        extensions: ['vue'],
+        routeStyle: 'nuxt',
+        extendRoute(route) {
+          const hasRedirect = route.path.indexOf("redirect/")
+          if (hasRedirect > 0 && route.meta.hidden === undefined) {
+            route.meta.hidden = true
+          }
+          return route
+        },
+        importMode: "async",
+        exclude: ['**/components/**/*', '**/components/*.md', '**/modules/*.vue', '**/module/*.vue']
       }),
-      vue(),
       Layouts({
         layoutsDirs: 'src/Layouts',
         defaultLayout: 'default',
         extensions: ['vue'],
         exclude: ['**/component/*.vue', '**/components/*.vue', '**/components/*.md', '**/modules/*.vue', '**/module/*.vue']
       }),
+      vue(),
       AutoImport({
         imports: ["vue", "@vueuse/core"],
         dirs: ["src/composable"],

@@ -55,6 +55,7 @@
     "stompjs": "^2.3.3",
     "terser": "^5.19.3",
     "uuid": "^11.0.3",
+    "vite-plugin-pages": "^0.32.4",
     "vue": "^3.3.4",
     "vue-router": "^4.2.0"
   },
@@ -96,7 +97,6 @@
     "unplugin-auto-import": "^0.15.3",
     "unplugin-icons": "^0.16.1",
     "unplugin-vue-components": "^0.24.1",
-    "unplugin-vue-router": "^0.10.9",
     "vite": "^4.4.11",
     "vite-plugin-mock": "^3.0.0",
     "vite-plugin-svg-icons": "^2.0.1",

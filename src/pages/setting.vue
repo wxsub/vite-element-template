@@ -1,6 +1,6 @@
 <route>
     {
-      meta: { title: "设置" }
+      meta: { title: "设置1" }
     }
 </route>
 

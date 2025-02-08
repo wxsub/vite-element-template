@@ -24,7 +24,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
 import { useUserStore } from "@/store/modules/user"
 
 const data = reactive({

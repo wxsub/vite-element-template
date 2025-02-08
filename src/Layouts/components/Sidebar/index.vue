@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import directory from '@/Layouts/components/Sidebar/directory.vue'
+import { useRouterStoreHook } from "@/store/modules/router"
+import SidebarItem from '@/Layouts/components/Sidebar/SidebarItem.vue'
+
+interface Router {
+  path: string;
+  [key: string]: any;
+}
+
+const { routers } = useRouterStoreHook() as { routers: Router[] }
+
+console.log(routers)
 
 const route = useRoute()
 
@@ -16,9 +26,7 @@ const activeMenu = computed(() => {
       :default-active="activeMenu"
       class="min-h-[100vh]"
       mode="vertical">
-      <directory title="首页" />
-      <directory title="系统设置" name="setting" />
-      <directory title="示例" name="example" />
+      <sidebar-item v-for="Route in routers" :key="Route.path" :item="Route" :base-path="Route.path" />
     </el-menu>
   </el-scrollbar>
 </template>
