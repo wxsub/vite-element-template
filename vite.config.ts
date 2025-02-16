@@ -121,9 +121,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         "@vueuse/core",
         "sortablejs",
         "path-to-regexp",
-        "echarts",
-        "@wangeditor/editor",
-        "@wangeditor/editor-for-vue"
+        "echarts"
       ]
     },
     build: {
