@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import SidebarItem from '@/Layouts/components/Sidebar/SidebarItem.vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const activeMenu = computed(() => {
+  return route.path
+})
 </script>
 
 <template>
