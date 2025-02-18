@@ -1,4 +1,5 @@
 import vue from "@vitejs/plugin-vue"
+import restart from 'vite-plugin-restart'
 
 import { UserConfig, ConfigEnv, loadEnv, defineConfig } from "vite"
 
@@ -106,10 +107,13 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         iconDirs: [path.resolve(pathSrc, "assets/icons")],
         symbolId: "icon-[dir]-[name]"
       }),
+      restart({
+        restart: ['src/Layouts/**/*']
+      }),
       viteMockServe({
         ignore: /^_/,
         mockPath: "mock",
-        enable: true, // mode === "development"
+        enable: mode === "development"
       })
     ],
     optimizeDeps: {

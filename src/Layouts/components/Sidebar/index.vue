@@ -16,62 +16,43 @@ const activeMenu = computed(() => {
       :default-active="activeMenu"
       class="min-h-[100vh]"
       mode="vertical">
-      <el-sub-menu index="1">
+      <el-menu-item index="/">
+        <template #title>首页</template>
+      </el-menu-item>
+      <el-sub-menu index="/setting/router">
         <template #title>
           <el-icon>
             <svg-icon name="home-wxsub-dark" />
           </el-icon>
-          <span>Navigator One1</span>
+          <span>设置</span>
         </template>
         <el-menu-item-group>
           <template #title>
-            <span>Group One</span>
+            <span>基础设置</span>
           </template>
-          <el-menu-item index="/nav/1/item-1">
-            item one
-          </el-menu-item>
-          <el-menu-item index="1-2">
-            item two
+          <el-menu-item index="/setting/router">
+            路由设置
           </el-menu-item>
         </el-menu-item-group>
-        <el-menu-item-group title="Group Two">
-          <el-menu-item index="1-3">
-            item three
-          </el-menu-item>
-        </el-menu-item-group>
-        <el-sub-menu index="1-4">
+        <el-menu-item-group>
           <template #title>
-            <span>item four</span>
+            <span>高级设置</span>
           </template>
-          <el-menu-item index="1-4-1">
-            item one
+          <el-menu-item index="/setting/system">
+            系统设置
           </el-menu-item>
-        </el-sub-menu>
+        </el-menu-item-group>
       </el-sub-menu>
-      <el-menu-item index="/nav/2">
-        <el-icon>
-          <IconMenu />
-        </el-icon>
+      <el-sub-menu index="/example/formkit">
         <template #title>
-          Navigator Two
+          <span>案例演示</span>
         </template>
-      </el-menu-item>
-      <el-menu-item index="3" disabled>
-        <el-icon>
-          <Document />
-        </el-icon>
-        <template #title>
-          Navigator Three
-        </template>
-      </el-menu-item>
-      <el-menu-item index="/nav/4">
-        <el-icon>
-          <Setting />
-        </el-icon>
-        <template #title>
-          Navigator Four
-        </template>
-      </el-menu-item>
+        <el-menu-item index="/example/formkit">
+          <template #title>
+            formkit
+          </template>
+        </el-menu-item>
+      </el-sub-menu>
     </el-menu>
   </el-scrollbar>
 </template>
