@@ -1,3 +1,5 @@
+@use "sass:map";
+
 :root {
   --client: 1440 // Your layout design width
 }
@@ -7,12 +9,25 @@
   @return calc($calc * 1vw);
 }
 
-@for $i from 1 through 6 {
-  .ellipsis-#{$i} {
-    display: -webkit-box;
-    box-orient: vertical;
-    line-clamp: $i;
-    overflow: hidden;
+$breakpoints: (
+  'mobile': 767px,    // ≤767px (iPhone全系竖屏)
+  'tablet': 1023px,   // 768-1023px (iPad/Surface竖横屏)
+  'desktop': 1024px   // ≥1024px (PC设备)
+);
+
+@mixin responsive($breakpoint) {
+  @if not map.has-key($breakpoints, $breakpoint) {
+    @warn "无效断点 `#{$breakpoint}`。可用值: #{map-keys($breakpoints)}";
+  }
+  $value: map.get($breakpoints, $breakpoint);
+  @if $breakpoint == 'mobile' {
+    @media (max-width: $value) { @content; }
+  }
+  @else if $breakpoint == 'tablet' {
+    @media (min-width: 768px) and (max-width: $value) { @content; }
+  }
+  @else if $breakpoint == 'desktop' {
+    @media (min-width: $value) { @content; }
   }
 }
 
