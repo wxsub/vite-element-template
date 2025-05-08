@@ -33,6 +33,7 @@
       "prettier --write"
     ]
   },
+  "type": "module",
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "@vitejs/plugin-vue": "^4.4.0",

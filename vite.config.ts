@@ -3,6 +3,9 @@ import restart from 'vite-plugin-restart'
 
 import { UserConfig, ConfigEnv, loadEnv, defineConfig } from "vite"
 
+import tailwindcss from "tailwindcss"
+import autoprefixer from "autoprefixer"
+
 import Layouts from 'vite-plugin-vue-layouts'
 import Pages from "vite-plugin-pages"
 
@@ -38,7 +41,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         }
       },
       postcss: {
-        plugins: [require("tailwindcss"), require("autoprefixer")]
+        plugins: [tailwindcss(), autoprefixer()]
       }
     },
     server: {
