@@ -1,7 +1,9 @@
-import { ElInput, ElDatePicker, ElInputNumber, ElRate, ElTimePicker, ElTimeSelect } from "element-plus"
+import { ElInput, ElDatePicker, ElRate, ElTimePicker, ElTimeSelect } from "element-plus"
 
 export const Modules: any = {
   select: defineAsyncComponent(() => import("./modules/select.vue")),
+  remoteSearchSelect: defineAsyncComponent(() => import("./modules/remoteSearchSelect.vue")),
+  address: defineAsyncComponent(() => import("./modules/address.vue")),
   checkbox: defineAsyncComponent(() => import("./modules/checkbox.vue")),
   radio: defineAsyncComponent(() => import("./modules/radio.vue")),
   popover: defineAsyncComponent(() => import("./modules/popover.vue")),
@@ -11,7 +13,6 @@ export const Modules: any = {
   datePicker: ElDatePicker,
   timePicker: ElTimePicker,
   timeSelect: ElTimeSelect,
-  inputNumber: ElInputNumber,
   rate: ElRate
 }
 
