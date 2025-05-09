@@ -1,5 +1,6 @@
 import { createApp } from "vue"
 import 'virtual:svg-icons-register'
+import "element-plus/dist/index.css";
 import App from "@/App.vue"
 import "moment/dist/locale/zh-cn"
 import { setupStore } from "@/store"
