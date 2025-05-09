@@ -2,7 +2,7 @@
   <el-radio-group v-model="_value" v-bind="$attrs">
     <el-radio
         v-for="(it, idx) in options"
-        :label="it[$attrs.valueKey || 'id']"
+        :value="it[$attrs.valueKey || 'id']"
         :key="idx">
       {{ it[$attrs.labelKey || 'name'] }}
     </el-radio>

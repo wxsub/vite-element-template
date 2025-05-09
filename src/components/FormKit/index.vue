@@ -1,7 +1,7 @@
 <template>
   <div :class="[{ 'form-label-auto': isAutoAlignment }]" class="FormKit">
     <el-form
-      :ref="UNIQUE_KEY"
+      ref="FormKitRef"
       :model="modelValue"
       :key="UNIQUE_KEY"
       v-bind="FORM_ATTRS"
@@ -30,9 +30,6 @@
                 v-on="conf.events || {}"
                 v-bind="conf.props"
                 @change="mutation($event, conf)">
-              <template #prefix v-if="conf?.prefix">
-                <el-image :src="conf.prefix" class="h-6 mt-1" />
-              </template>
             </component>
             <slot :name="conf.key" :row="conf" :value="modelValue[conf.key]" :size="size" />
             <p v-if="conf.hint" :class="FormKit['item-hint']" v-html="conf.hint"/>
@@ -46,12 +43,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
 import approved, { Modules } from './asyncLoadModules'
-import type { FormRules } from 'element-plus'
+import { ElForm } from 'element-plus'
+import { ElMessage, FormItemRule } from "element-plus";
 import _ from 'lodash'
+
 interface ConfigInterface {
-  type: string;
+  type?: string;
   key: string;
   span?: number;
   block?: boolean;
@@ -62,14 +60,19 @@ interface ConfigInterface {
   visible?: boolean | object | Array<object>;
   hint?: string;
   options?: Array<object>;
-  rules?: Array<FormRules>;
+  rules?: Array<FormItemRule>;
   events?: object;
   props?: object;
   request?: Function | object;
 }
-let CurrentInstance: any = null
+
+interface FormKitExposed {
+  validate: (openTips?: boolean) => Promise<any>;
+  clearValidate: () => void;
+}
 
 const UNIQUE_KEY = ref(Number(new Date())),
+    FormKitRef = ref<InstanceType<typeof ElForm> & FormKitExposed>(),
 	  Stacks: Array<object> = reactive([]),
     emits = defineEmits(["update:modelValue", "update:config", "update", "enter"]);
 const props = defineProps({
@@ -92,7 +95,6 @@ onMounted(async () => {
       if (iterator?.request) Stacks.push(iterator)
     }
     if (Stacks.length > 0) await executeRequestStack()
-    CurrentInstance = getCurrentInstance()
   } catch (error) {
 	  console.log(`[_initComponent method]: ${error}`)
   }
@@ -101,14 +103,15 @@ onMounted(async () => {
 const FORM_ATTRS = computed(() => {
   const attrs = Object.create(null);
   attrs.size = props.size;
-  attrs.inline = typeof props.columns === "number" && props.columns > 1;
+  attrs.inline = Number(props.columns) > 1;
   if (props.disabled) attrs.disabled = props.disabled;
   if (props.rules && Object.keys(props.rules).length > 0) attrs.rules = props.rules;
   return attrs
 }), isAutoAlignment = computed(() => {
   return props.columns === 'auto' && props.labelPosition !== 'top'
 }), COL_SPAN = computed(() => {
-  if (typeof props.columns === "number") return 24 / props.columns
+  const columnsValue = props.columns as number;
+  return 24 / columnsValue
 }), configs: ComputedRef<ConfigInterface[]> = computed(() => {
   return props.config.filter((conf: ConfigInterface) => {
     if (conf?.visible === undefined) return conf
@@ -154,8 +157,7 @@ function mutation(event: any, config: ConfigInterface) {
 }
 function fixedPointClearValidate(config: ConfigInterface) {
   if (Object.hasOwnProperty.call(config, 'key') && Object.hasOwnProperty.call(config, 'rules')) {
-    const { proxy } = CurrentInstance || {}
-    if (proxy) proxy.$refs[UNIQUE_KEY.value].clearValidate([config.key])
+    FormKitRef.value?.clearValidate([config.key])
   }
 }
 function checkConfigIsVisible({ value, key }: any) {
@@ -185,12 +187,11 @@ async function executeRequestStack() {
 	  }
   }
 }
-function validate(openTips = false) {
-  return new Promise((resolve, reject) => {
+function validate(openTips: boolean = false) {
+  return new Promise(async (resolve, reject) => {
     try {
-	    if (CurrentInstance) {
-        const { proxy } = CurrentInstance
-		    proxy.$refs[UNIQUE_KEY.value].validate((valid: boolean) => {
+	    if (FormKitRef.value) {
+        await FormKitRef.value?.validate((valid: boolean) => {
           if (valid) {
             resolve(props.modelValue)
           } else throw '您需要将标星号的栏目填写完整后重新尝试'
@@ -204,6 +205,11 @@ function validate(openTips = false) {
     }
   })
 }
+
+defineExpose<FormKitExposed>({
+  validate,
+  clearValidate: () => FormKitRef.value?.clearValidate()
+})
 </script>
 
 <style module="FormKit" lang="scss">
@@ -214,7 +220,6 @@ function validate(openTips = false) {
 
 <style lang="scss">
 .FormKit {
-  .el-input-number { width: auto }
   :deep(.el-form-item) { margin: 0; width: 100% }
   :deep(.el-form--label-top .el-form-item__label) { padding: 0 }
   :deep(.el-form-item__error) { position: relative }
