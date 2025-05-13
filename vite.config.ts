@@ -48,6 +48,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       host: "0.0.0.0",
       port: Number(env.VITE_APP_PORT),
       open: false,
+      allowedHosts: true, // For Intranet penetration
       watch: { usePolling: false }, // For non-docker environments, please set true
       proxy: {
         [env.VITE_APP_BASE_API]: {
