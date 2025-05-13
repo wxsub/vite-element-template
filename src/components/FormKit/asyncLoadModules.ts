@@ -8,6 +8,7 @@ export const Modules: any = {
   radio: defineAsyncComponent(() => import("./modules/radio.vue")),
   popover: defineAsyncComponent(() => import("./modules/popover.vue")),
   dropdown: defineAsyncComponent(() => import("./modules/dropdown.vue")),
+  inputNumber: defineAsyncComponent(() => import("./modules/inputNumber.vue")),
   // singleImageUpload: defineAsyncComponent(() => import("./modules/singleImageUpload.vue")),
   input: ElInput,
   datePicker: ElDatePicker,
