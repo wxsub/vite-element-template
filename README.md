@@ -223,14 +223,26 @@ All icons has been imported into the system when execute main.js, like this
 <el-icon><i-ep-plus /></el-icon>
 ```
 ***说明​​：***
-1、i-ep- 是固定前缀（i 为组件名前缀，ep 代表 Element Plus 图标库）
-2、图标名需转为​全小写短横线格式​​（如 Plus → plus）
+1. i-ep- 是固定前缀（i 为组件名前缀，ep 代表 Element Plus 图标库）
+2. 图标名需转为​全小写短横线格式​​（如 Plus → plus）
 
 ## 全局scss变量
 系统为每个组件引入了一个scss变量文件（src/assets/styles/variables.scss），你可以自行在该文件内设计属于自己的scss变量或方法在任意组件style中使用
 ```css
 .container {
   width: vm(100);
+}
+
+// or
+
+.container {
+  font-size: 24px;
+  @include responsive('mobile') {
+    font-size: 16px;
+  }
+  @include responsive('tablet') {
+    font-size: 18px;
+  }
 }
 ```
 
