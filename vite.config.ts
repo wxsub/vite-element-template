@@ -86,7 +86,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       AutoImport({
         imports: ["vue", "@vueuse/core"],
         dirs: ["src/composable"],
-        resolvers: [ElementPlusResolver(), IconsResolver({})],
+        resolvers: [ElementPlusResolver(), IconsResolver({ prefix: 'i' })],
         eslintrc: {
           enabled: false,
           filepath: "./.eslintrc-auto-import.json",
@@ -100,7 +100,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           // Automatically import Element Plus components
           ElementPlusResolver(),
           // Automatically register icon components
-          IconsResolver({ enabledCollections: ["ep"] }),
+          IconsResolver({
+            enabledCollections: ["ep"],
+            prefix: "i"
+          }),
         ],
         dirs: ["src/**/components"],
         dts: false
