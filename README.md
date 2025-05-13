@@ -216,6 +216,16 @@ All icons has been imported into the system when execute main.js, like this
 <svg-icon name="home-wxsub-dark"></svg-icon>  // [dir name]-[svg file name]
 ```
 
+## 自动加载Element Plus Icon图标库
+系统集成unplugin-icons、unplugin-auto-import插件规则从 iconify 中自动导入任何图标集。因此你在页面中使用Element Plus Icon图标库而无需import此图标，以下为使用案例
+```
+// use <el-icon><Plus /></el-icon>
+<el-icon><i-ep-plus /></el-icon>
+```
+***说明​​：***
+1、i-ep- 是固定前缀（i 为组件名前缀，ep 代表 Element Plus 图标库）
+2、图标名需转为​全小写短横线格式​​（如 Plus → plus）
+
 ## 全局scss变量
 系统为每个组件引入了一个scss变量文件（src/assets/styles/variables.scss），你可以自行在该文件内设计属于自己的scss变量或方法在任意组件style中使用
 ```css
