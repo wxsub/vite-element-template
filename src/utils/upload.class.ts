@@ -1,4 +1,3 @@
-import http from '@/config/axios.config'
 import { AxiosProgressEvent } from "axios"
 
 type UploadProgressListener = (percentage: number) => void;
@@ -11,7 +10,7 @@ class FileUploader {
   private onComplete: UploadCompletedListener
   private onError: UploadErrorListener
 
-  constructor(uploadUrl: string) {
+  constructor(uploadUrl: string = '/default/oss/upload') {
     this.uploadUrl = uploadUrl
     this.onProgress = () => {}
     this.onComplete = () => {}
@@ -40,9 +39,9 @@ class FileUploader {
         this.onError(`Invalid file type. Only ${typePattern.join(', ')} are allowed.`)
         return
       }
-      const FORM_DATA = new FormData()
-      FORM_DATA.append('file', file)
-      const response = await http.post(this.uploadUrl, FORM_DATA, {
+      const UploadFormData = new FormData()
+      UploadFormData.append('file', file)
+      const response = await useAxios().post(this.uploadUrl, UploadFormData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (progressEvent: AxiosProgressEvent) => {
           const total = progressEvent.total || 1,
@@ -52,6 +51,12 @@ class FileUploader {
       })
       this.onComplete(response)
     } catch (error) { this.onError(error) }
+  }
+
+  destroy() {
+    this.onProgress = () => {}
+    this.onComplete = () => {}
+    this.onError = () => {}
   }
 }
 
