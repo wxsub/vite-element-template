@@ -1,4 +1,4 @@
-import { ElInput, ElDatePicker, ElRate, ElTimePicker, ElTimeSelect } from "element-plus"
+import { ElInput, ElDatePicker, ElRate, ElTimePicker, ElTimeSelect, ElCascader } from "element-plus"
 
 export const Modules: any = {
   select: defineAsyncComponent(() => import("./modules/select.vue")),
@@ -14,6 +14,7 @@ export const Modules: any = {
   datePicker: ElDatePicker,
   timePicker: ElTimePicker,
   timeSelect: ElTimeSelect,
+  cascader: ElCascader,
   rate: ElRate
 }
 

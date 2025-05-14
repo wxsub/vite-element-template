@@ -64,6 +64,7 @@ interface ConfigInterface {
   events?: object;
   props?: object;
   request?: Function | object;
+  handle?: Function;
 }
 
 interface FormKitExposed {
