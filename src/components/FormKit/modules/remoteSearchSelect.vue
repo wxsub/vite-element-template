@@ -5,6 +5,8 @@ const props = defineProps({
   initialValue: { default: null },
   placeholder: { type: String, default: '请输入' },
   modelValue: { type: [String, Number, Array] },
+  onChoose: { type: [Function, null], default: null },
+  handler: { type: [Function, null], default: null },
   remoteMethod: { type: [Function, null], default: null }
 })
 
@@ -30,9 +32,22 @@ const searchRemoteMethod = async (query: string) => {
     loading.value = true
     const response = await props.remoteMethod(query)
     loading.value = false
-    if (Array.isArray(response)) options.value = response
+    if (Array.isArray(response)) options.value = props.handler ? props.handler(response) : response
   } else {
     options.value = []
+  }
+}
+
+const onChange = (value: any) => {
+  try {
+    if (props.onChoose) {
+      const selectedOption = options.value.find((option: any) => option[props.valueKey] === value)
+      if (selectedOption) {
+        props.onChoose(selectedOption)
+      }
+    }
+  } catch (error) {
+    console.warn('remoteSearchSelect module onChoose error:', error)
   }
 }
 </script>
@@ -44,6 +59,7 @@ const searchRemoteMethod = async (query: string) => {
     remote
     reserve-keyword
     :placeholder="placeholder"
+    @change="onChange"
     :remote-method="searchRemoteMethod"
     :loading="loading"
     v-bind="$attrs">
