@@ -22,44 +22,33 @@ const props = defineProps({
     size: { type: Number, default: 80 }
 })
 
+const loading = ref(false),
+    uuid = ref(Number(new Date()).toString()),
+    fileBucket = ref<any>([]);
+
 const emit = defineEmits(['update:modelValue']);
 
-const dataset: any = computed({
-    get: () => {
-        const { modelValue } = props
-        if (modelValue) {
-            if (props.limit === 1) {
-                fileBucket.value = [{  path: modelValue, status: 1, progress: 0 }]
-                return modelValue
-            } else if (Array.isArray(modelValue)) {
-                fileBucket.value = (modelValue as string[]).map((path: string) => ({
-                    path, status: 1, progress: 0
-                }))
-                return modelValue
-            } else {
-                fileBucket.value = []
-                return []
-            }
+watch(() => props.modelValue, (newVal) => {
+    if (newVal) {
+        if (props.limit === 1) {
+            fileBucket.value = [{ path: newVal, status: 1, progress: 0 }]
+        } else if (Array.isArray(newVal)) {
+            fileBucket.value = (newVal as string[]).map((path: string) => ({
+                path, status: 1, progress: 0
+            }))
         } else {
             fileBucket.value = []
-            if (props.limit === -1) return []
-            return props.limit === 1 ? '' : []
         }
-    },
-    set: (value) => {
-        emit('update:modelValue', value)
     }
-}), multiple = computed(() => {
+}, { immediate: true })
+
+const multiple = computed(() => {
     if (props.limit === -1) return true
     return props.limit > 1
 }), disabled = computed(() => {
     if (props.limit === -1) return false
     return fileBucket.value.length >= props.limit
 });
-
-const loading = ref(false),
-    uuid = ref(Number(new Date()).toString()),
-    fileBucket = ref<any>([]);
 
 const change = (e: Event) => {
     const target = e.target as HTMLInputElement,
@@ -109,10 +98,10 @@ const removeFile = (item: any, index: number) => {
 
 const setData = () => {
     if (fileBucket.value.length === 0) {
-        dataset.value = props.limit === 1 ? '' : []
+        emit('update:modelValue', props.limit === 1 ? '' : [])
     } else {
         const data = fileBucket.value.map((item: any) => item.path)
-        dataset.value = props.limit === 1 ? data[0] : data
+        emit('update:modelValue', props.limit === 1 ? data[0] : data)
     }
 }
 </script>
@@ -120,7 +109,7 @@ const setData = () => {
 <template>
     <div :class="formKitUpload.upload">
         <div v-for="(it, index) in fileBucket" :key="index" :class="formKitUpload.uploadPrepare">
-            <div :class="formKitUpload.progress" v-if="it.status === -1">
+            <div :class="formKitUpload.warning" v-if="it.status === -1">
                 <el-icon :size="(size / 2)" class="text-[#FC4870]"><i-ep-warningFilled /></el-icon>
             </div>
             <template v-else>
@@ -132,7 +121,7 @@ const setData = () => {
                     :initial-index="4"
                     fit="cover"
                 />
-                <div :class="formKitUpload.progress" v-if="it.progress < 100">
+                <div :class="formKitUpload.progress" v-if="it.status === 0 && it.progress < 100">
                     <el-progress type="circle" :percentage="it.progress || 0" :width="(size / 2)" :stroke-width="3" />
                 </div>
             </template>
@@ -171,7 +160,7 @@ const setData = () => {
         height: v-bind("`${size}px`");
         border: 1px solid #e4e7ec;
         border-radius: 6px;
-        .progress {
+        .warning {
             position: absolute;
             width: 100%;
             height: 100%;

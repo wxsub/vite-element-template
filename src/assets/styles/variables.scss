@@ -1,11 +1,8 @@
 @use "sass:map";
 
-:root {
-  --client: 1440 // Your layout design width
-}
-
 @function vm($px) {
-  $calc: calc($px / 14.4);
+  $ratio: calc(1440 / 100);
+  $calc: calc($px / $ratio);
   @return calc($calc * 1vw);
 }
 
