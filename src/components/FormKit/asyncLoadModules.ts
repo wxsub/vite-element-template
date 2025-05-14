@@ -9,7 +9,7 @@ export const Modules: any = {
   popover: defineAsyncComponent(() => import("./modules/popover.vue")),
   dropdown: defineAsyncComponent(() => import("./modules/dropdown.vue")),
   inputNumber: defineAsyncComponent(() => import("./modules/inputNumber.vue")),
-  // singleImageUpload: defineAsyncComponent(() => import("./modules/singleImageUpload.vue")),
+  upload: defineAsyncComponent(() => import("./modules/upload.vue")),
   input: ElInput,
   datePicker: ElDatePicker,
   timePicker: ElTimePicker,
