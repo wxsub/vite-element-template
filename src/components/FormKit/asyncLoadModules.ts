@@ -1,4 +1,4 @@
-import { ElInput, ElDatePicker, ElRate, ElTimePicker, ElTimeSelect } from "element-plus"
+import { ElInput, ElDatePicker, ElRate, ElTimePicker, ElTimeSelect, ElCascader } from "element-plus"
 
 export const Modules: any = {
   select: defineAsyncComponent(() => import("./modules/select.vue")),
@@ -9,11 +9,12 @@ export const Modules: any = {
   popover: defineAsyncComponent(() => import("./modules/popover.vue")),
   dropdown: defineAsyncComponent(() => import("./modules/dropdown.vue")),
   inputNumber: defineAsyncComponent(() => import("./modules/inputNumber.vue")),
-  // singleImageUpload: defineAsyncComponent(() => import("./modules/singleImageUpload.vue")),
+  upload: defineAsyncComponent(() => import("./modules/upload.vue")),
   input: ElInput,
   datePicker: ElDatePicker,
   timePicker: ElTimePicker,
   timeSelect: ElTimeSelect,
+  cascader: ElCascader,
   rate: ElRate
 }
 

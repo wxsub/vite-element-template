@@ -197,14 +197,6 @@ src/pages/[...all].vue -> /* (/non-existent-page)
 ### 捕获路由权限
 需要的路由信息以及权限资源将统一来自/config/router.permission.js, 你可以导出其permission方法，加载系统的全部数据将存放于此
 
-## About use to elementUi icons
-All icons has been imported into the system when execute main.js, like this
-
-```html
-<el-icon><Lock /></el-icon>
-```
-避免重复导入Lock图标组件进入系统
-
 ## 使用svg图标
 系统采用svg icon的形式，svg图标默认统一放入`/src/assets/icons`内(修改改目录请在`vite.config.ts`内`createSvgIconsPlugin`进行修改)，使用时请使用svgIcon组件（系统已默认注册）
 例如：
@@ -225,6 +217,8 @@ All icons has been imported into the system when execute main.js, like this
 ***说明​​：***
 1. i-ep- 是固定前缀（i 为组件名前缀，ep 代表 Element Plus 图标库）
 2. 图标名需转为​全小写短横线格式​​（如 Plus → plus）
+
+避免重复导入Lock图标组件进入系统
 
 ## 全局scss变量
 系统为每个组件引入了一个scss变量文件（src/assets/styles/variables.scss），你可以自行在该文件内设计属于自己的scss变量或方法在任意组件style中使用
