@@ -32,7 +32,7 @@ pnpm run dev
 
 [演示地址](https://wxsub.github.io/vite-element-template/)
 
-## tailwindcss
+## Tailwindcss
 系统内置tailwindcss，tailwindcss是一个非常优秀的css辅助脚本，配合vue3动态引入的设计，so 大部分css不必动手绘制，特殊需求样式的处理，请在src/assets/styles/下查阅是否存在
 类似css模块，如果没有相应css模块，你可能需要手动在style标签进行书写，当然它也是很少一部分也不推荐，推荐快速书写css参考
 [tailwindcss文档](https://tailwindcss.com/docs/)，配合editor的自动提示，你将会得到令人惊奇的开发故事。
@@ -242,6 +242,51 @@ src/pages/[...all].vue -> /* (/non-existent-page)
   }
 }
 ```
+
+## FormKit Component
+基于ElementPlus表单组件进行的组合封装，通过数据流方式将表单数据化，方便快速开发。
+
+### Component Attributes
+| 参数         | 说明    |    类型   |  默认值  | 
+| -------- | :-----  |  :----:  |  :----: |
+| model-value / v-model |  组件绑定数据源  |  Object  |   {}
+| config |  表单配置项，详细config配置参数参考下方`config Attributes`  |  Array  |   []
+| disabled |  禁用整个表单  |  Boolean  |   false  
+| labelPosition |  表单项label对齐规则，参照[ElementPlus Form Attributes](https://element-plus.org/zh-CN/component/form.html#form-api)  |  String  |   top  
+| labelWidth |  表单项标题宽度（此参数仅在labelPosition为left、right时生效，为top时会自动忽略）  |  Number  |   125 
+| columns |  每行显示多少列表单项  |  Number  |   5  
+| row-gap |  表单项的垂直间距  |  Number  |   5  
+| title |  表单项头标题  |  String  |   -
+| size |  用于控制该表单内组件的尺寸（可选值: '' / 'large' / 'default' / 'small'）  |  String  |   mini 
+| row |  参照[ElementPlus Row API](https://element-plus.org/zh-CN/component/layout.html#row-api)  |  String  |   top
+
+### Config Attributes
+| 参数         |  说明  |  可选值  |   类型   |  案例
+| -------- | :-----:  |  :----: |  :----:  | :----: |
+| label |  表单项名称  |   -   |  String  |  -
+| type |  该表单项类型  |   见下Config type explain   |  String  | -
+| placeholder |  该表单项placeholder  |   -   |  String  |   -
+| disabled |  该表单项是否禁用  |   true、false   |  boolean  |  -
+| keys |  表单项key值(该项应该和后台返回该表单项的字段对应，方便将修改后的数据与后台直接交互)  |   -   |  String  |  -
+| startkeys |  日期区间选择器字段：开始时间key值  |   -   |  String  |  -
+| endkeys |  日期区间选择器字段：结束时间key值  |   -   |  String  | -
+| keydata |  此属性仅在type为select和checkbox时生效，它将作为该select项拉取数据（getDictsList接口，根据业务需要替换）时需要传输的参数；type为checkbox时它作为多选数据项  |   -   |  String |  `{label: "多选:", type: 'checkbox', keydata: [{ label: "医疗保险", id: 1 }]}`
+| rules |  表单项校验规则，为空不校验  |   -   |  Array  |   -
+| inline |  该表单项是否在新的一行整行显示（注意当type为checkbox时默认为true）  |   true、false   |  boolean  |  -
+| $remote |  该表单项需要进行远程数据加载的自定义请求  |   -   |  Promise  |  `{$remote: ()=> import { selectCardNo } from "@/api/contract"}`
+| props |  该表单项进行远程数据加载的自定义请求时指定选项的值为选项对象的某个属性值  |   label/value   |  Object  |  `{props: { label: 'name', value: 'id' }}`
+| remoteKey |  该表单项需要进行远程数据加载自定义请求时需要的参数，该remoteKey需要应该在组件v-model绑定数据集存在  |   -   |  String  | `{remoteKey: "custId"}`
+| link |  该表单项显示需要关联的字段  |   -   |  Object  |  `{link: { key: "showid", value: 0 }}`表示表单内字段`showid`的值为0时该项不显示
+| suffix |  该表单项的后缀文字（此字段目前只会在type为text和input时生效）  |   -   |  String  |  -
+| pickerOptions |  当前时间日期选择器特有的选项，详细参考**pickerOptions Attributes**  |   -   |  Object  |  -
+| max |  步进器特有字段用于控制步进器的最大值（当max为string时则会匹配表单内字段，为Number时最大值则为该Number）  |   -   |  String/Number  |  -
+| labelKey |  自定义额外后台，当type为checkbox和region时通常传输的值为checkbox的id和region的地区码，特殊业务在需要id和地区码的同时还需要他们选中的文字信息，此时则需要labelKey指定后台对应的接受字段（checkbox为-拼接字符串、region为/拼接字符串）  |   -   |  String  |  -
+| isIndeterminate |  type为checkbox特有属性，true为开启全选  |   true/false   |  boolean  |  -
+
+### Config type explain
+| 关键字         |  说明  |  备注
+| -------- | :-----:  |  :----: |
+| label |  表单项名称  |  111
 
 ## Mock Data
 系统集成了mockjs，请在`mock`文件夹下创建模拟api规范
