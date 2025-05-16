@@ -264,29 +264,34 @@ src/pages/[...all].vue -> /* (/non-existent-page)
 | 参数         |  说明  |  可选值  |   类型   |  案例
 | -------- | :-----:  |  :----: |  :----:  | :----: |
 | label |  表单项名称  |   -   |  String  |  -
-| type |  该表单项类型  |   见下Config type explain   |  String  | -
-| placeholder |  该表单项placeholder  |   -   |  String  |   -
+| type |  该表单项类型  |   可自行配置，默认见下Config type explain   |  String  | -
 | disabled |  该表单项是否禁用  |   true、false   |  boolean  |  -
 | keys |  表单项key值(该项应该和后台返回该表单项的字段对应，方便将修改后的数据与后台直接交互)  |   -   |  String  |  -
-| startkeys |  日期区间选择器字段：开始时间key值  |   -   |  String  |  -
-| endkeys |  日期区间选择器字段：结束时间key值  |   -   |  String  | -
-| keydata |  此属性仅在type为select和checkbox时生效，它将作为该select项拉取数据（getDictsList接口，根据业务需要替换）时需要传输的参数；type为checkbox时它作为多选数据项  |   -   |  String |  `{label: "多选:", type: 'checkbox', keydata: [{ label: "医疗保险", id: 1 }]}`
+| span |  当前项栅格占据的列数  |   24   |  number  |   24
+| labelWidth |  标签的长度，例如 '50px'。 作为 Form 直接子元素的 form-item 会继承该值。 可以使用 auto。  |   -   |  string / number  |   ''
 | rules |  表单项校验规则，为空不校验  |   -   |  Array  |   -
+| options |  select、cascader等组件的操作项  |   -   |  Array  |  `options: [{ name: '全天营业', id: 'ALL' }]`
 | inline |  该表单项是否在新的一行整行显示（注意当type为checkbox时默认为true）  |   true、false   |  boolean  |  -
-| $remote |  该表单项需要进行远程数据加载的自定义请求  |   -   |  Promise  |  `{$remote: ()=> import { selectCardNo } from "@/api/contract"}`
-| props |  该表单项进行远程数据加载的自定义请求时指定选项的值为选项对象的某个属性值  |   label/value   |  Object  |  `{props: { label: 'name', value: 'id' }}`
-| remoteKey |  该表单项需要进行远程数据加载自定义请求时需要的参数，该remoteKey需要应该在组件v-model绑定数据集存在  |   -   |  String  | `{remoteKey: "custId"}`
-| link |  该表单项显示需要关联的字段  |   -   |  Object  |  `{link: { key: "showid", value: 0 }}`表示表单内字段`showid`的值为0时该项不显示
-| suffix |  该表单项的后缀文字（此字段目前只会在type为text和input时生效）  |   -   |  String  |  -
-| pickerOptions |  当前时间日期选择器特有的选项，详细参考**pickerOptions Attributes**  |   -   |  Object  |  -
-| max |  步进器特有字段用于控制步进器的最大值（当max为string时则会匹配表单内字段，为Number时最大值则为该Number）  |   -   |  String/Number  |  -
-| labelKey |  自定义额外后台，当type为checkbox和region时通常传输的值为checkbox的id和region的地区码，特殊业务在需要id和地区码的同时还需要他们选中的文字信息，此时则需要labelKey指定后台对应的接受字段（checkbox为-拼接字符串、region为/拼接字符串）  |   -   |  String  |  -
-| isIndeterminate |  type为checkbox特有属性，true为开启全选  |   true/false   |  boolean  |  -
+| request |  该表单项需要进行远程数据加载的自定义请求  |   -   |  Promise  |  `request: useAxios().get('/default/shop/category-tree')`
+| handle |  配合远程数据加载，处理远程数据  |   -   |  Function  |  `handle: (response: any) => Array.isArray(response) ? response : []`
+| props |  直接绑定到组件上的参数  |   -   |  Object  |  `props: { placeholder: '请输入店铺编码', max: 10 }`
+| visible |  该表单项显示需要关联的字段  |   -   |  Object  |  `{link: { key: "showid", value: 0 }}`表示表单内字段`showid`的值为0时该项不显示
 
 ### Config type explain
 | 关键字         |  说明  |  备注
 | -------- | :-----:  |  :----: |
-| label |  表单项名称  |  111
+| input |  输入框  |  -
+| select |  下拉选择框  |  -
+| datePicker |  日期时间选择器  |  [文档](https://element-plus.org/zh-CN/component/datetime-picker.html)
+| datePicker |  时间选择器  |  [文档](https://element-plus.org/zh-CN/component/datetime-picker.html)](https://element-plus.org/zh-CN/component/time-picker.html)
+| cascader |  级联选择器  |  [文档](https://element-plus.org/zh-CN/component/cascader.html)
+| remoteSearchSelect |  带远程搜索功能的input  |  参数回显请使用initialValue字段
+| address |  地址选择器  |  内部fetchAddressData方法需要修改API接口
+| checkbox |  多选框  |  -
+| radio |  单选框  |  -
+| inputNumber |  数字输入框  |  -
+| upload |  文件上传  |  需要在utils/upload.class.ts修改uploadUrl
+| rate |  评分  |  [文档](https://element-plus.org/zh-CN/component/rate.html)
 
 ## Mock Data
 系统集成了mockjs，请在`mock`文件夹下创建模拟api规范
