@@ -23,10 +23,6 @@ const dataset: any = computed({
     }
 })
 
-onMounted(() => {
-  if (props.initialValue) searchRemoteMethod(props.initialValue)
-})
-
 const searchRemoteMethod = async (query: string) => {
   if (query && props.remoteMethod) {
     loading.value = true
@@ -50,6 +46,10 @@ const onChange = (value: any) => {
     console.warn('remoteSearchSelect module onChoose error:', error)
   }
 }
+
+watch(() => props.initialValue, (value) => {
+  if (value) searchRemoteMethod(value)
+}, { immediate: true })
 </script>
 
 <template>
