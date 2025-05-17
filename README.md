@@ -256,7 +256,6 @@ src/pages/[...all].vue -> /* (/non-existent-page)
 | labelWidth |  表单项标题宽度（此参数仅在labelPosition为left、right时生效，为top时会自动忽略）  |  Number  |   125 
 | columns |  每行显示多少列表单项  |  Number  |   5  
 | row-gap |  表单项的垂直间距  |  Number  |   5  
-| title |  表单项头标题  |  String  |   -
 | size |  用于控制该表单内组件的尺寸（可选值: '' / 'large' / 'default' / 'small'）  |  String  |   mini 
 | row |  参照[ElementPlus Row API](https://element-plus.org/zh-CN/component/layout.html#row-api)  |  String  |   top
 
