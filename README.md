@@ -265,17 +265,17 @@ src/pages/[...all].vue -> /* (/non-existent-page)
 | -------- | :-----:  |  :----: |  :----:  | :----: |
 | label |  表单项名称  |   -   |  String  |  -
 | type |  该表单项类型  |   可自行配置，默认见下Config type explain   |  String  | -
-| disabled |  该表单项是否禁用  |   true、false   |  boolean  |  -
+| disabled |  该表单项是否禁用  |   true / false   |  boolean  |  -
 | keys |  表单项key值(该项应该和后台返回该表单项的字段对应，方便将修改后的数据与后台直接交互)  |   -   |  String  |  -
 | span |  当前项栅格占据的列数  |   24   |  number  |   24
 | labelWidth |  标签的长度，例如 '50px'。 作为 Form 直接子元素的 form-item 会继承该值。 可以使用 auto。  |   -   |  string / number  |   ''
 | rules |  表单项校验规则，为空不校验  |   -   |  Array  |   -
-| options |  select、cascader等组件的操作项  |   -   |  Array  |  `options: [{ name: '全天营业', id: 'ALL' }]`
-| inline |  该表单项是否在新的一行整行显示（注意当type为checkbox时默认为true）  |   true、false   |  boolean  |  -
-| request |  该表单项需要进行远程数据加载的自定义请求  |   -   |  Promise  |  `request: useAxios().get('/default/shop/category-tree')`
-| handle |  配合远程数据加载，处理远程数据  |   -   |  Function  |  `handle: (response: any) => Array.isArray(response) ? response : []`
+| options |  select、cascader等组件的操作项  |   -   |  Array  |  ` options: [{ name: '全天营业', id: 'ALL' }] `
+| request |  该表单项需要进行远程数据加载的自定义请求  |   -   |  Promise  |  ` request: useAxios().get('/default/shop/category-tree') `
+| handle |  配合远程数据加载，处理远程数据  |   -   |  Function  |  ` handle: (response: any) => Array.isArray(response) ? response : [] `
 | props |  直接绑定到组件上的参数  |   -   |  Object  |  `props: { placeholder: '请输入店铺编码', max: 10 }`
-| visible |  该表单项显示需要关联的字段  |   -   |  Object  |  `{link: { key: "showid", value: 0 }}`表示表单内字段`showid`的值为0时该项不显示
+| visible |  该表单项显示需要关联的字段  |   -   |  Object  |  ` visible: { key: "showid", value: 0 } `表示表单内字段`showid`的值为0时该项不显示
+| events |  接受组件事件  |   -   |  Object  |  -
 
 ### Config type explain
 | 关键字         |  说明  |  备注
@@ -283,7 +283,7 @@ src/pages/[...all].vue -> /* (/non-existent-page)
 | input |  输入框  |  -
 | select |  下拉选择框  |  -
 | datePicker |  日期时间选择器  |  [文档](https://element-plus.org/zh-CN/component/datetime-picker.html)
-| datePicker |  时间选择器  |  [文档](https://element-plus.org/zh-CN/component/datetime-picker.html)](https://element-plus.org/zh-CN/component/time-picker.html)
+| timePicker |  时间选择器  |  [文档](https://element-plus.org/zh-CN/component/time-picker.html)
 | cascader |  级联选择器  |  [文档](https://element-plus.org/zh-CN/component/cascader.html)
 | remoteSearchSelect |  带远程搜索功能的input  |  参数回显请使用initialValue字段
 | address |  地址选择器  |  内部fetchAddressData方法需要修改API接口
