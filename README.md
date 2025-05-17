@@ -276,6 +276,7 @@ src/pages/[...all].vue -> /* (/non-existent-page)
 | props |  直接绑定到组件上的参数  |   -   |  Object  |  `props: { placeholder: '请输入店铺编码', max: 10 }`
 | visible |  该表单项显示需要关联的字段  |   -   |  Object  |  ` visible: { key: "showid", value: 0 } `表示表单内字段`showid`的值为0时该项不显示
 | events |  接受组件事件  |   -   |  Object  |  -
+| hint |  在当前行下方显示提示文本  |   -   |  string  |  -
 
 ### Config type explain
 | 关键字         |  说明  |  备注
