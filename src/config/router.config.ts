@@ -3,9 +3,9 @@ import generatedRoutes from 'virtual:generated-pages'
 import wss, { WebSocketInterface } from "@/utils/wss.class"
 import {
   createRouter,
-  createWebHistory,
   RouteLocationNormalized,
-  NavigationGuardNext
+  NavigationGuardNext,
+  createWebHashHistory
 } from 'vue-router'
 import { useRouterStoreHook } from "@/store/modules/router"
 import { useUserStoreHook } from "@/store/modules/user"
@@ -25,7 +25,7 @@ const whiteList = routerStore.whiteList,
   routes = setupLayouts(generatedRoutes);
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
   scrollBehavior: () => ({ left: 0, top: 0 })
 })
@@ -54,7 +54,7 @@ router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormal
       browserSetter(title)
       NProgress.done()
     } catch (error) {
-      next(`/redirect/unauthorized?type=inactive&title=网络连接异常&content=${JSON.stringify(error)}`)
+      next(`/redirect/error?type=inactive&title=网络连接异常&content=${JSON.stringify(error)}`)
       browserSetter("网络连接异常")
       NProgress.done()
     }
