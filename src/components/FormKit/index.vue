@@ -26,7 +26,6 @@
                 :disabled="conf['disabled']"
                 v-model="modelValue[conf.key]"
                 :options="conf.options || buckets[conf.key]"
-                :class="{ [FormKit['item-hint']]: !(block) }"
                 v-on="conf.events || {}"
                 v-bind="conf.props"
                 @change="mutation($event, conf)">
@@ -52,7 +51,6 @@ interface ConfigInterface {
   type?: string;
   key: string;
   span?: number;
-  block?: boolean;
   labelWidth?: number;
   label?: string;
   prefix?: string;
@@ -80,7 +78,6 @@ const props = defineProps({
   modelValue: { required: true, type: Object },
   config: { type: Array<ConfigInterface>, default: () => [] },
   rules: { type: Object, default: () => {} },
-  block: { type: Boolean, default: false },
   disabled: { type: Boolean, default: false },
   labelPosition: { type: String, default: 'top' }, // Form Input Alignment Rules
   rowGap: { type: Number, default: 5 }, // Vertical spacing of form items
