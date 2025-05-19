@@ -6,7 +6,7 @@ import { UserConfig, ConfigEnv, loadEnv, defineConfig } from "vite"
 import tailwindcss from "tailwindcss"
 import autoprefixer from "autoprefixer"
 
-import Layouts from 'vite-plugin-vue-layouts'
+import Layouts from "vite-plugin-vue-meta-layouts"
 import Pages from "vite-plugin-pages"
 
 import AutoImport from "unplugin-auto-import/vite"
@@ -77,10 +77,8 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         exclude: ['**/components/*.vue']
       }),
       Layouts({
-        layoutsDirs: 'src/layouts',
-        defaultLayout: 'default',
-        extensions: ['vue'],
-        exclude: ['**/component/*.vue', '**/components/*.vue', '**/components/*.md', '**/modules/*.vue', '**/module/*.vue']
+        target: 'src/Layouts',
+        defaultLayout: 'default'
       }),
       vue(),
       AutoImport({
