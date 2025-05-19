@@ -74,10 +74,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           return route
         },
         importMode: "async",
-        exclude: ['**/components/**/*', '**/components/*.md', '**/modules/*.vue', '**/module/*.vue']
+        exclude: ['**/components/*.vue']
       }),
       Layouts({
-        layoutsDirs: 'src/Layouts',
+        layoutsDirs: 'src/layouts',
         defaultLayout: 'default',
         extensions: ['vue'],
         exclude: ['**/component/*.vue', '**/components/*.vue', '**/components/*.md', '**/modules/*.vue', '**/module/*.vue']
@@ -103,9 +103,9 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           IconsResolver({
             enabledCollections: ["ep"],
             prefix: "i"
-          }),
+          })
         ],
-        dirs: ["src/**/components"],
+        dirs: ["src/components"],
         dts: false
       }),
 
