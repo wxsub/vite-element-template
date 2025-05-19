@@ -6,7 +6,7 @@ import { UserConfig, ConfigEnv, loadEnv, defineConfig } from "vite"
 import tailwindcss from "tailwindcss"
 import autoprefixer from "autoprefixer"
 
-import Layouts from 'vite-plugin-vue-layouts'
+import Layouts from "vite-plugin-vue-meta-layouts"
 import Pages from "vite-plugin-pages"
 
 import AutoImport from "unplugin-auto-import/vite"
@@ -32,7 +32,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     },
     css: {
       modules: {
-        generateScopedName: env.VITE_USER_NODE_ENV === 'production' ? '[hash:base64:6]' : '[local]__[hash:base64:4]'
+        generateScopedName: env.VITE_USER_NODE_ENV === 'production' ? '[hash:base64:6]' : '[name]__[local]'
       },
       preprocessorOptions: {
         scss: {
@@ -74,13 +74,11 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           return route
         },
         importMode: "async",
-        exclude: ['**/components/**/*', '**/components/*.md', '**/modules/*.vue', '**/module/*.vue']
+        exclude: ['**/components/*.vue']
       }),
       Layouts({
-        layoutsDirs: 'src/Layouts',
-        defaultLayout: 'default',
-        extensions: ['vue'],
-        exclude: ['**/component/*.vue', '**/components/*.vue', '**/components/*.md', '**/modules/*.vue', '**/module/*.vue']
+        target: 'src/Layouts',
+        defaultLayout: 'default'
       }),
       vue(),
       AutoImport({
@@ -103,9 +101,9 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           IconsResolver({
             enabledCollections: ["ep"],
             prefix: "i"
-          }),
+          })
         ],
-        dirs: ["src/**/components"],
+        dirs: ["src/components"],
         dts: false
       }),
 

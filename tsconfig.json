@@ -21,7 +21,7 @@
       "vite/client",
       "unplugin-icons/types/vue",
       "vite-plugin-pages/client",
-      "vite-plugin-vue-layouts/client"
+      "vite-plugin-vue-meta-layouts/client"
     ],
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "allowSyntheticDefaultImports": true /* Allow default import */,
