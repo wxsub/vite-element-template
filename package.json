@@ -53,8 +53,8 @@
     "sortablejs": "^1.15.0",
     "stompjs": "^2.3.3",
     "terser": "^5.19.3",
+    "unplugin-vue-router": "^0.12.0",
     "uuid": "^11.0.3",
-    "vite-plugin-pages": "^0.32.4",
     "vite-plugin-vue-meta-layouts": "^0.5.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.0"
