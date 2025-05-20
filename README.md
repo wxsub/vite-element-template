@@ -79,7 +79,7 @@ function login(loginData: object) {
 ```
 
 ## Pages文件路由和Layout系统
-系统会扫描pages文件目录下所有`.vue`文件以生成路由系统所以你需要使用统一规范和特定的方式去设计你的页面，路由元信息需要使用yaml语法写进route标签内，如下：
+系统会检查文件夹中src/pages是否存在任何.vue文件, 并根据文件名生成相应的路由结构。这样，您routes在向应用程序添加路由时就无需再维护数组。因此您需要使用统一规范和特定的方式去设计你的页面，路由元信息需要使用yaml语法写进route标签内，如下：
 ```html
 <route lang="yaml">
   meta:
@@ -113,10 +113,10 @@ Vetur: Generate grammar from vetur.grammar.customBlocks
 Layout System使用一个将layout混入路由的一个设计，对于非常规layout你要在系统内Layouts目录内去设计你的layout，当然设计layout时你需要避免中文文件名的产生，
 因为它依旧使用文件名作为key
 ```vue
-// 指定blank作为layout
+// 指定fullscreen作为layout
 <route>
   {
-    meta: { title: "B", roles: [], layout: "blank" }
+    meta: { title: "B", roles: [], layout: "fullscreen" }
   }
 </route>
 ```
@@ -134,8 +134,15 @@ Tips：layout字段指向的就是Layouts文件夹内所有.vue文件(默认defa
 
 **Tips**: `pages/redirect`目录下的所有文件（路由）， 都将默认添加`meta.hidden: true`规则, 当然它不会修改你已经设置的`meta.hidden`
 
+### 索引路由
+任何index.vue（必须全部小写）文件都会生成一个空路径（类似于index.html文件）：
+1. src/pages/index.vue：生成/路线
+2. src/pages/users/index.vue：生成/users路线
+
 ### 嵌套路由
-可以利用 Vue Router 子路由来创建嵌套布局。可以通过为父组件定义与包含子路由的目录相同的名称来定义父组件。 当有如下的目录结构时：
+可以利用 Vue Router 子路由来创建嵌套布局。通过在同名.vue文件夹旁边定义文件来自动定义嵌套路由。如果同时创建和组件，将在的中渲染。
+` src/pages/users/index.vuesrc/pages/users.vuesrc/pages/users/index.vuesrc/pages/users.vue<RouterView> `
+换句话说，给定以下文件夹结构：
 
 ```
 src/pages/
@@ -145,36 +152,66 @@ src/pages/
   └── users.vue
 ```
 
-将会得到如下的路由配置：
+您将获得这个routes数组：
 
 ```
-[
+const routes = [
   {
     path: '/users',
-    component: '/src/pages/users.vue',
+    component: () => import('src/pages/users.vue'),
     children: [
-      {
-        path: '',
-        component: '/src/pages/users/index.vue',
-        name: 'users'
-      },
-      {
-        path: ':id',
-        component: '/src/pages/users/[id].vue',
-        name: 'users-id'
-      }
-    ]
-  }
+      { path: '', component: () => import('src/pages/users/index.vue') },
+    ],
+  },
+]
+```
+而省略该src/pages/users.vue组件将生成以下路由：
+```
+const routes = [
+  {
+    path: '/users',
+    // notice how there is no component here
+    children: [
+      { path: '', component: () => import('src/pages/users/index.vue') },
+    ],
+  },
 ]
 ```
 
+### 嵌套路由，无需嵌套布局
+有时你可能想以斜杠的形式在URL 中添加嵌套，但又不想影响 UI 层次结构。请考虑以下文件夹结构：
+```
+src/pages/
+├── users/
+│   ├── [id].vue
+│   └── index.vue
+└── users.vue
+```
+如果要添加新路由，/users/create可以添加一个新文件，src/pages/users/create.vue但这会将create.vue组件嵌套在组件中users.vue。为了避免这种情况，您可以创建一个文件src/pages/users.create.vue。生成路由时，该文件.将变为：/
+```
+const routes = [
+  {
+    path: '/users',
+    component: () => import('src/pages/users.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/users/index.vue') },
+      { path: ':id', component: () => import('src/pages/users/[id].vue') },
+    ],
+  },
+  {
+    path: '/users/create',
+    component: () => import('src/pages/users.create.vue'),
+  },
+]
+```
 
-### 捕获所有路由
-捕获所有路由使用包含省略号的方括号来表示：
-```
-src/pages/[...all].vue -> /* (/non-existent-page)
-```
-省略号后的文字将用于命名路由，以及用作传递路由参数的属性名称。
+### 全部捕获 / 404 未找到路线
+要创建捕获所有路由，...请在参数名称前添加三个点 ( )，例如，src/pages/[...path].vue将创建具有以下路径的路由：/:path(.*)。
+
+这将匹配任何路由。请注意，这也可以在文件夹内执行，例如，src/pages/articles/[...path].vue将创建具有以下路径的路由：/articles/:path(.*)。
+
+### 命名路线
+所有生成的路由如果包含component属性，则都会包含name属性。这样可以避免意外地将用户定向到父路由。默认情况下，名称是使用文件路径生成的，但您可以通过传递自定义getRouteName()函数来覆盖此行为。您几乎可以在任何地方进行 TypeScript 验证，因此更改此设置应该很容易。
 
 ### 正常合法使用
 ```
@@ -196,6 +233,42 @@ src/pages/[...all].vue -> /* (/non-existent-page)
 
 ### 捕获路由权限
 需要的路由信息以及权限资源将统一来自/config/router.permission.js, 你可以导出其permission方法，加载系统的全部数据将存放于此
+
+### 多个路线的路由文件夹
+您需要在配置器（vite.config.ts）中找到plugins -> VueRouter添加routesFolder并传递数组来提供多个路由文件夹,routesFolder默认包含：src/pages
+
+```
+VueRouter({
+  routesFolder: ['src/pages', 'src/admin/routes'],
+})
+```
+您还可以为每个文件夹提供一个路径前缀，它将按原样使用，并且不能以 开头，/但可以包含您想要的任何参数，甚至不以 结尾/：
+```
+VueRouter({
+  routesFolder: [
+    'src/pages',
+    {
+      src: 'src/admin/routes',
+      // note there is always a trailing slash and never a leading one
+      path: 'admin/',
+      // src/admin/routes/dashboard.vue -> /admin/dashboard
+    },
+    {
+      src: 'src/docs',
+      // you can add parameters
+      path: 'docs/:lang/',
+      // src/docs/introduction.vue -> /docs/:lang/introduction
+    },
+    {
+      src: 'src/promos',
+      // you can omit the trailing slash
+      path: 'promos-',
+      // src/promos/black-friday.vue -> /promos-black-friday
+    },
+  ],
+})
+```
+请注意，提供的文件夹必须是独立的，并且一个路由文件夹不能包含另一个指定的路由文件夹。如果您需要进一步的自定义，请尝试使用[DefinePage() 方法](https://uvr.esm.is/guide/extending-routes#definepage)。
 
 ## 使用svg图标
 系统采用svg icon的形式，svg图标默认统一放入`/src/assets/icons`内(修改改目录请在`vite.config.ts`内`createSvgIconsPlugin`进行修改)，使用时请使用svgIcon组件（系统已默认注册）
