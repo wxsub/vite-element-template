@@ -7,7 +7,7 @@ import tailwindcss from "tailwindcss"
 import autoprefixer from "autoprefixer"
 
 import Layouts from "vite-plugin-vue-meta-layouts"
-import Pages from "vite-plugin-pages"
+import VueRouter from 'unplugin-vue-router/vite'
 
 import AutoImport from "unplugin-auto-import/vite"
 import Components from "unplugin-vue-components/vite"
@@ -62,19 +62,8 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       }
     },
     plugins: [
-      Pages({
-        dirs: 'src/pages',
-        extensions: ['vue'],
-        routeStyle: 'nuxt',
-        extendRoute(route) {
-          const hasRedirect = route.path.indexOf("redirect/")
-          if (hasRedirect > 0 && route.meta.hidden === undefined) {
-            route.meta.hidden = true
-          }
-          return route
-        },
-        importMode: "async",
-        exclude: ['**/components/*.vue']
+      VueRouter({
+        importMode: 'sync'
       }),
       Layouts({
         target: 'src/Layouts',
