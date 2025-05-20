@@ -1,6 +1,5 @@
 import { defineStore } from "pinia"
 import { store } from "@/store"
-import { ref } from "vue"
 
 export const routerStore = defineStore("router", () => {
   const whiteList: Array<string> = [],
