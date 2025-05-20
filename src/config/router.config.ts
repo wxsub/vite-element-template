@@ -23,7 +23,6 @@ NProgress.configure({ showSpinner: false })
 
 const whiteList = routerStore.whiteList,
   RoutesSet = setupLayouts(routes);
-console.log(RoutesSet)
 
 const router = createRouter({
   history: createWebHashHistory(),
