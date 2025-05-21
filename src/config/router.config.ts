@@ -1,5 +1,5 @@
 import { setupLayouts } from 'virtual:meta-layouts'
-import { routes } from 'vue-router/auto-routes'
+import generatedRoutes from 'virtual:generated-pages'
 import wss, { WebSocketInterface } from "@/utils/wss.class"
 import {
   createRouter,
@@ -22,15 +22,15 @@ const routerStore = useRouterStoreHook(),
 NProgress.configure({ showSpinner: false })
 
 const whiteList = routerStore.whiteList,
-  RoutesSet = setupLayouts(routes);
+  routes = setupLayouts(generatedRoutes);
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes: RoutesSet,
+  routes,
   scrollBehavior: () => ({ left: 0, top: 0 })
 })
 
-routerStore.setRoutes(RoutesSet)
+routerStore.setRoutes(routes)
 
 router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
   NProgress.start()
