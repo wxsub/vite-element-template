@@ -327,10 +327,11 @@ VueRouter({
 | disabled |  禁用整个表单  |  Boolean  |   false  
 | labelPosition |  表单项label对齐规则，参照[ElementPlus Form Attributes](https://element-plus.org/zh-CN/component/form.html#form-api)  |  String  |   top  
 | labelWidth |  表单项标题宽度（此参数仅在labelPosition为left、right时生效，为top时会自动忽略）  |  Number  |   125 
-| columns |  每行显示多少列表单项  |  Number  |   5  
-| row-gap |  表单项的垂直间距  |  Number  |   5  
+| columns |  每行显示多少列表单项  |  Number / String  |   5  
 | size |  用于控制该表单内组件的尺寸（可选值: '' / 'large' / 'default' / 'small'）  |  String  |   mini 
-| row |  参照[ElementPlus Row API](https://element-plus.org/zh-CN/component/layout.html#row-api)  |  String  |   top
+| rows |  参照[ElementPlus Row API](https://element-plus.org/zh-CN/component/layout.html#row-api)  |  String  |   top
+
+**注意**： `columns`设置为字符串`'auto'`后`label-width`将失效，失效后的计算结果为`0px`
 
 ### Config Attributes
 | 参数         |  说明  |  可选值  |   类型   |  案例
@@ -365,6 +366,20 @@ VueRouter({
 | inputNumber |  数字输入框  |  -
 | upload |  文件上传  |  需要在utils/upload.class.ts修改uploadUrl
 | rate |  评分  |  [文档](https://element-plus.org/zh-CN/component/rate.html)
+
+### FormKit Slots
+| 插槽名         |  说明  |  参数
+| -------- | :-----:  | :-----:  |
+| prepend |  输入框前置内容 | -
+| append |  表单项后置内容 | -
+| content |  表单平级内容 | configs => 配置项
+| ${config.keys} |  表单项内容组件平级内容 | row => 当前config项、value => 组件绑定值
+
+### Exposes
+| 名称         |  说明 |  参数  |  类型
+| -------- | :-----:  | :-----:  | :-----:  |
+| validate | 立即校验表单项 | openTips => 校验失败是否弹出提示 | Promise
+| clearValidate | 清除表单校验项 | - | Function
 
 ## Mock Data
 系统集成了mockjs，请在`mock`文件夹下创建模拟api规范
