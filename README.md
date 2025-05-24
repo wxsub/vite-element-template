@@ -381,6 +381,36 @@ VueRouter({
 | validate | 立即校验表单项 | openTips => 校验失败是否弹出提示 | Promise
 | clearValidate | 清除表单校验项 | - | Function
 
+## SFTP本地文件自动化上传部署
+
+如果公司未未前端设置CI/CD，本地文件自动化上传部署似乎是个不错的选择
+**默认使用的是SSH SFTP**进行本地文件推送，你需要修改`/deploy/sftp.mjs`内`sftpServeConfig`您的服务器信息
+```
+// 发布开发环境
+pnpm run deploy:development
+
+// 发布生产环境
+pnpm run deploy:production
+```
+
+若后端限制只能使用ftp协议进行上传，需要先进行安装
+```
+pnpm add basic-ftp -D
+```
+然后修改`/deploy/ftp.mjs`文件内的配置信息
+
+```
+// 执行
+node deploy/ftp.mjs --mode development
+```
+
+**--mode为指定的环境变量，你需要放进指令最后**
+
+当然您也可以使用scp进行文件上传, 修改package.json中scripts.scp命令中的`<User Name>`、`<Server Public IP>`、`<Server directory>`
+```
+pnpm run scp
+```
+
 ## Mock Data
 系统集成了mockjs，请在`mock`文件夹下创建模拟api规范
 关于mockjs的使用请转至[mockjs官网](https://github.com/nuysoft/Mock/wiki)，或参考以下示例
