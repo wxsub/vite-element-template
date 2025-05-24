@@ -3,14 +3,16 @@ import fs from 'fs'
 import ora from 'ora'
 import { setTimeout } from 'timers/promises'
 
-const ftpServeConfig = {
-    host: '124.221.192.243',
-    port: 21,
+const env = process.argv[process.argv.length - 1]
+
+const sftpServeConfig = env === 'development' ? {
+    host: '<Server Host>',
+    port: "<Server Public Port>",
     localDir: "./dist",
-    serverDir: "/opt/mcyx/front",
-    user: 'front',
-    password: 'mcyx123789654'
-}
+    serverDir: "<Server Target Dir>",
+    user: "<Server User Name>",
+    password: "<Server Password>"
+} : {}
 
 const spinner = ora('Initializing upload').start()
 const maxRetries = 3 // Maximum number of retries
