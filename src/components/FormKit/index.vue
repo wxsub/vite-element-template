@@ -4,19 +4,18 @@
       ref="FormKitRef"
       :model="modelValue"
       :key="UNIQUE_KEY"
-      v-bind="FORM_ATTRS"
+      v-bind="formAttrs"
       :label-position="labelPosition">
-      <el-row
-        v-bind="row"
-        :style="{ 'row-gap': `${rowGap}px` }"
-        :class="[isAutoAlignment ? 'form-kit-auto' : FormKit['form-kit-row']]">
+      <el-row v-bind="setRowAttrs">
+        <slot name="prepend" />
         <el-col
           v-for="conf in configs"
           :key="conf.key"
-          :span="conf.span || COL_SPAN">
+          :span="conf.span || setSpanAttrs">
           <el-form-item
             :label="conf.label"
             :label-width="isAutoAlignment ? '0px' : (conf.labelWidth || `${labelWidth}px`)"
+            :class="{[FormKit['auto-alignment']]: isAutoAlignment }"
             :prop="conf.key"
             :rules="conf.rules">
             <component
@@ -34,10 +33,10 @@
             <p v-if="conf.hint" :class="FormKit['item-hint']" v-html="conf.hint"/>
           </el-form-item>
         </el-col>
-        <slot name="FormKitAppend" />
+        <slot name="append" />
       </el-row>
     </el-form>
-    <slot :config="configs" name="FormKitContent" />
+    <slot :config="configs" name="content" />
   </div>
 </template>
 
@@ -80,11 +79,10 @@ const props = defineProps({
   rules: { type: Object, default: () => {} },
   disabled: { type: Boolean, default: false },
   labelPosition: { type: String, default: 'top' }, // Form Input Alignment Rules
-  rowGap: { type: Number, default: 5 }, // Vertical spacing of form items
   labelWidth: { type: Number, default: 120 }, // Form item title width (only works when labelPosition is left, right)
   columns: { type: [Number, String], default: 1 }, // How many columns per row
   size: { type: String, default: 'default' }, // Form Size
-  row: { type: Object, default: () => ({ gutter: 30, type: 'flex' }) } // Form row item settings
+  rows: { type: Object, default: () => null } // Form row item settings
 })
 
 onMounted(async () => {
@@ -98,18 +96,21 @@ onMounted(async () => {
   }
 })
 
-const FORM_ATTRS = computed(() => {
+const formAttrs = computed(() => {
   const attrs = Object.create(null);
   attrs.size = props.size;
   attrs.inline = Number(props.columns) > 1;
   if (props.disabled) attrs.disabled = props.disabled;
   if (props.rules && Object.keys(props.rules).length > 0) attrs.rules = props.rules;
   return attrs
+}), setRowAttrs = computed(() => {
+  const { gutter } = props.rows || {}
+  return { gutter: gutter || 20 }
 }), isAutoAlignment = computed(() => {
-  return props.columns === 'auto' && props.labelPosition !== 'top'
-}), COL_SPAN = computed(() => {
+  return props.columns === 'auto'
+}), setSpanAttrs = computed(() => {
   const columnsValue = props.columns as number;
-  return 24 / columnsValue
+  return _.isNumber(columnsValue) ? 24 / columnsValue : null
 }), configs: ComputedRef<ConfigInterface[]> = computed(() => {
   return props.config.filter((conf: ConfigInterface) => {
     if (conf?.visible === undefined) return conf
@@ -214,6 +215,7 @@ defineExpose<FormKitExposed>({
 .form-kit-row { flex-wrap: wrap }
 .item-hint { margin: 0; color: #888888; font-weight: 300; font-size: 12px; line-height: 24px }
 .formKit-list-item { display: inline-block; width: 100% }
+.auto-alignment { margin-bottom: 0 }
 </style>
 
 <style lang="scss">
@@ -221,7 +223,7 @@ defineExpose<FormKitExposed>({
   :deep(.el-form-item) { margin: 0; width: 100% }
   :deep(.el-form--label-top .el-form-item__label) { padding: 0 }
   :deep(.el-form-item__error) { position: relative }
+  :deep(.el-form-item--default) { margin-bottom: 0 }
 }
-.form-label-auto :deep(.el-form-item__label) { width: auto !important }
 .form-kit-auto :deep(.el-form-item__content) { display: inline-block }
 </style>
