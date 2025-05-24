@@ -6,7 +6,7 @@
     "preinstall": "npx only-allow pnpm",
     "dev": "vite serve --mode development --strictPort",
     "preview": "pnpm run build && vite preview --port 8849",
-    "build:development": "vite build --mode development && vue-tsc --noEmit",
+    "build:staging": "vite build --mode staging && vue-tsc --noEmit && pnpm run deploy:development",
     "build:production": "vite build --mode production && vue-tsc --noEmit",
     "deploy:development": "node deploy/sftp.mjs --mode development",
     "deploy:production": "node deploy/sftp.mjs --mode production",
