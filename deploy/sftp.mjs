@@ -7,12 +7,12 @@ import { setTimeout } from 'timers/promises'
 const env = process.argv[process.argv.length - 1]
 
 const sftpServeConfig = env === 'development' ? {
-    host: '124.221.192.243',
-    port: 22,
+    host: '<Server Host>',
+    port: "<Server Public Port>",
     localDir: "./dist",
-    serverDir: "/opt/mcyx/front/admin",
-    user: 'front',
-    password: 'mcyx123789654'
+    serverDir: "<Server Target Dir>",
+    user: "<Server User Name>",
+    password: "<Server Password>"
 } : {}
 
 const spinner = ora('Initializing upload').start()
