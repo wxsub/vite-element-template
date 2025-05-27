@@ -39,6 +39,8 @@ watch(() => props.modelValue, (newVal) => {
         } else {
             fileBucket.value = []
         }
+    } else {
+        fileBucket.value = []
     }
 }, { immediate: true })
 
