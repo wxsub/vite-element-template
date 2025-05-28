@@ -9,7 +9,7 @@
     <div class="mt-[20%] text-white">
       <h1 class="text-[32px] font-semibold text-center">登录</h1>
       <div class="w-[420px] mt-6">
-        <el-form size="large">
+        <el-form size="large" @keyup.enter.native="login">
           <el-form-item label-position="top">
             <el-input v-model="formData.account" placeholder="请输入账号"/>
           </el-form-item>
@@ -39,11 +39,13 @@ const formData = reactive({
 const login = async () => {
   try {
     data.loading = true
-    await useUserStore().login(data)
+    await useUserStore().login(formData)
     data.loading = false
     location.reload()
   } catch (error) {
     console.log(error)
+  } finally {
+    data.loading = false
   }
 }
 </script>
