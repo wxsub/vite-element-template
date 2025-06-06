@@ -3,6 +3,7 @@
     <el-radio
         v-for="(it, idx) in options"
         v-if="type === 'default'"
+        :disabled="it.disabled"
         :value="it[$attrs.valueKey || 'id']"
         :key="idx">
       {{ it[$attrs.labelKey || 'name'] }}

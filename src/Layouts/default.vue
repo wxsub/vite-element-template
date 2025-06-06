@@ -1,13 +1,13 @@
 <template>
   <el-container>
-    <el-aside :width="setting.aside">
+    <el-aside :width="aside">
       <Sidebar />
     </el-aside>
     <el-container>
-      <el-header :height="setting.header" class="border-b-[1px] border-[#ccc]">
+      <el-header :height="header" class="border-b-[1px] border-[#ccc]">
         <Header />
       </el-header>
-      <el-main>
+      <el-main :class="defaultLayout.main">
         <router-view v-slot="{ Component, route }">
           <transition name="router-fade" mode="out-in">
             <keep-alive>
@@ -25,4 +25,13 @@
 import Header from '@/Layouts/components/Headers/index.vue'
 import Sidebar from '@/Layouts/components/Sidebar/index.vue'
 import setting from '@/config/setting'
+
+const { header, aside } = setting
 </script>
+
+<style module="defaultLayout" lang="scss">
+.main {
+  max-height: calc(100vh - v-bind(header));
+  overflow-y: auto;
+}
+</style>
