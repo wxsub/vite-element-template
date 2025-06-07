@@ -5,7 +5,8 @@ import { useStorage } from "@vueuse/core"
 import { ref } from "vue"
 
 export const useUserStore = defineStore("user", () => {
-  const Dataset: any = ref(null)
+  const Dataset: any = ref(null),
+    MenuCursorSet = new Set();
 
   const setUserData = (data: Object | any) => Dataset.value = data
 
@@ -37,6 +38,7 @@ export const useUserStore = defineStore("user", () => {
           const response: any = await http.get("/user/info");
           if (response?.id) {
             setUserData(response);
+            setMenuCursor(response.menus || [])
             resolve(response);
           } else {
             reject(response);
@@ -68,12 +70,24 @@ export const useUserStore = defineStore("user", () => {
     }
   }
 
+  const setMenuCursor = (menus: [any]) => {
+    MenuCursorSet.add("/")
+    const traverse = (nodes: [any]) => {
+      nodes.forEach(node => {
+        if (node.path?.trim()) MenuCursorSet.add(node.path.trim())
+        if (node.children) traverse(node.children)
+      })
+    }
+    if (menus.length > 0) traverse(menus)
+  }
+
   return {
     Dataset,
     login,
     getUserInfo,
     logout,
-    setUserData
+    setUserData,
+    hasMenuCursor: (targetPath: string) => MenuCursorSet.has(targetPath.trim())
   }
 })
 
