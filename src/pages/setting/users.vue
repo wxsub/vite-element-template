@@ -32,7 +32,7 @@ onMounted(() => GetList())
 const GetList = async () => {
   try {
     loading.value = true
-    const response: any = await useAxios().get(`/account/users`, {
+    const response: any = await useAxios().get(`/user/users`, {
       params: filterQuery.value
     })
     loading.value = false
@@ -45,65 +45,7 @@ const GetList = async () => {
 
 const opener = async (id: number | null) => {
   dialogDataSet.visible = true
-  if (id) {
-    dialogDataSet.id = id
-    try {
-        dialogDataSet.loading = true
-        const response: any = await useAxios().get(`/account/user/${id}`)
-        dialogDataSet.value = response || {}
-        setTimeout(() => {
-            dialogDataSetFormRef.value?.clearValidate()
-        }, 200)
-    } catch (error) {
-        console.log(String(error))
-        dialogDataSet.visible = false
-    } finally {
-      dialogDataSet.loading = false
-    }
-  } else {
-    dialogDataSet.id = null
-    dialogDataSet.value = { state: 'NORMAL' }
-    setTimeout(() => {
-      dialogDataSetFormRef.value?.clearValidate()
-    }, 200)
-  }
-}
-
-const onSubmit = async () => {
-  try {
-    await dialogDataSetFormRef.value?.validate()
-    dialogDataSet.saving = true
-    if (dialogDataSet.id) {
-      await useAxios().put(`/account/user/${dialogDataSet.id}`, dialogDataSet.value)
-    } else {
-      await useAxios().post(`/account/user`, dialogDataSet.value)
-    }
-    ElMessage.success('操作成功')
-    dialogDataSet.visible = false
-    GetList()
-  } catch (error) {
-    console.log(String(error))
-  } finally {
-    dialogDataSet.saving = false
-  }
-}
-
-const remove = async (rows: any) => {
-  try {
-    if (rows?.id) {
-      await ElMessageBox.confirm(`确定要删除${rows.nickName}这个用户吗. 是否继续?`, '删除',
-        {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }
-      )
-      await useAxios().delete(`/account/user/${rows.id}`)
-      await GetList()
-    }
-  } catch (e) {
-    console.log(String(e))
-  }
+  await dialogDataSetFormRef.value?.validate()
 }
 </script>
 
@@ -160,30 +102,12 @@ const remove = async (rows: any) => {
           <span v-else>暂未设置</span>
         </template>
       </el-table-column>
-      <el-table-column prop="nickName" label="用户名称" align="center" />
+      <el-table-column prop="name" label="用户名称" align="center" />
       <el-table-column prop="accountNo" label="账号" align="center" />
       <el-table-column label="状态" align="center">
         <template #default="{ row }">
           <el-tag type="primary" v-if="row.state === 'NORMAL'">正常</el-tag>
           <el-tag type="warning" v-else>禁用</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="创建时间" align="center">
-        <template #default="{ row }">
-          <span>{{ row.createdTime || '-' }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="修改时间" align="center">
-        <template #default="{ row }">
-          <span>{{ row.updatedTime || '-' }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" width="180">
-        <template #default="{ row }">
-          <div class="flex justify-center align-center">
-            <el-button type="primary" link @click="opener(row.id)" :disabled="row.superAccounts.indexOf(row.accountNo) >= 0">编辑</el-button>
-            <el-button type="danger" link @click="remove(row)" :disabled="row.superAccounts.indexOf(row.accountNo) >= 0" v-if="Array.isArray(row.superAccounts)">删除</el-button>
-          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -243,8 +167,8 @@ const remove = async (rows: any) => {
             maxCollapseTags: 3,
             multiple: true
           },
-          request: () => useAxios().get('/account/all-roles'),
-          handle: (response: any) => (response || []),
+          request: () => useAxios().get('/user/roles'),
+          handle: (response: any) => (response.items || []),
           rules: [
             { required: true, message: '用户角色不能为空' }
           ]
@@ -266,7 +190,6 @@ const remove = async (rows: any) => {
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="dialogDataSet.visible = false">关闭</el-button>
-        <el-button type="primary" :loading="dialogDataSet.saving" @click="onSubmit" :disabled="dialogDataSet.loading">提交</el-button>
       </div>
     </template>
   </el-dialog>

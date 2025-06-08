@@ -111,6 +111,66 @@ export default [
         data: result || {}
       }
     }
+  },
+  {
+    url: '/api/user/roles',
+    method: 'get',
+    response: (xhr: any) => {
+      return {
+        code: 200,
+        message: '获取成功',
+        data: {
+          total: 2,
+          items: [
+            {
+              id: 1,
+              name: '超级管理员',
+              description: '拥有所有权限',
+              menus: menus.map(menu => menu.id)
+            },
+            {
+              id: 2,
+              name: '普通用户',
+              description: '只能访问公共资源',
+              menus: [8, 13]
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    url: '/api/user/users',
+    method: 'get',
+    response: (xhr: any) => {
+      return {
+        code: 200,
+        message: '获取成功',
+        data: {
+          total: 2,
+          items: [
+            {
+              id: 1,
+              avatar: '',
+              name: '超级管理员',
+              accountNo: 'admin',
+              email: 'google@123.com',
+              state: 'NORMAL',
+              description: '拥有所有权限'
+            },
+            {
+              id: 2,
+              avatar: 'https://meichuangyx-test.oss-cn-hangzhou.aliyuncs.com/ADMIN/bdb3da5c-b6a8-42c2-82ea-8e9ef32ab78b.png',
+              name: '张三',
+              accountNo: 'zhangsan',
+              email: 'zhangsan@123.com',
+              state: 'NORMAL',
+              description: '拥有所有权限'
+            }
+          ]
+        }
+      }
+    }
   }
 ] as MockMethod[]
 
