@@ -13,6 +13,7 @@ const menus = [
         "name": "菜单管理",
         "path": "/setting/menus",
         "icon": null,
+        "parentId": 8,
         "children": []
       },
       {
@@ -20,6 +21,7 @@ const menus = [
         "name": "角色管理",
         "path": "/setting/role",
         "icon": null,
+        "parentId": 8,
         "children": []
       },
       {
@@ -27,6 +29,7 @@ const menus = [
         "name": "用户管理",
         "path": "/setting/users",
         "icon": null,
+        "parentId": 8,
         "children": []
       }
     ]
@@ -42,6 +45,7 @@ const menus = [
         "name": "FormKit组件",
         "path": "/example/formkit",
         "icon": null,
+        "parentId": 13,
         "children": []
       }
     ]
@@ -83,5 +87,45 @@ export default [
         }
       }
     }
+  },
+  {
+    url: '/api/user/menus',
+    method: 'get',
+    response: () => {
+      return {
+        code: 200,
+        message: '获取成功',
+        data: menus
+      }
+    }
+  },
+  {
+    url: '/api/user/searchMenu',
+    method: 'get',
+    response: (xhr: any) => {
+      const { id } = xhr.query || {}
+      const result = findMenuRow(Number(id))
+      return {
+        code: 200,
+        message: '获取成功',
+        data: result || {}
+      }
+    }
   }
 ] as MockMethod[]
+
+function findMenuRow(id: number) {
+  const traverse = (nodes: any): any => {
+    for (const node of nodes) {
+      if (node.id === id) {
+        return node;
+      }
+      if (node.children && node.children.length > 0) {
+        const found = traverse(node.children);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+  return traverse(menus);
+}
