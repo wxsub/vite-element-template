@@ -30,7 +30,7 @@
                 @change="mutation($event, conf)">
             </component>
             <slot :name="conf.key" :row="conf" :value="modelValue[conf.key]" :size="size" />
-            <p v-if="conf.hint" :class="FormKit['item-hint']" v-html="conf.hint"/>
+            <p v-if="conf.hint" :class="[FormKit['item-hint'], 'w-full']" v-html="conf.hint"/>
           </el-form-item>
         </el-col>
         <slot name="append" />
