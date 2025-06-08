@@ -29,10 +29,10 @@ export const useUserStore = defineStore("user", () => {
     })
   }
 
-  function getUserInfo() {
+  function getUserInfo(reload: boolean = true) {
     return new Promise<any>(async (resolve, reject) => {
       try {
-        if (Dataset?.value) {
+        if (Dataset?.value || reload === false) {
           resolve(Dataset.value)
         } else {
           const response: any = await http.get("/user/info");

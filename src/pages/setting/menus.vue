@@ -35,7 +35,7 @@ onMounted(() => GetList())
 const GetList = async () => {
   try {
     loading.value = true
-    const response: any = await useAxios().get(`/account/menus`, {
+    const response: any = await useAxios().get(`/user/menus`, {
       params: filterQuery.value
     })
     loading.value = false
@@ -52,7 +52,7 @@ const opener = async (id: number | null, parentId?:any) => {
     dialogDataSet.id = id
     try {
       dialogDataSet.loading = true
-      const response: any = await useAxios().get(`/account/menu/${id}`)
+      const response: any = await useAxios().get(`/user/searchMenu`, { params: { id } })
       dialogDataSet.value = response || {}
       setTimeout(() => {
         dialogDataSetFormRef.value?.clearValidate()
@@ -81,7 +81,7 @@ const onSubmit = async () => {
       await useAxios().post(`/account/menu`, dialogDataSet.value)
     }
     ElMessage.success('操作成功')
-    await userStore.getUserInfo(true)
+    await userStore.getUserInfo()
     dialogDataSet.visible = false
     GetList()
   } catch (error) {
@@ -102,7 +102,7 @@ const remove = async (rows: any) => {
         }
       )
       await useAxios().delete(`/account/menu/${rows.id}`)
-      await userStore.getUserInfo(true)
+      await userStore.getUserInfo()
       await GetList()
     }
   } catch (e) {
@@ -223,6 +223,7 @@ const remove = async (rows: any) => {
 
   <el-dialog v-model="dialogDataSet.visible" :title="dialogDataSet.id ? '编辑菜单' : '创建菜单'" :close-on-click-modal="false" width="520">
     <FormKit
+      v-loading="dialogDataSet.loading"
       :config="[
         {
           label: '上级菜单',
@@ -254,15 +255,6 @@ const remove = async (rows: any) => {
           ]
         },
         {
-          type: 'input',
-          label: '菜单编码',
-          key: 'code',
-          props: { placeholder: '请输入菜单编码' },
-          rules: [
-            { required: true, message: '菜单编码不能为空' }
-          ]
-        },
-        {
           label: '菜单类型',
           type: 'select',
           key: 'type',
@@ -275,17 +267,18 @@ const remove = async (rows: any) => {
           ]
         },
         {
+          type: 'inputNumber',
+          label: '排序',
+          hint: '数字越大越靠前',
+          span: 24,
+          key: 'sort',
+          props: { placeholder: '请输入排序', min: 0, max: 10, step: 1, controlsPosition: 'right' }
+        },
+        {
           type: 'upload',
           label: '菜单图标',
           key: 'icon',
           props: { limite: 1 }
-        },
-        {
-          type: 'inputNumber',
-          label: '排序',
-          hint: '数字越大越靠前',
-          key: 'sort',
-          props: { placeholder: '请输入排序', min: 0, max: 10, step: 1, controlsPosition: 'right' }
         }
       ]"
       :columns="2"
