@@ -216,7 +216,7 @@ This will match any route. Note that this can also be executed within a folder, 
 All generated routes will include the name attribute if they contain the component attribute. This prevents accidentally directing users to the parent route. By default, names are generated using file paths, but you can override this behavior by passing a custom getRouteName() function. You can do TypeScript validation almost anywhere, so changing this setting should be easy.
 
 ### Normal legal use
-``
+```
 ├── [... .all].vue # Capture all routes, often used for 404s
 ├── about
 │ └── index.vue
