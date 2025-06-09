@@ -1,5 +1,7 @@
 # vite-element-template webapp
 
+**English** | [中文](./README.zh_CN.md)
+
 基于vue3+vite+elementPlus的一个快速前端后台框架搭建项目，项目集成自动化发布方案、elementUI动态组件导入、axios、mockjs以及docker等。
 
 **项目node版本不低于18.0.0**
