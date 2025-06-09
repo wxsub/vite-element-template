@@ -336,22 +336,22 @@ Based on ElementPlus form components for the combination of packaging , through 
 **Note**: `label-width` will be invalidated when `columns` is set to the string `'auto'`, and the result will be `0px` when it is invalidated.
 
 ### Config Attributes
-| Parameters | Description | Optional Values | Types | Cases
-| -------- | :-----: | :----: | :----: | :----: | ----: |
-| label | The name of the form item | - | String | -
-| type | The type of the form item | Configurable, see Config type explain | String | - | disabled | The type of the form item | Can be configured, see below for default.
-| disabled | Whether the form item is disabled | true / false | boolean | - | keys | The form item's keys.
-| keys | The key value of the form item (this item should correspond to the field returned by the backend, so that it is convenient to directly interact the modified data with the backend) | - | String | - | The current item's key value.
-| span | Number of columns occupied by the current item | 24 | number | 24
-| labelWidth | The length of the label, e.g. '50px'. This value is inherited by form-item as a direct child of Form. auto can be used. | - | string / number | ''
-| rules | Form-item checking rules, null is not checked | - | Array | - | options | select, ccType | select, ccType | select, ccType | select
-| options | select, cascader, etc. | - | Array | ` options: [{ name: 'Open All Day', id: 'ALL' }] `
-| request | Custom request for remote data loading for this form item | - | Promise | ` request: useAxios().get('/default/shop/category-tree') `
-| handle | Work with remote data loading, handle remote data | - | Function | ` handle: (response: any) => Array.isArray(response) ? response : [] `
-| props | Parameters bound directly to the component | - | Object | `props: { placeholder: 'Please enter the store code', max: 10 }`
-| visible | This form item displays the field that needs to be associated with it | - | Object | ` visible: { key: “showid”, value: 0 } `Indicates that this item will not be displayed if the value of the field `showid` is 0 within the form.
-| events | accept component events | - | Object | -
-| hint | Show hint text below current line | - | string | -
+| Parameters | Description | Optional Values | Type | Case
+| -------- | :-----:  |  :----: |  :----:  | :----: |
+| label |  Form item name  |   -   |  String  |  -
+| type | Type of this form item | Configurable, see below for default Config type explain | String | -
+| disabled |  Whether the form item is disabled  |   true / false   |  boolean  |  -
+| keys |  form item key value (this item should correspond to the field of the form item returned by the backend, so as to facilitate direct interaction between the modified data and the backend)  |   -   |  String  |  -
+| span |  Number of columns occupied by the current item grid  |   24   |  number  |   24
+| labelWidth |  The length of the label, e.g. '50px'. This value is inherited by form-item as a direct child of Form. auto can be used.  |   -   |  string / number  |   ''
+| rules |  Form item validation rules, empty without validation  |   -   |  Array  |   -
+| options |  Operational items for components such as select, cascader, etc.  |   -   |  Array  |  ` options: [{ name: 'Open all day', id: 'ALL' }] `
+| request |  This form item requires a custom request for remote data loading  |   -   |  Promise  |  ` request: useAxios().get('/default/shop/category-tree') `
+| handle |  Processing remote data in conjunction with remote data loading  |   -   |  Function  |  ` handle: (response: any) => Array.isArray(response) ? response : [] `
+| props |  Parameters bound directly to the component  |   -   |  Object  |  `props: { placeholder: 'Pls input shop code', max: 10 }`
+| visible |  This form entry displays the fields that need to be associated  |   -   |  Object  |  ` visible: { key: "showid", value: 0 } `Indicates that the item is not displayed when the value of the field `showid` in the form is 0.
+| events |  Accepting component events  |   -   |  Object  |  -
+| hint |  Display prompt text below the current line  |   -   |  string  |  -
 
 ### Config type explain
 | Keywords | Description | Remarks
