@@ -11,7 +11,7 @@
       <div class="w-[420px] mt-6">
         <el-form size="large" @keyup.enter.native="login">
           <el-form-item label-position="top">
-            <el-input v-model="formData.account" placeholder="请输入账号"/>
+            <el-input v-model="formData.accountNo" placeholder="请输入账号"/>
           </el-form-item>
           <el-form-item label-position="top">
             <el-input v-model="formData.password" type="password" placeholder="请输入密码" />
@@ -32,8 +32,8 @@ const data = reactive({
 })
 
 const formData = reactive({
-  account: 'admin',
-  password: 'admin',
+  accountNo: '',
+  password: '',
 })
 
 const login = async () => {

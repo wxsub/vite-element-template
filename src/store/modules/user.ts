@@ -3,9 +3,11 @@ import http from "@/config/axios.config"
 import { store } from "@/store"
 import { useStorage } from "@vueuse/core"
 import { ref } from "vue"
+import { ElMessageBox } from "element-plus"
 
 export const useUserStore = defineStore("user", () => {
-  const Dataset: any = ref(null)
+  const Dataset: any = ref(null),
+    MenuCursorSet = new Set();
 
   const setUserData = (data: Object | any) => Dataset.value = data
 
@@ -16,9 +18,9 @@ export const useUserStore = defineStore("user", () => {
   function login(loginData: object) {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        const response: any = await useAxios().post("/login", loginData)
-        if (response?.token) {
-          useStorage<string>("XSRF-TOKEN", response.token)
+        const response: any = await useAxios().post("/account/public/account-token/password", loginData)
+        if (response?.accessToken) {
+          useStorage<string>("XSRF-TOKEN", response.accessToken)
           resolve(response)
         } else reject(response)
       } catch (e) {
@@ -28,18 +30,19 @@ export const useUserStore = defineStore("user", () => {
     })
   }
 
-  function getUserInfo() {
+  function getUserInfo(reload: boolean = false) {
     return new Promise<any>(async (resolve, reject) => {
       try {
-        if (Dataset?.value) {
+        if (Dataset?.value && reload === false) {
           resolve(Dataset.value)
         } else {
-          const response: any = await http.get("/user/info");
-          if (response?.id) {
-            setUserData(response);
-            resolve(response);
+          const response: any = await http.get("/account/user-profile");
+          if (response) {
+            setUserData(response)
+            setMenuCursor(response.menus || [])
+            resolve(response)
           } else {
-            reject(response);
+            reject(response)
           }
         }
       } catch (e) {
@@ -60,6 +63,7 @@ export const useUserStore = defineStore("user", () => {
           type: 'warning'
         }
       )
+      await http.post("/account/account-token/logout");
       const hash = window.location.hash
       localStorage.clear()
       if (hash.indexOf("#/login") === -1) location.reload()
@@ -68,12 +72,24 @@ export const useUserStore = defineStore("user", () => {
     }
   }
 
+  const setMenuCursor = (menus: [any]) => {
+    MenuCursorSet.add("/")
+    const traverse = (nodes: [any]) => {
+      nodes.forEach(node => {
+        if (node.path?.trim()) MenuCursorSet.add(node.path.trim())
+        if (node.children) traverse(node.children)
+      })
+    }
+    if (menus.length > 0) traverse(menus)
+  }
+
   return {
     Dataset,
     login,
     getUserInfo,
     logout,
-    setUserData
+    setUserData,
+    hasMenuCursor: (targetPath: string) => MenuCursorSet.has(targetPath.trim())
   }
 })
 

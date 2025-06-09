@@ -1,58 +1,44 @@
 <script setup lang="ts">
+import { useUserStoreHook } from '@/store/modules/user'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import SidebarItem from './SidebarItem.vue'
 
-const route = useRoute()
+const UserStore = useUserStoreHook()
+
+type MenuItem = {
+  name?: string
+  path: string
+  icon?: string
+  children?: MenuItem[]
+}
+
+const route = useRoute(),
+  loading = ref(false),
+  defaultMenus = ref<MenuItem[]>([
+    { name: '首页', path: '/' }
+  ]);
+
+const menuPathSet = computed(() => new Set(menus.value.map(it => it.path)))
 
 const activeMenu = computed(() => {
-  return route.path
+  if (route.meta.activeMenu) return route.meta.activeMenu
+
+  const matchedRoute = [...route.matched]
+    .reverse()
+    .find(r => menuPathSet.value.has(r.path))
+
+  return matchedRoute?.path || route.path
+}), menus = computed(() => {
+  const { menus = [] } = UserStore?.Dataset || {}
+  return Array.isArray(menus) ? [...defaultMenus.value, ...menus] : defaultMenus.value
 })
 </script>
 
 <template>
   <el-scrollbar class="h-[100vh]">
-    <el-menu
-      router
-      :default-active="activeMenu"
-      class="min-h-[100vh]"
-      mode="vertical">
-      <el-menu-item index="/">
-        <template #title>首页</template>
-      </el-menu-item>
-      <el-sub-menu index="/setting/router">
-        <template #title>
-          <el-icon>
-            <svg-icon name="home-wxsub-dark" />
-          </el-icon>
-          <span>设置</span>
-        </template>
-        <el-menu-item-group>
-          <template #title>
-            <span>基础设置</span>
-          </template>
-          <el-menu-item index="/setting/router">
-            路由设置
-          </el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group>
-          <template #title>
-            <span>高级设置</span>
-          </template>
-          <el-menu-item index="/setting/system">
-            系统设置
-          </el-menu-item>
-        </el-menu-item-group>
-      </el-sub-menu>
-      <el-sub-menu index="/example/formkit">
-        <template #title>
-          <span>案例演示</span>
-        </template>
-        <el-menu-item index="/example/formkit">
-          <template #title>
-            formkit
-          </template>
-        </el-menu-item>
-      </el-sub-menu>
+    <el-menu router :default-active="activeMenu" class="min-h-[100vh]" mode="vertical" v-loading="loading">
+      <sidebar-item v-for="it in menus" :key="it.path" :item="it" />
     </el-menu>
   </el-scrollbar>
 </template>

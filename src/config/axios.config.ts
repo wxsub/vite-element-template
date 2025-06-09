@@ -5,7 +5,7 @@ import { ElMessage } from "element-plus"
 // Create an axios instance
 const service = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
-  timeout: 20000,
+  timeout: 200000,
   withCredentials: true
 });
 
@@ -17,28 +17,32 @@ service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 // response interceptor
 service.interceptors.response.use(async (response: AxiosResponse) => {
-  const { data: responseData = {}, status, statusText } = response || {}
-  const { data = {}, msg } = responseData;
+  const { data = {}, msg, status: responseStatus } = response?.data || {};
+  if (responseStatus === 200) {
+    return data;
+  } else {
+    ElMessage.error(msg || "系统出错")
+    await Promise.reject(response?.data)
+  }
+}, async (error: any) => {
+  const { status, response, message } = error || {},
+    { statusText, data } = response || {};
   switch (status) {
-    case 100:
-    case 200:
-      return data;
     case 401:
       const hash = window.location.hash
       localStorage.clear()
       if (hash.indexOf("#/login") === -1) location.reload()
       break
+    case 403:
+      window.location.replace(`#/redirect/error?type=inactive&title=您当前无权访问该模块&content=${message || statusText || "当前用户未授权"}`)
+      break
     case 302:
       if (data?.url) window.open(data.url)
       break
     default:
-      ElMessage.error(msg || statusText || "系统出错")
-      await Promise.reject(data)
+      ElMessage.error(statusText || "服务器错误，请联系管理员处理")
       break
   }
-}, async (error: any) => {
-  const { response } = error || {}
-  ElMessage.error(response?.statusText || "服务器错误，请联系管理员处理")
   return Promise.reject(response)
 })
 

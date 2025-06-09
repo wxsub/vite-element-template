@@ -13,7 +13,14 @@ const sftpServeConfig = env === 'development' ? {
     serverDir: "/opt/mcyx/front/admin",
     user: 'front',
     password: 'mcyx123789654'
-} : {}
+} : {
+    host: '120.26.221.165',
+    port: 22,
+    localDir: "./dist",
+    serverDir: "/opt/mcyx/front/admin",
+    user: 'front',
+    password: 'mcyx&123789654'
+}
 
 const spinner = ora('Initializing upload').start()
 const maxRetries = 3 // Maximum number of retries
