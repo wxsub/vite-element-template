@@ -3,7 +3,7 @@ interface DefaultSettings {
     header: string,
     aside: string,
     layout: string;
-    size: string;  // 布局大小(default |large |small)
+    size: "default" | "small" | "medium" | "large";  // ElementPlus Components Layout size
     themeColor: string;
 }
 
