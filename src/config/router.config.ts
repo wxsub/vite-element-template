@@ -49,12 +49,14 @@ router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormal
         // await initializeSystemWebSocketSetup(TICKET)  // creat global websocket, if you not Need comment
         if (hash) {
           next({ ...to, replace: true })
-        } else next()
+        } else {
+          userStore.hasMenuCursor(to.path) ? next() : next(`/redirect/error?title=您无权访问${meta.title || to.path}&content=您没有权限访问此页面，请联系管理员添加，或检查您的权限设置。`)
+        }
       }
       browserSetter(title)
       NProgress.done()
     } catch (error) {
-      next(`/redirect/error?type=inactive&title=网络连接异常&content=${JSON.stringify(error)}`)
+      next(`/redirect/error?title=网络连接异常&content=${JSON.stringify(error)}`)
       browserSetter("网络连接异常")
       NProgress.done()
     }

@@ -111,7 +111,8 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       viteMockServe({
         ignore: /^_/,
         mockPath: "mock",
-        enable: mode === "development"
+        enable: true, // Please set the real scene mode === "development"
+        logger: true
       })
     ],
     optimizeDeps: {
