@@ -19,15 +19,16 @@
             :prop="conf.key"
             :rules="conf.rules">
             <component
-                v-if="conf.type"
-                :is="loader(conf.type)"
-                :ref="`formKit-component-${conf.key}`"
-                :disabled="conf['disabled']"
-                v-model="modelValue[conf.key]"
-                :options="conf.options || buckets[conf.key]"
-                v-on="conf.events || {}"
-                v-bind="conf.props"
-                @change="mutation($event, conf)">
+              v-if="conf.type"
+              :is="loader(conf.type)"
+              :ref="`module-${conf.key}`"
+              :disabled="conf['disabled']"
+              v-model="modelValue[conf.key]"
+              :options="conf.options || buckets[conf.key]"
+              v-on="conf.events || {}"
+              v-bind="conf.props"
+              @change="mutation($event, conf)"
+              :key="`module-${conf.key}-${ComponentUpdateTrigger[conf.key] || 0}`">
             </component>
             <slot :name="conf.key" :row="conf" :value="modelValue[conf.key]" :size="size" />
             <p v-if="conf.hint" :class="[FormKit['item-hint'], 'w-full']" v-html="conf.hint"/>
@@ -73,6 +74,9 @@ const UNIQUE_KEY = ref(Number(new Date())),
     FormKitRef = ref<InstanceType<typeof ElForm> & FormKitExposed>(),
 	  Stacks: Array<object> = reactive([]),
     emits = defineEmits(["update:modelValue", "update:config", "update", "enter"]);
+
+const ComponentUpdateTrigger = reactive<Record<string, number>>({})
+
 const props = defineProps({
   modelValue: { required: true, type: Object },
   config: { type: Array<ConfigInterface>, default: () => [] },
@@ -130,6 +134,15 @@ const formAttrs = computed(() => {
     }
   })
 });
+
+watchEffect(() => {
+  props?.config.forEach(config => {
+    if (config.key) {
+      ComponentUpdateTrigger[config.key] = ComponentUpdateTrigger[config.key] === undefined ? 0 : ComponentUpdateTrigger[config.key] + 1
+      fixedPointClearValidate(config)
+    }
+  })
+})
 
 const buckets: any = reactive({})
 
