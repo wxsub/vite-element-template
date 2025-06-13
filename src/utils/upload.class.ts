@@ -29,16 +29,13 @@ class FileUploader {
     this.onError = listener
   }
 
-  private isValidFileType(file: File, typePatterns: string[]): boolean {
-    return typePatterns.some((pattern: string) => (new RegExp(pattern)).test(file.type))
+  isValidFileType(file: File, typePatterns: string): boolean {
+    const Types = typePatterns.split(', ') || []
+    return Types.some((pattern: string) => (new RegExp(pattern)).test(file.type))
   }
 
-  async action(file: File, typePattern: string[] = ['image/*']): Promise<void> {
+  async action(file: File): Promise<void> {
     try {
-      if (!this.isValidFileType(file, typePattern)) {
-        this.onError(`Invalid file type. Only ${typePattern.join(', ')} are allowed.`)
-        return
-      }
       const UploadFormData = new FormData()
       UploadFormData.append('file', file)
       const response = await useAxios().post(this.uploadUrl, UploadFormData, {
