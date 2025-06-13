@@ -28,7 +28,7 @@ const searchRemoteMethod = async (query: string) => {
     loading.value = true
     const response = await props.remoteMethod(query)
     loading.value = false
-    if (Array.isArray(response)) options.value = props.handler ? props.handler(response) : response
+    options.value = props.handler ? props.handler(response) : (Array.isArray(response) ? response : [])
   } else {
     options.value = []
   }
