@@ -10,6 +10,7 @@ export const Modules: any = {
   dropdown: defineAsyncComponent(() => import("./modules/dropdown.vue")),
   inputNumber: defineAsyncComponent(() => import("./modules/inputNumber.vue")),
   upload: defineAsyncComponent(() => import("./modules/upload.vue")),
+  editor: defineAsyncComponent(() => import("./modules/Editor/index.vue")),
   input: ElInput,
   datePicker: ElDatePicker,
   timePicker: ElTimePicker,
