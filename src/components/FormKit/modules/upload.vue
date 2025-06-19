@@ -5,6 +5,7 @@ import { v4 as uuidV4 } from 'uuid'
 
 const props = defineProps({
     modelValue: { type: [String, Array] },
+    fileSize: { type: Number, default: 20 }, // The unit is MB
     limit: { type: Number, default: 1 },
     autoUpload: { type: Boolean, default: true },
     isCustom: { type: Boolean, default: false },
@@ -51,6 +52,11 @@ const change = (e: Event) => {
         files = target.files;
     if (files && files.length > 0) {
         Array.from(files).forEach(file => {
+            const maxSize = props.fileSize * 1024 * 1024
+            if (file.size > maxSize) {
+                ElMessage.error(`File size cannot exceed ${props.fileSize}MB`)
+                return
+            }
             fileBucket.value.push({
                 file,
                 isImage: file.type.startsWith('image/'),
