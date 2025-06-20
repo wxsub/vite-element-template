@@ -18,18 +18,29 @@
             :class="{[FormKit['auto-alignment']]: isAutoAlignment }"
             :prop="conf.key"
             :rules="conf.rules">
-            <component
-              v-if="conf.type"
-              :is="loader(conf.type)"
-              :ref="`module-${conf.key}`"
-              :disabled="conf['disabled']"
-              v-model="modelValue[conf.key]"
-              :options="conf.options || buckets[conf.key]"
-              v-on="conf.events || {}"
-              v-bind="conf.props"
-              @change="mutation($event, conf)"
-              :key="`module-${conf.key}-${ComponentUpdateTrigger[conf.key] || 0}`">
-            </component>
+            <Suspense>
+              <template #default>
+                <component
+                  v-if="conf.type"
+                  :is="loader(conf.type)"
+                  :ref="`module-${conf.key}`"
+                  :disabled="conf['disabled']"
+                  v-model="modelValue[conf.key]"
+                  :options="conf.options || buckets[conf.key]"
+                  v-on="conf.events || {}"
+                  v-bind="conf.props"
+                  @change="mutation($event, conf)"
+                  :key="`module-${conf.key}-${ComponentUpdateTrigger[conf.key] || 0}`">
+                </component>
+              </template>
+              <template #fallback>
+                <div class="inline-flex justify-center px-2">
+                  <el-icon class="is-loading">
+                    <i-ep-loading />
+                  </el-icon>
+                </div>
+              </template>
+            </Suspense>
             <slot :name="conf.key" :row="conf" :value="modelValue[conf.key]" :size="size" />
             <p v-if="conf.hint" :class="[FormKit['item-hint'], 'w-full']" v-html="conf.hint"/>
           </el-form-item>
