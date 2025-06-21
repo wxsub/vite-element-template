@@ -60,13 +60,13 @@ const isShowAllCheck = computed(() => {
 
 function checkAllChange(val: Array<any>) {
   FormData = val ? [...props.options].map(it => it[attrs.valueKey || 'id']) : []
-  isIndeterminate = false
+  isIndeterminate.value = false
 }
 
 function checkIndeterminate(value?: any) {
   const COUNTS = Array.isArray(value) ? value.length : 0
   checkAll = COUNTS === props.options.length
-  isIndeterminate = COUNTS > 0 && COUNTS < props.options.length
+  isIndeterminate.value = COUNTS > 0 && COUNTS < props.options.length
 }
 </script>
 
