@@ -31,6 +31,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6, p { margin: 0 }
@@ -50,6 +51,15 @@ li {
   padding: 0;
   margin: 0;
   list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  &:hover {
+    color: var(hsla(0,0%,100%,.65), rgba(255, 255, 255, .65));
+  }
 }
 
 *,

@@ -5,7 +5,7 @@ import {
   createRouter,
   RouteLocationNormalized,
   NavigationGuardNext,
-  createWebHashHistory
+  createWebHistory
 } from 'vue-router'
 import { useRouterStoreHook } from "@/store/modules/router"
 import { useUserStoreHook } from "@/store/modules/user"
@@ -25,12 +25,14 @@ const whiteList = routerStore.whiteList,
   routes = setupLayouts(generatedRoutes);
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
   scrollBehavior: () => ({ left: 0, top: 0 })
 })
 
 routerStore.setRoutes(routes)
+
+useStorage<string>("XSRF-TOKEN", 'tmp')
 
 router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
   NProgress.start()

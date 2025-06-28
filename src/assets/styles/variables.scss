@@ -1,5 +1,29 @@
 @use "sass:map";
 
+:root {
+  --max-view-width: 1280px;
+  --font-default-color: #6f7780;
+
+  @media screen and (max-width: 1276px) {
+    --max-view-width: 996px;
+  }
+
+  @media screen and (max-width: 1000px) {
+    --max-view-width: 100%;
+  }
+}
+
+.wxsub-container-width {
+  width: 100%;
+  max-width: var(--max-view-width);
+  padding: 0 6px;
+}
+
+.views {
+  @extend .wxsub-container-width;
+  margin: 0 auto;
+}
+
 @function vm($px) {
   $ratio: calc(1440 / 100);
   $calc: calc($px / $ratio);
