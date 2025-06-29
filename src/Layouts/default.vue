@@ -8,8 +8,22 @@
         <a class="hover:opacity-70">
           <img class="h-[32px]" src="https://cms-assets.unrealengine.com/AVzjeqAbLRKi3W5jq0CAvz/cmb81xhrx3tsh07mzz3amnbyl" width="233">
         </a>
+        <div class="flex-1 flex gap-4">
+          <navigation-bar />
+          <div class="flex-1 flex items-center gap-4">
+            <search-bar />
+            <status-bar />
+          </div>
+        </div>
       </nav>
     </header>
+    <router-view v-slot="{ Component, route }">
+      <transition name="router-fade" mode="out-in">
+        <keep-alive>
+          <component :is="Component" :key="route.fullPath" />
+        </keep-alive>
+      </transition>
+    </router-view>
   </div>
 </template>
 
