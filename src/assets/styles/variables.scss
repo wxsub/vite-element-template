@@ -2,6 +2,14 @@
 
 :root {
   --max-view-width: 1920px;
+
+  @media screen and (max-width: 1276px) {
+    --max-view-width: 996px;
+  }
+
+  @media screen and (max-width: 1000px) {
+    --max-view-width: 100%;
+  }
 }
 
 .wxsub-container-width {
@@ -15,7 +23,7 @@
 }
 
 @function vm($px) {
-  $ratio: calc(1440 / 100);
+  $ratio: calc(1920 / 100);
   $calc: calc($px / $ratio);
   @return calc($calc * 1vw);
 }

@@ -5,9 +5,29 @@
 </route>
 
 <template>
-  <div class="views">
-    <div class="py-[80px] px-[64px]">11</div>
+  <div class="section">
+    <div class="video-banner">
+      <video loop title playsinline disableremoteplayback autoplay muted>
+        <source src="https://cms-assets.unrealengine.com/AiKUh5PQCTaOFnmJDZJBfz/d66nnRxEQpatoaaSG3ww" type="video/mp4">
+      </video>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<style lang="scss">
+.section {
+  padding: vm(96) vm(128);
+  color: white;
+}
+.video-banner {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
+  
+  video {
+    
+  }
+}
+</style>
