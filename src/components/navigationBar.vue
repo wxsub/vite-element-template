@@ -42,7 +42,7 @@ const navList = reactive([
                 :width="item.width || 160" v-model:visible="item.show" :show-arrow="false" placement="bottom-start">
                 <template #reference>
                     <div class="px-4 py-2 flex items-center gap-2 cursor-pointer hover:opacity-70 duration-300">
-                        <span>{{ item.name }}</span>
+                        <span class="break-keep">{{ item.name }}</span>
                         <el-icon class="text-[12px] duration-300">
                             <i-ep-arrowUpBold v-if="item.show" />
                             <i-ep-arrowDownBold v-else />
@@ -54,15 +54,15 @@ const navList = reactive([
                 </ol>
             </el-popover>
             <div class="px-4 py-2 flex items-center gap-2 cursor-pointer hover:opacity-70 duration-300" v-else>
-                <span>{{ item.name }}</span>
+                <span class="break-keep">{{ item.name }}</span>
             </div>
         </li>
-        <li>
+        <li class="max-[1080px]:hidden">
             <el-popover popper-class="nav-popover-card" trigger="hover" :width="200" v-model:visible="show"
                 :show-arrow="false" placement="bottom-start">
                 <template #reference>
                     <div class="px-4 py-2 flex items-center gap-2 cursor-pointer hover:opacity-70 duration-300">
-                        <span>更多</span>
+                        <span class="break-keep">更多</span>
                         <el-icon class="text-[12px] duration-300">
                             <i-ep-arrowUpBold v-if="show" />
                             <i-ep-arrowDownBold v-else />

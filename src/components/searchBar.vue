@@ -12,6 +12,7 @@ const onFocus = ref(false)
 <style>
 .search-bar {
     flex: 1;
+    max-width: 800px;
     height: 42px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 9999px;
