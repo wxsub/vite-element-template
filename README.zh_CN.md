@@ -6,6 +6,33 @@
 
 **项目node版本不低于18.0.0**
 
+## 项目结构
+
+```
+├── .github/                # GitHub工作流配置
+├── deploy/                 # 部署脚本和配置
+├── mock/                   # 开发用模拟数据
+├── public/                 # 静态资源
+├── src/                    # 源代码
+│   ├── Layouts/            # 布局组件
+│   ├── assets/             # 项目资源(样式、图标)
+│   ├── components/         # 可复用组件
+│   ├── composable/         # 组合式函数
+│   ├── config/             # 应用配置
+│   ├── pages/              # 页面组件(自动路由)
+│   ├── store/              # Vuex/Pinia状态管理
+│   ├── types/              # TypeScript类型定义
+│   ├── utils/              # 工具函数
+│   ├── App.vue             # 根组件
+│   └── main.ts             # 应用入口
+├── .env.*                  # 不同环境的环境变量
+├── index.html              # HTML模板
+├── package.json            # 项目依赖和脚本
+├── tailwind.config.js      # Tailwind CSS配置
+├── tsconfig.json           # TypeScript配置
+└── vite.config.ts          # Vite配置
+```
+
 ```
 npm install -g pnpm
 // check you pnpm pnpm -v

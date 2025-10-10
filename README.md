@@ -6,6 +6,33 @@ Based on vue3+vite+elementPlus a fast front-end back-end framework to build the 
 
 **Project node version no less than 18.0.0**
 
+## Project Structure
+
+```
+├── .github/                # GitHub workflows configuration
+├── deploy/                 # Deployment scripts and configurations
+├── mock/                   # Mock data for development
+├── public/                 # Static assets
+├── src/                    # Source code
+│   ├── Layouts/            # Layout components
+│   ├── assets/             # Project assets (styles, icons)
+│   ├── components/         # Reusable components
+│   ├── composable/         # Composable functions
+│   ├── config/             # Application configurations
+│   ├── pages/              # Page components (auto-routing)
+│   ├── store/              # Vuex/Pinia store
+│   ├── types/              # TypeScript type definitions
+│   ├── utils/              # Utility functions
+│   ├── App.vue             # Root component
+│   └── main.ts             # Application entry point
+├── .env.*                  # Environment variables for different environments
+├── index.html              # HTML template
+├── package.json            # Project dependencies and scripts
+├── tailwind.config.js      # Tailwind CSS configuration
+├── tsconfig.json           # TypeScript configuration
+└── vite.config.ts          # Vite configuration
+```
+
 ```
 npm install -g pnpm
 // check you pnpm pnpm -v
