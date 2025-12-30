@@ -4,6 +4,7 @@ export interface Meta {
     title?: string;
     layout?: string;
     roles?: string;
+    middleware?: string | string[];
 }
 
 export interface RouterItem {

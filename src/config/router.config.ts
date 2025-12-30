@@ -1,6 +1,7 @@
 import { setupLayouts } from 'virtual:meta-layouts'
 import generatedRoutes from 'virtual:generated-pages'
 import wss, { WebSocketInterface } from "@/utils/wss.class"
+import middlewares from "@/utils/middleware"
 import {
   createRouter,
   RouteLocationNormalized,
@@ -13,6 +14,7 @@ import { useSystemStore } from "@/store/modules/system"
 import NProgress from "nprogress"
 import "nprogress/nprogress.css"
 import { isEmpty } from "lodash"
+
 let SystemWebSocket: WebSocketInterface | null = null
 
 const routerStore = useRouterStoreHook(),
@@ -32,8 +34,11 @@ const router = createRouter({
 
 routerStore.setRoutes(routes)
 
-router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
+router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
   NProgress.start()
+
+  await middlewares(to, from, next, router)
+
   const { meta, query } = to || {},
     { hash, title } = meta || {};
 
@@ -47,6 +52,7 @@ router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormal
       } else {
         await userStore.getUserInfo() // fetch user info
         // await initializeSystemWebSocketSetup(TICKET)  // creat global websocket, if you not Need comment
+        
         if (hash) {
           next({ ...to, replace: true })
         } else {
@@ -61,7 +67,9 @@ router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormal
       NProgress.done()
     }
   } else {
-    if (hasWhiteList(to.path)) { next() } else {
+    if (hasWhiteList(to.path)) {
+      next() 
+    } else {
       const redirect = query?.redirect
       next(redirect ? `/redirect/sign-in?redirect=${redirect}` : `/redirect/sign-in`)
       NProgress.done()
