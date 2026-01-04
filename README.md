@@ -19,6 +19,7 @@ Based on vue3+vite+elementPlus a fast front-end back-end framework to build the 
 │   ├── components/         # Reusable components
 │   ├── composable/         # Composable functions
 │   ├── config/             # Application configurations
+│   ├── middleware/         # Route middleware
 │   ├── pages/              # Page components (auto-routing)
 │   ├── store/              # Vuex/Pinia store
 │   ├── types/              # TypeScript type definitions

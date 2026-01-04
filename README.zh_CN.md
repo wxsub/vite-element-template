@@ -19,6 +19,7 @@
 │   ├── components/         # 可复用组件
 │   ├── composable/         # 组合式函数
 │   ├── config/             # 应用配置
+│   ├── middleware/         # 路由中间件
 │   ├── pages/              # 页面组件(自动路由)
 │   ├── store/              # Vuex/Pinia状态管理
 │   ├── types/              # TypeScript类型定义
