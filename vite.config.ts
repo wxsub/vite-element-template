@@ -36,7 +36,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       },
       preprocessorOptions: {
         scss: {
-          javascriptEnabled: true,
           additionalData: `@use "@/assets/styles/variables.scss" as *;`
         }
       },
