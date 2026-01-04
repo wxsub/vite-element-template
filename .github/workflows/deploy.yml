@@ -2,41 +2,47 @@ name: Deploy static content to Pages
 
 on:
   push:
-    branches:
-      - master
+    branches: ['master']
+
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
 jobs:
-  deploy-gh-pages:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
         with:
-          fetch-depth: 0
-
-      - name: install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - name: set Node.js
+          version: 8
+      - name: output file dir
+        run: ls
+      - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20.10.0
-
-      - name: package install
+          node-version: 18
+      - name: Install dependencies
         run: pnpm install
-
       - name: Build
         run: pnpm run build:production
-
-      - name: deploy Documentation
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: ci-github-pages
-          folder: ./dist
+          path: './dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
