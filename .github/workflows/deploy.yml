@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   deploy-gh-pages:
@@ -26,7 +28,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18.20.8
-          cache: pnpm
 
       - name: package install
         run: pnpm install
