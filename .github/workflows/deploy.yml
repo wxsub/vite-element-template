@@ -27,7 +27,7 @@ jobs:
       - name: set Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18.12.0
+          node-version: 20.10.0
 
       - name: package install
         run: pnpm install
@@ -40,6 +40,3 @@ jobs:
         with:
           branch: ci-github-pages
           folder: ./dist
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
