@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import defaultSettings from "@/settings";
+import defaultSettings from "@/config/setting";
 
 export const useSettingsStore = defineStore("setting", () => {
   // state
@@ -50,6 +50,6 @@ export const useSettingsStore = defineStore("setting", () => {
     sidebarLogo,
     layout,
     themeColor,
-    changeSetting,
+    changeSetting
   };
 });
