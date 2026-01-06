@@ -1,3 +1,5 @@
+import { useUserStoreHook } from "@/store/modules/user"
+
 const isInteger = Number.isInteger,
     isNegative = (num: number | bigint): boolean => num < 0;
 
@@ -155,6 +157,6 @@ class Permissions {
     }
 }
 
-export function usePermissions(initialPermissionValue: number | bigint = 0): Permissions {
-    return Permissions.getInstance(6);
+export function usePermissions(): Permissions {
+    return Permissions.getInstance(useUserStoreHook().UserData?.role || 0);
 }

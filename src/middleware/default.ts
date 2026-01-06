@@ -5,11 +5,11 @@ import { useRouterStoreHook } from "@/store/modules/router"
 const userStore = useUserStoreHook(),
   routerStore = useRouterStoreHook();
 
-export default function defaultMiddleware(
+export default async function defaultMiddleware(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
   next: NavigationGuardNext
-): void {
+): Promise<void> {
   const { meta, query } = to || {},
     { title } = meta || {};
 
@@ -25,7 +25,7 @@ export default function defaultMiddleware(
           next()
         }
       } else {
-        // await userStore.getUserInfo() // fetch user info
+        await userStore.getUserInfo() // fetch user info
         browserSetter(title)
         next()
       }

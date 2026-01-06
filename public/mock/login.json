@@ -1,0 +1,9 @@
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "token": 1001,
+        "name": "张三",
+        "email": "zhangsan@example.com"
+    }
+}

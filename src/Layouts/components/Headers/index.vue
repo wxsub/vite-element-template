@@ -13,13 +13,13 @@ const visible = ref(false)
       <Breadcrumb />
     </div>
     <div class="flex items-center gap-2">
-      <span>{{ UserStore?.Dataset?.name }}</span>
+      <span>{{ UserStore.UserData?.name }}</span>
       <el-popover
         v-model:visible="visible"
         :width="200"
         trigger="click">
         <template #reference>
-          <el-avatar :size="40" :src="UserStore?.Dataset?.avatar" class="cursor-pointer" />
+          <el-avatar :size="40" :src="UserStore.UserData?.avatar" class="cursor-pointer" />
         </template>
         <ul>
           <li class="py-2 px-1 flex items-center gap-2 cursor-pointer hover:text-[#333]" @click="UserStore.logout()">

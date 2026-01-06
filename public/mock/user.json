@@ -1,0 +1,13 @@
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "id": 1,
+        "role": 6,
+        "token": 1001,
+        "avatar": "https://meichuangyx-test.oss-cn-hangzhou.aliyuncs.com/ADMIN/bdb3da5c-b6a8-42c2-82ea-8e9ef32ab78b.png",
+        "name": "张三",
+        "menus": [],
+        "email": "zhangsan@example.com"
+    }
+}
