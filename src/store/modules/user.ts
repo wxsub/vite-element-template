@@ -7,7 +7,7 @@ export const useUserStore = defineStore("user", () => {
   const UserData: any = ref({});
 
   /**
-   * 密码登录
+   * user login
    * @param loginData
    */
   function login(loginData: object) {

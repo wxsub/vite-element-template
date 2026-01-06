@@ -17,7 +17,7 @@ const route = useRoute(),
   loading = ref(false),
   menus = ref<MenuItem[]>([
     { name: '首页', path: '/' },
-    { name: '权限', path: '/permissions' }
+    { name: '权限', path: '/permissions/config' }
   ]);
 
 const menuPathSet = computed(() => new Set(menus.value.map(it => it.path)))

@@ -1,9 +1,11 @@
 <template>
   <el-config-provider :size="size">
     <el-container>
-      <el-aside :width="aside">
-        <Sidebar />
-      </el-aside>
+      <transition name="el-fade-in">
+        <el-aside :width="aside" v-if="SettingsStore.showSidebar">
+          <Sidebar />
+        </el-aside>
+      </transition>
       <el-container>
         <el-header :height="header" class="border-b-[1px] border-[#ccc]">
           <Header />
@@ -27,8 +29,11 @@
 import Header from '@/Layouts/components/Headers/index.vue'
 import Sidebar from '@/Layouts/components/Sidebar/index.vue'
 import setting from '@/config/setting'
+import { useSettingsStore } from '@/store/modules/settings'
 
 const { header, aside, size } = setting
+
+const SettingsStore = useSettingsStore()
 </script>
 
 <style module="defaultLayout" lang="scss">

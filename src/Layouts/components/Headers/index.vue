@@ -1,21 +1,26 @@
 <script setup lang="ts">
 import { useUserStoreHook } from '@/store/modules/user'
+import { useSettingsStore } from '@/store/modules/settings'
 import Breadcrumb from '@/Layouts/components/Breadcrumb/index.vue'
 
 const UserStore = useUserStoreHook()
-
-const visible = ref(false)
+const SettingsStore = useSettingsStore()
 </script>
 
 <template>
   <div class="h-full flex justify-between items-center">
-    <div class="text-[18px] font-semibold">
+    <div class="text-[18px] font-semibold flex items-center gap-2">
+      <el-button text size="small" @click="SettingsStore.changeSetting({ key: 'showSidebar', value: !SettingsStore.showSidebar })">
+        <el-icon size="18">
+          <i-ep-Expand v-if="SettingsStore.showSidebar" />
+          <i-ep-Fold v-else />
+        </el-icon>
+      </el-button>
       <Breadcrumb />
     </div>
     <div class="flex items-center gap-2">
       <span>{{ UserStore.UserData?.name }}</span>
       <el-popover
-        v-model:visible="visible"
         :width="200"
         trigger="click">
         <template #reference>
