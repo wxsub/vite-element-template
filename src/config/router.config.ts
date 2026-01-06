@@ -23,6 +23,8 @@ NProgress.configure({ showSpinner: false })
 
 const routes = setupLayouts(generatedRoutes);
 
+routes.push({ path: '/:pathMatch(.*)*', redirect: '/redirect/404' })
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
@@ -33,6 +35,12 @@ routerStore.setRoutes(routes)
 
 router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
   NProgress.start()
+
+  const matched = router.resolve(to).matched
+  if (matched.length === 0) {
+    next('/redirect/404')
+    return
+  }
 
   await middlewares(to, from, next, router)
 })
