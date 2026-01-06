@@ -245,7 +245,6 @@ All generated routes will include the name attribute if they contain the compone
 
 ### Normal legal use
 ```
-├── [... .all].vue # Capture all routes, often used for 404s
 ├── about
 │ └── index.vue
 ├── about.vue # Access this page via /about

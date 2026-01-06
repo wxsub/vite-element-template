@@ -245,7 +245,6 @@ const routes = [
 
 ### 正常合法使用
 ```
-├── [...all].vue # 捕获所有路由，常用于404
 ├── about
 │   └── index.vue
 ├── about.vue # 通过/about来访问该页面
