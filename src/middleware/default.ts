@@ -11,7 +11,7 @@ export default async function defaultMiddleware(
   next: NavigationGuardNext
 ): Promise<void> {
   const { meta, query } = to || {},
-    { title } = meta || {};
+    { title, permission } = meta || {};
 
   const TICKET = localStorage.getItem("XSRF-TOKEN") || null
   if (TICKET) {
@@ -27,7 +27,15 @@ export default async function defaultMiddleware(
       } else {
         await userStore.getUserInfo() // fetch user info
         browserSetter(title)
-        next()
+        if (permission) {
+          if (usePermissions().verify(permission)) {
+            next()
+          } else {
+            next(`/redirect/error?title=权限不足&content=${JSON.stringify(permission)}`)
+          }
+        } else {
+          next()
+        }
       }
     } catch (error) {
       browserSetter("网络连接异常")

@@ -97,11 +97,17 @@ class Permissions {
         return bitmark;
     }
 
-    public verify(bitmark: number | bigint): boolean {
-        this.#validateBitmark(bitmark);
-        this.#validatePermissionState();
-
-        return BitOperationUtil.verifyBitmark(this.#permissionValue, bitmark);
+    public verify(bitmark: any): boolean {
+      if (![ 'number', 'bigint' ].includes(typeof bitmark) || 
+          !BitOperationUtil.isValidNonNegativeInteger(bitmark) || 
+          !BitOperationUtil.isValidBitmark(bitmark)) {
+        console.warn(`Invalid bitmark provided: ${bitmark}`);
+        return false;
+      }
+      
+      this.#validatePermissionState();
+  
+      return BitOperationUtil.verifyBitmark(this.#permissionValue, bitmark);
     }
 
     public add(bitmark: number | bigint): this {

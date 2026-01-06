@@ -3,7 +3,7 @@ export interface Meta {
     icon?: string;
     title?: string;
     layout?: string;
-    roles?: string;
+    permission?: number | bigint;
     middleware?: string | string[];
 }
 
