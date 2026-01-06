@@ -15,8 +15,9 @@ type MenuItem = {
 
 const route = useRoute(),
   loading = ref(false),
-  defaultMenus = ref<MenuItem[]>([
-    { name: '首页', path: '/' }
+  menus = ref<MenuItem[]>([
+    { name: '首页', path: '/' },
+    { name: '权限', path: '/permissions' }
   ]);
 
 const menuPathSet = computed(() => new Set(menus.value.map(it => it.path)))
@@ -29,10 +30,7 @@ const activeMenu = computed(() => {
     .find(r => menuPathSet.value.has(r.path))
 
   return matchedRoute?.path || route.path
-}), menus = computed(() => {
-  const { menus = [] } = UserStore?.Dataset || {}
-  return Array.isArray(menus) ? [...defaultMenus.value, ...menus] : defaultMenus.value
-})
+});
 </script>
 
 <template>
