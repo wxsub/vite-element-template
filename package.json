@@ -46,6 +46,7 @@
     "axios": "^1.4.0",
     "echarts": "^5.2.2",
     "element-plus": "^2.3.14",
+    "element-plus-formkit": "^0.1.9",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "nprogress": "^0.2.0",
