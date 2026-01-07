@@ -14,6 +14,7 @@ import "virtual:svg-icons-register"
 import "element-plus/theme-chalk/dark/css-vars.css"
 import "tailwindcss/tailwind.css"
 import "@/assets/styles/reset.scss"
+import 'element-plus-formkit/dist/index.css'
 
 import SvgIcon from "@/components/SvgIcon/index.vue"
 

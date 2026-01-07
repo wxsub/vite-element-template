@@ -17,7 +17,8 @@ const route = useRoute(),
   loading = ref(false),
   menus = ref<MenuItem[]>([
     { name: '首页', path: '/' },
-    { name: '权限说明', path: '/permissions/description' }
+    { name: '权限说明', path: '/permissions/description' },
+    { name: '数据化表单', path: '/example/formkit' }
   ]);
 
 const menuPathSet = computed(() => new Set(menus.value.map(it => it.path)))

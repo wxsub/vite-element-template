@@ -3,9 +3,10 @@
 </route>
 
 <script setup lang="ts">
-import FormKit from "@/components/FormKit/index.vue"
+import FormKit, { type Instance, registerModule } from 'element-plus-formkit';
 
-type FormKitInstance = InstanceType<typeof FormKit>
+registerModule('editor', defineAsyncComponent(() => import("@/components/Editor/index.vue")))
+
 type detailDailogType = {
     visible: boolean,
     items: any,
@@ -18,7 +19,7 @@ type detailDailogType = {
 
 const Query = ref({ name: null, page: 1, limit: 10 }),
     total = ref(0),
-    formKitRef = ref<FormKitInstance>(),
+    formKitRef = ref<Instance>(),
     loading = ref(false),
     detailDailog = reactive<detailDailogType>({ visible: false, items: [], id: null, value: {} }),
     items: any = ref([]);
@@ -105,6 +106,13 @@ const EditConfigs = computed(() => {
         label: '开户人身份证号',
         key: 'openUserIdCardNo',
         props: { placeholder: '请输入开户人身份证号' }
+      },
+      {
+        type: 'editor',
+        label: '备注',
+        key: 'remark',
+        span: 24,
+        props: { placeholder: '请输入备注' }
       }
     ]
 })
