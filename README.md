@@ -157,7 +157,7 @@ Tips：The layout field points to all the .vue files in the Layouts folder (defa
 **Warning**：Based on the rules of unplugin-vue-router, custom fields are deposited in the meta attribute if possible, otherwise they will not be recognized
 
 1. **title**: Routing title
-2. **roles**: route permissions, reserved permissions field
+2. **permission**: route permissions
 3. **layout**: the layout used by the current route, the name of the file in the `src/Layouts/*.vue` directory
 4. **icon**: the current route icon, for sidebar component rendering, your icon field rules refer to [`svg-icon`](#use svg icon) component `name` field rules
 5. **hidden**: hide the current route, the current route will not appear in the sidebar, but can be accessed through the link to the page
@@ -261,7 +261,7 @@ However, it is generally not recommended to write your components files in the p
 You should also note that you should avoid using special symbols to create new files or folders in the pages directory, especially “-”, as this will cause the routing recursion to fail and the program to terminate.
 
 ### Capturing routing permissions
-The required route information and permission resources will be unified from /config/router.permission.js, and you can export its permission method, where all the data for loading the system will be stored.
+The required routing information and permission resources will all come from `/composable/usePermissions.ts`. You can export its `permission` method, and the logic related to route permission verification will be stored there.
 
 ### Route folders for multiple routes
 You need to find plugins -> VueRouter in the configurator (vite.config.ts) and add routesFolder and pass an array to provide multiple routes folders, routesFolder contains by default: src/pages

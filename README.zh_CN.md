@@ -157,7 +157,7 @@ Tips：layout字段指向的就是Layouts文件夹内所有.vue文件(默认defa
 **注意**：基于unplugin-vue-router的规则，自定义的字段尽可能存入meta属性中，否则无法识别
 
 1. **title**： 路由标题
-2. **roles**： 路由权限，预留权限字段
+2. **permission**： 路由权限
 3. **layout**: 当前路由使用的布局，`src/Layouts/*.vue`目录下的文件名
 4. **icon**: 当前路由icon，为侧边栏组件渲染使用，你的icon字段规则参考[`svg-icon`](#使用svg图标)组件`name`字段规则
 5. **hidden**: 隐藏当前路由，当前路由不会出现在侧边栏位置，但可以通过链接访问该页面
@@ -261,7 +261,7 @@ const routes = [
 你还需要注意：避免使用特殊符号在pages目录下新建文件或文件夹，特别是”-“，这会导致路由递归失败程序终止
 
 ### 捕获路由权限
-需要的路由信息以及权限资源将统一来自/config/router.permission.js, 你可以导出其permission方法，加载系统的全部数据将存放于此
+需要的路由信息以及权限资源将统一来自/composable/usePermissions.ts, 你可以导出其permission方法，路由权限校验相关逻辑将存放于此
 
 ### 多个路线的路由文件夹
 您需要在配置器（vite.config.ts）中找到plugins -> VueRouter添加routesFolder并传递数组来提供多个路由文件夹,routesFolder默认包含：src/pages
