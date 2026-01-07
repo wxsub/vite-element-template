@@ -17,3 +17,15 @@ export interface RouterItem {
 export interface RouterStore {
     options: RouterItem[];
 }
+
+export interface BreadcrumbItem {
+  label: string
+  link: string
+  current: boolean
+  _path: string
+}
+
+export interface BreadcrumbConfig {
+  label: string
+  link?: string | ((url: string) => string)
+}
