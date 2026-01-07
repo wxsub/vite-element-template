@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { useUserStoreHook } from '@/store/modules/user'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import SidebarItem from './SidebarItem.vue'
-
-const UserStore = useUserStoreHook()
 
 type MenuItem = {
   name?: string
@@ -17,8 +14,16 @@ const route = useRoute(),
   loading = ref(false),
   menus = ref<MenuItem[]>([
     { name: '首页', path: '/' },
-    { name: '权限说明', path: '/permissions/description' },
-    { name: '数据化表单', path: '/example/formkit' }
+    { name: '权限设计说明', path: '/permissions/description' },
+    { name: '数据化表单', path: '/example/formkit' },
+    {
+      name: '嵌套路由',
+      path: '/nested',
+      children: [
+        { name: '嵌套路由', path: '/nested' },
+        { name: '动态参数路由', path: '/nested/dynamic-parameters/12' }
+      ]
+    }
   ]);
 
 const menuPathSet = computed(() => new Set(menus.value.map(it => it.path)))
