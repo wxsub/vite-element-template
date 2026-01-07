@@ -177,7 +177,7 @@ Tips：layout字段指向的就是Layouts文件夹内所有.vue文件(默认defa
 ```
 src/pages/
   ├── users/
-  │  ├── [id].vue
+  │  ├── _id.vue
   │  └── index.vue
   └── users.vue
 ```
@@ -213,7 +213,7 @@ const routes = [
 ```
 src/pages/
 ├── users/
-│   ├── [id].vue
+│   ├── _id.vue
 │   └── index.vue
 └── users.vue
 ```
@@ -225,7 +225,7 @@ const routes = [
     component: () => import('src/pages/users.vue'),
     children: [
       { path: '', component: () => import('src/pages/users/index.vue') },
-      { path: ':id', component: () => import('src/pages/users/[id].vue') },
+      { path: ':id', component: () => import('src/pages/users/_id.vue') },
     ],
   },
   {
@@ -249,7 +249,7 @@ const routes = [
 │   └── index.vue
 ├── about.vue # 通过/about来访问该页面
 ├── blog  # 通过/blog来访问
-│   ├── [id].vue # 动态路由
+│   ├── _id.vue # 动态路由
 │   ├── index.vue
 │   └── today
 ├── components.vue

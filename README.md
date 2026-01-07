@@ -177,7 +177,7 @@ In other words, given the following folder structure:
 ```
 src/pages/
   ├── users/
-  │  ├── [id].vue
+  │  ├── _id.vue
   │  └── index.vue
   └── users.vue
 ```
@@ -213,7 +213,7 @@ Sometimes you may want to add nesting to URLs in the form of slashes, but you do
 ```
 src/pages/
 ├── users/
-│   ├── [id].vue
+│   ├── _id.vue
 │   └── index.vue
 └── users.vue
 ```
@@ -225,7 +225,7 @@ const routes = [
     component: () => import('src/pages/users.vue'),
     children: [
       { path: '', component: () => import('src/pages/users/index.vue') },
-      { path: ':id', component: () => import('src/pages/users/[id].vue') },
+      { path: ':id', component: () => import('src/pages/users/_id.vue') },
     ],
   },
   {
@@ -249,7 +249,7 @@ All generated routes will include the name attribute if they contain the compone
 │ └── index.vue
 ├── about.vue # Access this page via /about
 ├── blog # Access the page via /blog
-│ ├── [id].vue # Dynamic routing
+│ ├── _id.vue # Dynamic routing
 │ ├── index.vue
 │ └── today
 ├── components.vue
