@@ -5,6 +5,7 @@
 <script setup lang="ts">
 import FormKit, { type Instance, registerModule } from 'element-plus-formkit';
 
+// Of course, you can also move this logic into `main.ts` for unified registration.
 registerModule('editor', defineAsyncComponent(() => import("@/components/Editor/index.vue")))
 
 type detailDailogType = {
