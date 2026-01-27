@@ -1,6 +1,7 @@
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 import type { Router, RouteLocationNormalized, NavigationFailure } from 'vue-router'
 import type { BreadcrumbConfig, BreadcrumbItem } from '@/types/router'
+import { useRouterStoreHook } from '@/store/modules/router'
 
 export class Breadcrumbs {
   #router: Router
@@ -17,10 +18,53 @@ export class Breadcrumbs {
       if (failure || (route.path === from.path && from.matched.length)) return
       this.setBreadcrumbsByRoute(route)
     })
+
+    const routerStore = useRouterStoreHook()
+    watch(() => routerStore.SidebarMenus, () => {
+      if (this.#router.currentRoute.value) {
+        this.setBreadcrumbsByRoute(this.#router.currentRoute.value)
+      }
+    })
   }
 
   setBreadcrumbsByRoute(route: RouteLocationNormalized): void {
     if (!route) return
+
+    const routerStore = useRouterStoreHook()
+    const menus = routerStore.SidebarMenus
+    
+    // Try to resolve breadcrumbs from menu structure first
+    const menuPath = this.findMenuPath(menus, route.path)
+    
+    if (menuPath && menuPath.length > 0) {
+      const newBreadcrumbs: BreadcrumbItem[] = []
+      
+      // Ensure Home is present if not first item
+      if (menuPath[0].path !== '/') {
+        const homeCrumb = this.createBreadcrumb('/')
+        if (homeCrumb) newBreadcrumbs.push(homeCrumb)
+      }
+
+      menuPath.forEach((menu, index) => {
+        const isCurrent = index === menuPath.length - 1
+        const label = menu.meta?.title || menu.name
+        const link = menu.path
+        
+        if (label && link) {
+           newBreadcrumbs.push({
+              label,
+              link,
+              current: isCurrent,
+              _path: link
+           })
+        }
+      })
+      
+      this.value.splice(0, this.value.length, ...newBreadcrumbs)
+      return
+    }
+
+    // Fallback to existing logic
     const arPath = route.path.replace(/\/$/, "").split('/')
     let iterablePath = ''
     let spliced = false
@@ -44,6 +88,28 @@ export class Breadcrumbs {
 
       this.value.push(breadcrumb)
     })
+  }
+
+  findMenuPath(menus: any[], targetPath: string): any[] | null {
+    if (!menus) return null
+    
+    for (const menu of menus) {
+        // Exact match
+        if (menu.path === targetPath) {
+             if (menu.children && menu.children.length) {
+                 const childPath = this.findMenuPath(menu.children, targetPath)
+                 if (childPath) return [menu, ...childPath]
+             }
+             return [menu]
+        }
+        
+        // Recursive check
+        if (menu.children && menu.children.length) {
+            const childPath = this.findMenuPath(menu.children, targetPath)
+            if (childPath) return [menu, ...childPath]
+        }
+    }
+    return null
   }
 
   createBreadcrumb(path: string, isCurrent: boolean = false): BreadcrumbItem | false {
