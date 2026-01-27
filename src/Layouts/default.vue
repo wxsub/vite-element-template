@@ -12,13 +12,9 @@
         </el-header>
         <el-main :class="defaultLayout.main">
           <router-view v-slot="{ Component, route }">
-            <transition name="router-fade" mode="out-in">
-              <keep-alive>
-                <section>
-                  <component :is="Component" :key="route.fullPath" />
-                </section>
-              </keep-alive>
-            </transition>
+            <keep-alive>
+              <component :is="Component" :key="route.fullPath" />
+            </keep-alive>
           </router-view>
         </el-main>
       </el-container>

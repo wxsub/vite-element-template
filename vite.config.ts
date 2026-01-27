@@ -17,6 +17,7 @@ import Icons from "unplugin-icons/vite"
 import IconsResolver from "unplugin-icons/resolver"
 
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons"
+import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 
 import { viteMockServe } from "vite-plugin-mock"
 
@@ -73,6 +74,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         defaultLayout: 'default'
       }),
       vue(),
+      VueSetupExtend(),
       AutoImport({
         imports: ["vue", "@vueuse/core"],
         dirs: ["src/composable"],
