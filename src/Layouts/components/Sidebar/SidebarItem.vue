@@ -1,19 +1,10 @@
 <template>
-  <el-sub-menu v-if="Array.isArray(item.children) && item.children.length > 0" :index="item.path">
+  <el-sub-menu v-if="Array.isArray(item.children) && item.children.length > 0" :index="item.path || item.name">
     <template #title>
       <Icon v-if="item.icon" :name="item.icon" />
       <span>{{ item.name }}</span>
     </template>
-    <el-menu-item
-      v-for="sub in item.children"
-      :index="hasExternal(sub.path) ? '' : sub.path"
-      @click="handleMixedLink(sub.path)"
-      :key="sub.path">
-      <template #title>
-        <Icon v-if="sub.icon" :name="item.icon" />
-        <span>{{ sub.name }}</span>
-      </template>
-    </el-menu-item>
+    <SidebarItem v-for="sub in item.children" :key="sub.path" :item="sub" />
   </el-sub-menu>
 
   <el-menu-item :index="hasExternal(item.path) ? '' : item.path" v-else @click="handleMixedLink(item.path)">
@@ -21,7 +12,7 @@
   </el-menu-item>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="SidebarItem">
 import Icon from './Icon.vue'
 
 defineProps({
