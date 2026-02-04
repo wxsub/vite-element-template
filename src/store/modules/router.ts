@@ -7,7 +7,7 @@ const ConstantMenus = [
 
 export const routerStore = defineStore("router", () => {
   const whiteList: Array<string> = [],
-    SidebarMenus: any = ref([]),
+    SidebarMenus: any = ref([ ...ConstantMenus ]),
     routers: any = ref([]);
 
   const setRoutes = (data: Array<object> | any) => routers.value = data
