@@ -8,7 +8,8 @@
   </el-sub-menu>
 
   <el-menu-item :index="hasExternal(item.path) ? '' : item.path" v-else @click="handleMixedLink(item.path)">
-    <template #title>{{ item.name }}</template>
+    <Icon v-if="item.icon" :name="item.icon" />
+    <span>{{ item.name }}</span>
   </el-menu-item>
 </template>
 
