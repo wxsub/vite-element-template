@@ -1,36 +1,20 @@
 <script setup lang="ts">
 import { ArrowRight } from '@element-plus/icons-vue'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Breadcrumbs } from '@/utils/breadcrumb-plugin'
-import { useRouterStoreHook } from '@/store/modules/router'
 
 const route = useRoute(),
   Router = useRouter(),
   levelList = ref<any[]>([]);
 
-const routerStore = useRouterStoreHook()
-
 let breadcrumbs: any = null
 
 onMounted(() => {
   breadcrumbs = new Breadcrumbs(Router)
+  breadcrumbs.init()
   breadcrumbs.setBreadcrumbsByRoute(route)
   levelList.value = breadcrumbs.value
-})
-
-watch(route, () => {
-  if (breadcrumbs) {
-    breadcrumbs.setBreadcrumbsByRoute(route)
-    levelList.value = breadcrumbs.value
-  }
-})
-
-watch(() => routerStore.SidebarMenus, () => {
-  if (breadcrumbs) {
-    breadcrumbs.setBreadcrumbsByRoute(route)
-    levelList.value = breadcrumbs.value
-  }
 })
 
 function handleLink(item: any) {

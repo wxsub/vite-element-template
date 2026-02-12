@@ -15,7 +15,8 @@ export class Breadcrumbs {
   init(): void {
     this.#router.afterEach((...args: [RouteLocationNormalized, RouteLocationNormalized, (NavigationFailure | undefined | void)]) => {
       const [route, from, failure] = args
-      if (failure || (route.path === from.path && from.matched.length)) return
+      if (failure) return
+      if (route.fullPath === from.fullPath) return
       this.setBreadcrumbsByRoute(route)
     })
 
@@ -47,7 +48,7 @@ export class Breadcrumbs {
 
       menuPath.forEach((menu, index) => {
         const isCurrent = index === menuPath.length - 1
-        const label = menu.meta?.title || menu.name
+        const label = menu.meta?.title || menu.menuName || menu.name
         const link = menu.path
         
         if (label && link) {
