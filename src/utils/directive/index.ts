@@ -1,9 +1,35 @@
-import type { App } from "vue";
+import type { App, Directive } from "vue";
 
-// import { hasPerm } from "./permission";
+type DirectiveModule = { default?: Directive | undefined } & Record<string, unknown>;
 
-// 全局注册 directive
+const folderDirectiveModules = import.meta.glob<DirectiveModule>("./modules/*/index.{ts,js}", {
+  eager: true
+});
+
+const fileDirectiveModules = import.meta.glob<DirectiveModule>("./modules/*.{ts,js}", { eager: true });
+
+function registerDirective(app: App<Element>, name: string, mod: DirectiveModule) {
+  const directive = (mod.default ?? undefined) as Directive | undefined;
+  if (!directive) return;
+  app.directive(name, directive);
+}
+
 export function setupDirective(app: App<Element>) {
-  // 使 v-hasPerm 在所有组件中都可用
-  // app.directive("hasPerm", hasPerm);
+  const registeredNames = new Set<string>();
+
+  for (const [path, mod] of Object.entries(folderDirectiveModules)) {
+    const match = path.match(/^\.\/modules\/([^/]+)\/index\.(?:ts|js)$/);
+    const name = match?.[1];
+    if (!name || registeredNames.has(name)) continue;
+    registerDirective(app, name, mod);
+    registeredNames.add(name);
+  }
+
+  for (const [path, mod] of Object.entries(fileDirectiveModules)) {
+    const match = path.match(/^\.\/modules\/([^/]+)\.(?:ts|js)$/);
+    const name = match?.[1];
+    if (!name || registeredNames.has(name)) continue;
+    registerDirective(app, name, mod);
+    registeredNames.add(name);
+  }
 }
