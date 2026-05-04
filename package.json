@@ -59,7 +59,7 @@
     "sortablejs": "^1.15.0",
     "stompjs": "^2.3.3",
     "terser": "^5.19.3",
-    "uuid": "^11.0.3",
+    "uuid": "^14.0.0",
     "vite-plugin-pages": "^0.32.4",
     "vite-plugin-vue-meta-layouts": "^0.5.1",
     "vue": "^3.3.4",
